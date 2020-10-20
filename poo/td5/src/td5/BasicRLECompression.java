@@ -14,7 +14,9 @@ public class BasicRLECompression implements ICompression{
 		while(data.length()!=0) {
 			c = data.charAt(0);
 			if(c==flag) {
-				throw new Error("character int data is equal to flag");
+				throw new Error("Erreur de compression : Flag présent dans la chaîne de caractère.\n" + 
+						"	encodé à ce stade : " + res + 
+						"\n	non traité	  : " + data);
 			}
 			i = this.lengthOfSingleLetterPrefix(data);
 			if( i > 9) i = 9;
@@ -27,11 +29,21 @@ public class BasicRLECompression implements ICompression{
 	public String uncompress(String data) {
 		String res = "";
 		while(data.length()>0) {
+			int val;
 			char letter = data.charAt(0);
 			char flg = data.charAt(1);
-			int val = Character.digit(data.charAt(2),10);
-			if(!(Character.isAlphabetic(letter)&&flg==flag)) {
-				throw new Error("Wrong type of compression");
+			char valc = data.charAt(2);
+			if(letter == flag) {
+				throw new DecodeError("Mauvais caractère à décoder " + letter, res, data);
+			}
+			if(flg != flag) {
+				throw new DecodeError("Pas de flag à l'endroit souhaité après "+letter,res,data);
+			}
+			if(Character.isDigit(valc)) {
+				val = Character.digit(valc, 10);
+			}
+			else {
+				throw new DecodeError("Mauvais caractère après le flag " + flg,res,data);
 			}
 			for(int i = 0; i < val; i ++) {				
 				res = res + letter;
@@ -53,3 +65,18 @@ public class BasicRLECompression implements ICompression{
 	}
 
 }
+
+class DecodeError extends RuntimeException{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	public DecodeError(String s ,String done ,String todo) 
+	{
+		super("Erreur de décompression : " + s + "\n décodé à ce stade : " + done + 
+						"\n	non décodé        : " + todo); 
+	}
+	
+}
+
