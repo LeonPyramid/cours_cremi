@@ -1,4 +1,4 @@
-package td5;
+package td6;
 
 public class RLECompression implements ICompression{
 	protected char flag;
