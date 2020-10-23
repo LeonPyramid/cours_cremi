@@ -1,0 +1,11 @@
+total 68
+-rwxr-xr-x 1 leon leon 17432 oct.  23 02:58 log
+-rwxr-xr-x 1 leon leon 17200 oct.  23 01:56 log-base
+-rw-r--r-- 1 leon leon   925 oct.  23 01:56 log-base.c
+-rw-r--r-- 1 leon leon  1998 oct.  23 02:58 log.c
+-rw-r--r-- 1 leon leon     0 oct.  23 02:29 ls
+drwxr-xr-x 4 leon leon  4096 oct.   1 14:10 td1
+drwxr-xr-x 3 leon leon  4096 oct.  12 08:20 td2
+drwxr-xr-x 3 leon leon  4096 oct.  23 01:12 td3
+-rw-r--r-- 1 leon leon   925 oct.  23 01:56 test.txt
+-rw-r--r-- 1 leon leon   512 oct.  23 02:58 text.txt
