@@ -14,7 +14,6 @@
 
 int mpipe[2];
 enum{R,W};
-int zombie;
 
 void verifier(int cond, char *s)
 {
@@ -28,11 +27,18 @@ void verifier(int cond, char *s)
 
 int evaluer_expr(Expression *e)
 {
-  int res;
-  if(zombie != 0){
-    kill(zombie,0);
-    zombie = 0;
+  pid_t bgSon;                      //Used in BG to print the pid of the child process
+  pid_t pid;                        //Used in SIMPLE to wait the created process
+  int res;                          //used to get the return value of  evaluer_expr to know if it ended correctly or not
+  int zstat;                        //recover stat from zombie BG process
+  
+  //Zombie handler
+  res = waitpid(-1,&zstat,WNOHANG);
+  if(res != -1){
+    printf("%d fini : %d\n",res,zstat);
   }
+
+
   switch (e->type)
   {
   case VIDE:
@@ -40,10 +46,14 @@ int evaluer_expr(Expression *e)
     break;
 
   case SIMPLE:
-    if (fork())
+  if(strcmp(e->arguments[0],"exit")==0){
+    exit(EXIT_SUCCESS);
+  }
+    pid = fork();
+    if (pid != 0)
     {
       int stat;
-      wait(&stat);
+      waitpid(pid,&stat,0);
       return(stat);
     }
     else
@@ -76,15 +86,16 @@ int evaluer_expr(Expression *e)
     break;
 
   case BG:
-    zombie = fork();
-    if(zombie != 0){
-      printf("%d",zombie);
+    bgSon = fork();
+    if(bgSon != 0){
+      printf("%d\n",bgSon);
       return 0;
     }
     else{
       res = evaluer_expr(e->gauche);
       exit(EXIT_SUCCESS);
     }
+    break;
 
   case PIPE:
     verifier(pipe(mpipe)==0,"Error pipe creation");
@@ -111,14 +122,16 @@ int evaluer_expr(Expression *e)
       }
       exit(EXIT_SUCCESS);
     }
+    break;
   case REDIRECTION_I:
-    
+    break;
 
   default:
     fprintf(stderr, "not yet implemented %d\n", e->type);
     return 1;
   }
-  fprintf(stderr, "Error : your'e reaching out of your code!\n");
+  
+  fprintf(stderr, "Error : your'e reaching out of your code!\n"); //Usually tthe break; is never accessed in any of the case, so going here is forbidden
   return 1;
 }
 
