@@ -3,7 +3,6 @@ package td6;
 public class BasicRLECompression implements ICompression{
 	private char flag;
 	
-	
 	public BasicRLECompression (char c) {
 		this.flag = c;
 	}
@@ -14,9 +13,7 @@ public class BasicRLECompression implements ICompression{
 		while(data.length()!=0) {
 			c = data.charAt(0);
 			if(c==flag) {
-				throw new Error("Erreur de compression : Flag présent dans la chaîne de caractère.\n" + 
-						"	encodé à ce stade : " + res + 
-						"\n	non traité	  : " + data);
+				throw new RLEException(false,"Flag présent dans la chaîne de caractère.",res,data);
 			}
 			i = this.lengthOfSingleLetterPrefix(data);
 			if( i > 9) i = 9;
@@ -34,16 +31,16 @@ public class BasicRLECompression implements ICompression{
 			char flg = data.charAt(1);
 			char valc = data.charAt(2);
 			if(letter == flag) {
-				throw new DecodeError("Mauvais caractère à décoder " + letter, res, data);
+				throw new RLEException(true,"Mauvais caractère à décoder " + letter, res, data);
 			}
 			if(flg != flag) {
-				throw new DecodeError("Pas de flag à l'endroit souhaité après "+letter,res,data);
+				throw new RLEException(true,"Pas de flag à l'endroit souhaité après "+letter,res,data);
 			}
 			if(Character.isDigit(valc)) {
 				val = Character.digit(valc, 10);
 			}
 			else {
-				throw new DecodeError("Mauvais caractère après le flag " + flg,res,data);
+				throw new RLEException(true,"Mauvais caractère après le flag " + flg,res,data);
 			}
 			for(int i = 0; i < val; i ++) {				
 				res = res + letter;
@@ -66,16 +63,27 @@ public class BasicRLECompression implements ICompression{
 
 }
 
-class DecodeError extends RuntimeException{
+class RLEException extends RuntimeException{
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public DecodeError(String s ,String done ,String todo) 
+	public RLEException(boolean decomp,String s ,String done ,String todo)
+	//decomp permet de dire si l'erreur est lors d'une compression ou d'une décompression
 	{
-		super("Erreur de décompression : " + s + "\n décodé à ce stade : " + done + 
-						"\n	non décodé        : " + todo); 
+		if(decomp) {
+			throw new RLEException("Erreur de décompression : " + s + "\n décodé à ce stade : " + done + 
+					"\n	non décodé        : " + todo); 
+			
+		}
+		else {
+			throw new RLEException("Erreur de compression : " + s + "\n codé à ce stade : " + done + 
+					"\n	non codé        : " + todo); 
+		}
+	}
+	private RLEException(String s) {
+		super(s);
 	}
 	
 }

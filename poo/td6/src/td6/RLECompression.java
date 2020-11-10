@@ -45,7 +45,7 @@ public class RLECompression implements ICompression{
 					res = res + letter;
 				}
 				else {
-					throw new DecodeError("Mauvais caractère après le flag " + flag,res,data);
+					throw new RLEException(true,"Mauvais caractère après le flag " + flag,res,data);
 				}
 				data = data.substring(2);
 				
@@ -65,7 +65,7 @@ public class RLECompression implements ICompression{
 					data = data.substring(1);
 				}
 				else {
-					throw new DecodeError("Mauvais caractère après le flag " + valc,res,data);
+					throw new RLEException(true,"Mauvais caractère après le flag " + valc,res,data);
 				}
 			}
 		}
