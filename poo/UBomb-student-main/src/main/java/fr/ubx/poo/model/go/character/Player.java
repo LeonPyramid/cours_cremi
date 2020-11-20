@@ -60,6 +60,8 @@ public class Player extends GameObject implements Movable {
     public void doMove(Direction direction) {
         Position nextPos = direction.nextPosition(getPosition());
         setPosition(nextPos);
+        game.getWorld().RemoveMovable(this);
+        game.getWorld().SetMovable(nextPos, this);
     }
 
     public void update(long now) {
