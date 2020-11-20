@@ -18,6 +18,7 @@ public class Player extends GameObject implements Movable {
     private int lives = 1;
     private boolean winner;
 
+
     public Player(Game game, Position position) {
         super(game, position);
         this.direction = Direction.S;

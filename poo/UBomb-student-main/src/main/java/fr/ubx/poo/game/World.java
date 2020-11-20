@@ -5,6 +5,7 @@
 package fr.ubx.poo.game;
 
 import fr.ubx.poo.model.decor.Decor;
+import fr.ubx.poo.model.go.GameObject;
 
 import java.util.Collection;
 import java.util.Map;
@@ -12,6 +13,7 @@ import java.util.function.BiConsumer;
 
 public class World {
     private final Map<Position, Decor> grid;
+    private Map<Position, GameObject> movables;
     private final WorldEntity[][] raw;
     public final Dimension dimension;
 
@@ -59,4 +61,6 @@ public class World {
     public boolean isEmpty(Position position) {
         return grid.get(position) == null;
     }
+
+    public GameObject returnMovable(Position position) {return movables.get(position)}
 }
