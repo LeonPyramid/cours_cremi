@@ -1,0 +1,1 @@
+int essayer(void (*f)(void*),void *p,int sig);

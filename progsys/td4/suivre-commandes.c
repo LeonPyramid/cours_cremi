@@ -9,7 +9,7 @@
 #include <signal.h>
 #include <sys/time.h>
 
-#define NCOMMANDES 4
+#define NCOMMANDES 5
 
 // Returns duration in secs
 #define TIME_DIFF(t1, t2) \
@@ -28,6 +28,7 @@ struct etat
 
 
 char *commandes[NCOMMANDES][10] = {
+    {"sleep", "0", NULL},
     {"sleep", "0", NULL},
     {"sleep", "3", NULL},
     {"sleep", "4", NULL},
@@ -105,9 +106,11 @@ void lancer_commandes()
 
 void handler_tueur(int id){
     pid_t w = waitpid(0, NULL, WNOHANG);
-    printf("pid = %d\n", w);
-    if (w > 0)
+    while(w > 0){
+      printf("pid = %d\n", w);
       modifier_etat(w);
+      w = waitpid(0, NULL, WNOHANG);
+    }
 }
 
 
