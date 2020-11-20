@@ -62,5 +62,5 @@ public class World {
         return grid.get(position) == null;
     }
 
-    public GameObject returnMovable(Position position) {return movables.get(position)}
+    public GameObject returnMovable(Position position) {return movables.get(position);}
 }
