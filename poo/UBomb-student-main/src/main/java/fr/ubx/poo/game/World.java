@@ -8,12 +8,13 @@ import fr.ubx.poo.model.decor.Decor;
 import fr.ubx.poo.model.go.GameObject;
 
 import java.util.Collection;
+import java.util.Hashtable;
 import java.util.Map;
 import java.util.function.BiConsumer;
 
 public class World {
     private final Map<Position, Decor> grid;
-    private Map<Position, GameObject> movables;
+    private Map<Position, GameObject> movables = new Hashtable<>();
     private final WorldEntity[][] raw;
     public final Dimension dimension;
 
@@ -61,6 +62,23 @@ public class World {
     public boolean isEmpty(Position position) {
         return grid.get(position) == null;
     }
-
-    public GameObject returnMovable(Position position) {return movables.get(position)}
+    
+    public void SetMovable(Position pos, GameObject go){
+    	if(movables.get(pos)!=null) {
+    		throw new PositionAlreadyTakenException("Can't put " +go+" at "+ pos + " ; taken by " + movables.get(pos));
+    	}
+    	else {
+    		movables.put(pos,go);
+    	}
+    }
+    
+    public boolean RemoveMovable(GameObject go) {
+    	if(movables.containsValue(go)) {
+    		movables.remove(go.getPosition());
+    		return true;
+    	}
+    	return false;
+    }
+    
+    public GameObject returnMovable(Position position) {return movables.get(position);}
 }
