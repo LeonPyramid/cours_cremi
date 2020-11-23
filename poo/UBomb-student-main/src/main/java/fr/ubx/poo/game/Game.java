@@ -32,7 +32,8 @@ public class Game {
             System.err.println("Position not found : " + e.getLocalizedMessage());
             throw new RuntimeException(e);
         }
-
+        world.CreateMovable(this);
+    }
 
     public int getInitPlayerLives() {
         return initPlayerLives;

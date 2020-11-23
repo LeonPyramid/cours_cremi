@@ -9,34 +9,14 @@ Section LJ.
     Elimination : destruct H, si H : A /\ B 
                   variante : destruct H as [H1 H2].
         Dans les deux cas, on récupère deux hypothèses pour A et B (et on 
-        choisit leurs noms, pour la variante "as...")
+        choisit leurs noms, pour la variante "as..")
   *)
-  Lemma and_comm : P /\ Q -> Q /\ P.
-  Proof.
-    intro H.
-    destruct H as [H0 H1].
-
-    split.
-    - assumption.
-    - assumption.
-    (* "assumption" résoud les deux sous-buts engendrés par "split"
-    donc on peut remplacer les trois dernières lignes par
-    split; assumption.
-    *)
-    Undo 5.
-    split; assumption. (* "assumption" s'applique à (et résout) tous les sous-buts *)
-  Qed.
-  (* Sous Forme linéaire :
-  1 { Supposons P /\ Q
-  2   { Supposons P
-  3     Supposons Q
-  4     Q /\ P [/\_i, 3, 2]
-  6   }
-  7   Q /\ P [/\_e, 1, 2-4]
-  8 }
-  9 P /\ Q -> Q /\ P [->_i, 1, 7]
-  *)
-
+ Lemma and_comm : P /\ Q -> Q /\ P.
+ Proof.
+   intro H.
+   destruct H as [H0 H1].
+   split; assumption. (* "assumption" résout les deux sous-buts *)
+ Qed.
 
  (* tactiques pour la disjonction 
     Introduction:
@@ -51,51 +31,24 @@ Section LJ.
 
   Lemma or_not : P \/ Q -> ~P -> Q.
   Proof.
-    intros H H0.
-    destruct H.
-    - exfalso.
-      apply H0.
-      assumption.
-
-      Undo 3.
-      assert (f:False).
-      {
-        apply H0.
-        assumption.
-      }
-      destruct f.
-      (* "destruct f" sur f:False résoud n'importe quel but *)
-
-      Undo 6.
-      apply H0 in H.
-      destruct H.
-
-      Undo 2.
-      absurd P.
-      + assumption.
-      + assumption.
-
+   intros H H0.     
+   destruct H.
+   - exfalso.
+     apply H0; assumption.
+     (* alternative: 
+     assert (f:False).    
+     {
+       apply H0; trivial.
+     }
+     destruct f. *)
+     (* "destruct f" sur f:False résoud n'importe quel but *)
    - assumption.
    Qed.
-  (* Sous Forme linéaire :
-  1 { Supposons P \/ Q
-  2   Supposons ~P
-  3   { Supposons P
-  4     False [mp, 2, 3]
-  5     Q [False_e, 4]
-  6   }
-  7   { Supposons Q
-  8     Q [7]
-  9   }
- 10   Q [\/_e, 1, 3-5, 7-8]
- 11 }
- 12 P \/ Q -> ~P -> Q [->_i, 1, 2, 10]
-  *)
 
-  (* Structuration de la preuve: -,+,*,--,++,**
+  (* Structuration de la preuve: +,*,+
      utiles quand on a plusieurs sous-preuves non triviales;
      améliorent la lisibilité du script *)
-
+  
    (*  equivalence logique (<->, iff):
        unfold iff transforme A <-> B en
                              (A -> B) /\ (B -> A).
@@ -108,7 +61,13 @@ Section LJ.
   Proof.
     intro H.
     destruct H.
+    split.
+    - assumption.
+    - assumption.
+    (* "assumption" résoud les deux sous-buts engendrés par "split"
+    donc on peut remplacer les trois dernières lignes par
     split; assumption.
+    *)
   Qed.
 
   (* la regle de remplacement est implantée en Coq *)
@@ -118,30 +77,16 @@ Section LJ.
   (* "rewrite H in H'" fait la réécriture de H dans une autre hypothèse H' *)
   (* "rewrite <- H" réécrit dans l'autre sens, le membre droit par le gauche *)
   Lemma L1 : (P <-> Q) -> ~(Q <-> ~P).
-  Proof.
-    intro H.
-    rewrite H.
-    intro H0.
-    destruct H0.
-    unfold not in H0.
-
-    assert (~Q).
-    {
-      intro H2.
-      apply H0; assumption.
-    }
-    apply H2.
-    apply H1.
-    assumption.
-
-    Undo 8.
-    assert Q.
-    {
-      apply H1.
-      intro H2.
-      apply H0; assumption.
-    }
-    apply H0; assumption.
+  Proof.  
+     intro H.
+     rewrite H.
+     intro H0.
+     destruct H0.
+     assert (~Q).
+     { intro H2.
+       apply H0; assumption.
+     }
+     apply H2. apply H1. assumption. 
   Qed.
 
   (* Fin des exemples, début des exercices *)
@@ -151,128 +96,51 @@ Section LJ.
   (*  Exercices de la feuille 4 *)
 
   Lemma and_false : P /\ False -> False.
-  Proof.
-      intro.
-      destruct H.
-      assumption.
+  Proof. 
+    tauto.
   Qed.
 
   Lemma and_assoc : (P /\ Q) /\ R <-> P /\ (Q /\ R).
   Proof.
-      split.
-        - intro.
-          destruct H.
-          destruct H.
-          split.
-          assumption.
-          split;assumption.
-        - intro.
-          destruct H.
-          destruct H0.
-          split.
-          + split;assumption.
-          + assumption.
+    tauto.
   Qed.
-
 
   (* Ex. 2 *)
   Lemma or_to_imp: ~ P \/ Q -> P -> Q.
   Proof.
-   intro.
-   destruct H.
-    - intro.
-      absurd P;assumption.
-    - intro;assumption.
+   tauto.
   Qed.   
 
   Lemma not_or_and_not: ~(P\/Q) -> ~P /\ ~Q.
   Proof.
-    intro.
-    unfold not in H.
-    split;unfold not.
-      - intro.
-        apply H.
-        left;assumption.
-      - intro.
-        apply H.
-        right;assumption.
+    tauto.
   Qed.
 
   (* Exercice 4 *)
 
   Lemma absorption_or: P \/ False <-> P.
   Proof.
-    split.
-      - intro.
-        destruct H.
-          + assumption.
-          + exfalso;assumption.
-      - intro.
-        left;assumption.
+    tauto.
   Qed.
 
   Lemma and_or_dist : P /\ (Q \/ R) <-> P /\ Q \/ P /\ R.
   Proof.
-    split.
-      - intro.
-        destruct H.
-        destruct H0.
-          + left.
-            split;assumption.
-          + right.
-            split;assumption.
-      - intro.
-        split.
-          + destruct H.
-            * destruct H;assumption.
-            * destruct H;assumption.
-          + destruct H.
-            * left;destruct H;assumption.
-            * right;destruct H;assumption.
+    tauto.
   Qed.
 
   Lemma or_and_dist : P \/ (Q /\ R) <-> (P \/ Q) /\ (P \/ R).
   Proof.
-    split.
-      - intro.
-        split.
-          + destruct H.
-              * left; assumption.
-              * destruct H; right; assumption.
-          + destruct H.
-              * left; assumption.
-              * destruct H; right; assumption.
-      - intro.
-        destruct H.
-        destruct H.
-          + destruct H0.
-              * left; assumption.
-              * left; assumption.
-          + destruct H0.
-              * left; assumption.
-              * right;split;assumption.
-
+    tauto.
   Qed.
 
   Lemma and_not_not_impl: P /\ ~ Q -> ~(P -> Q).
   Proof.
-    intro.
-    unfold not.
-    intro.
-    destruct H.
-    apply H1;apply H0;assumption.
+    tauto.
   Qed.
 
   Lemma de_morgan1 : ~ (P \/ Q) <-> ~P /\ ~Q.
   Proof.
-    split.
-      + intro.
-      split.
-      unfold not in H.
-        - intro.
-        apply H;left;assumption.
-        - intro.
-        apply H;right;assumption.
+    tauto.
   Qed.
 
   Lemma reductio_ad_absurdum: (P -> ~P) -> ~P.
@@ -287,7 +155,7 @@ Section LJ.
 
   (* Exercice: reprendre toutes les preuves précédentes, 
      en simplifiant et clarifiant les scripts:
-     - structurer les sous-preuves avec -/+/*
+     - structurer les sous-preuves avec +/-/*
      - inversement, quand c'est possible, factoriser avec 
        l'enchainement de tactiques (par ";")
 
@@ -329,14 +197,7 @@ Section LK.
       {
         apply H; assumption.
       }
-      destruct f.
-
-      Undo 5.
-      exfalso.
-      apply H; assumption.
-
-      Undo 2.
-      absurd (~P); assumption.
+      destruct f. (* ou: exfalso, etc. *)
    Qed.
 
   (* Exercice: completer toutes les preuves, en remplaçant les
@@ -441,31 +302,26 @@ Section Second_ordre.
     unfold IMP2OR, EXM.
     intros.
     assert (~ A \/ A).
-    {
-      rewrite <- H. (* Coq "voit" qu'il suffit de prendre B=A; il va falloir prouver A->A *)
-      admit.
-    }
-  admit.
+    rewrite <- H. (* Coq "voit" qu'il suffit de prendre B=A; il va falloir prouver A->A *)
   Admitted.
-
+  
 
   Lemma L3 : EXM -> DNEG.
   Proof.
     unfold DNEG , EXM.
     intros.
     (* H permet de faire un tiers exclus sur A *)
-    specialize H with (A:=A).
-    admit.
+    assert (H0: A \/ ~A).
+    {
+      admit.
+    }
   Admitted.
 
   Lemma L4 : PEIRCE -> DNEG.
   Proof.
     unfold DNEG , PEIRCE.
-    (* On pourra utiliser :
-       specialize H with (A:=à-compléter) (B:=à-compléter-aussi).
-    *)
   Admitted.
-
+  
   Lemma L5 : EXM -> PEIRCE.
   Proof.
   Admitted.
@@ -473,3 +329,4 @@ Section Second_ordre.
 End Second_ordre.
 
 
+  

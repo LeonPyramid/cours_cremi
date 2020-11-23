@@ -37,20 +37,20 @@ public class World {
         throw new PositionNotFoundException("Player");
     }
 
-  /*  public Position [] findBoxes() throws PositionNotFoundException {
-        
-        int i = 0;
-        for (int x = 0; x < dimension.width; x++) {
+    
+    public void CreateMovable(Game game) {
+    	for (int x = 0; x < dimension.width; x++) {
             for (int y = 0; y < dimension.height; y++) {
-                if (raw[y][x] == WorldEntity.Box) {
-                    boxes[i] = new Position(x,y);
-                    i++;
+            		switch (raw[x][y]) {
+            		case Box:
+            			Position pos = new Position(x,y);
+            			movables.set(pos,new Box(game,pos));
                 }
             }
         }
+    }
+    
 
-        throw new PositionNotFoundException("Box");
-    }*/
     public Decor get(Position position) {
         return grid.get(position);
     }
