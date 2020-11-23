@@ -42,12 +42,20 @@ public class World {
     	for (int x = 0; x < dimension.width; x++) {
             for (int y = 0; y < dimension.height; y++) {
             		switch (raw[y][x]) {
-            		case Box:
-            			Position pos = new Position(x,y);
-            			movables.put(pos,new Box(game,pos));
-            			//System.out.println("j'ai mis une box");
-            			break;
-                    default:
+                        case Box:
+            		    	Position pos = new Position(x,y);
+            			    movables.put(pos,new Box(game,pos));
+            			    break;
+            			case Key:
+                            pos = new Position(x,y);
+                            movables.put(pos,new Key(game,pos));
+                            break;
+                        case Heart:
+                            pos =new Position(x,y);
+                            movables.put(pos,new Heart(game,pos));
+                            break;
+
+                        default:
                 }
             }
         }

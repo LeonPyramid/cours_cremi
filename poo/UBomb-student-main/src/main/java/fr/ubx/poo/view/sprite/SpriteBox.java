@@ -17,7 +17,7 @@ public class SpriteBox extends SpriteGameObject {
 
     public SpriteBox(Pane layer, Image image, Box box) {
 
-        super(layer,ImageFactory.getInstance().get(BOX), box);
+        super(layer,image, box);
 
 
 
