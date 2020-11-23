@@ -100,4 +100,6 @@ public class World {
     }
     
     public GameObject returnMovable(Position position) {return movables.get(position);}
+    
+    public Map<Position,GameObject> getMovables(){return movables;}
 }

@@ -50,8 +50,8 @@ public class Box extends GameObject implements Movable {
     @Override
     public void doMove(Direction direction) {
         Position nextPos = direction.nextPosition(getPosition());
-        setPosition(nextPos);
         game.getWorld().RemoveMovable(this);
+        setPosition(nextPos);
         game.getWorld().SetMovable(nextPos, this);
 
     }

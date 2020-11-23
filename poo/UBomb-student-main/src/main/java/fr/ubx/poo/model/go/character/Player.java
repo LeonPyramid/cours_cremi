@@ -7,7 +7,7 @@ package fr.ubx.poo.model.go.character;
 import fr.ubx.poo.game.Direction;
 import fr.ubx.poo.game.Position;
 import fr.ubx.poo.model.Movable;
-import fr.ubx.poo.model.go.GameObject;
+import fr.ubx.poo.model.go.*;
 import fr.ubx.poo.game.Game;
 
 public class Player extends GameObject implements Movable {
@@ -52,15 +52,24 @@ public class Player extends GameObject implements Movable {
     	if(!game.getWorld().isEmpty(newPos)) {
     		return false;
     	}
-    	
-    	//TODO collide object
+    	GameObject mov = game.getWorld().returnMovable(newPos);
+    	if(mov!=null) {
+    		if(mov instanceof Box) {
+    			if(!((Box) mov).canMove(direction)) {
+    				return false;
+    			}
+    			else {
+    				((Box) mov).doMove(direction);
+    			}
+    		}
+    	}
     	return true;
     }
 
     public void doMove(Direction direction) {
         Position nextPos = direction.nextPosition(getPosition());
-        setPosition(nextPos);
         game.getWorld().RemoveMovable(this);
+        setPosition(nextPos);
         game.getWorld().SetMovable(nextPos, this);
     }
 
