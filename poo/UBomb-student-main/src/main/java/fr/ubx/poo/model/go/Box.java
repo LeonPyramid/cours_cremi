@@ -35,7 +35,7 @@ public class Box extends GameObject implements Movable {
     public boolean canMove(Direction direction) {
         Position newPos = direction.nextPosition(this.getPosition());
 
-        if (!newPos.inside(game.getWorld().dimension)) {
+        if (!newPos.inside(game.getWorld().actualDim())) {
             return false;
         }
 

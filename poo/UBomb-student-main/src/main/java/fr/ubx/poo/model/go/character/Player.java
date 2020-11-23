@@ -45,7 +45,7 @@ public class Player extends GameObject implements Movable {
     	
     	Position newPos = direction.nextPosition(this.getPosition());
     	
-    	if(!newPos.inside(game.getWorld().dimension)) {
+    	if(!newPos.inside(game.getWorld().actualDim())) {
     		return false;
     	}
     	
@@ -68,9 +68,7 @@ public class Player extends GameObject implements Movable {
 
     public void doMove(Direction direction) {
         Position nextPos = direction.nextPosition(getPosition());
-        game.getWorld().RemoveMovable(this);
         setPosition(nextPos);
-        game.getWorld().SetMovable(nextPos, this);
     }
 
     public void update(long now) {

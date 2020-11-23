@@ -54,8 +54,8 @@ public final class GameEngine {
         Group root = new Group();
         layer = new Pane();
 
-        int height = game.getWorld().dimension.height;
-        int width = game.getWorld().dimension.width;
+        int height = game.getWorld().actualDim().height;
+        int width = game.getWorld().actualDim().width;
         int sceneWidth = width * Sprite.size;
         int sceneHeight = height * Sprite.size;
         Scene scene = new Scene(root, sceneWidth, sceneHeight + StatusBar.height);
@@ -157,7 +157,7 @@ public final class GameEngine {
             showMessage("Gagné", Color.BLUE);
         }
         //Debug dégueu
-        //System.out.println(game.getWorld().getMovables());
+        System.out.println(game.getWorld().getMovables());
     }
 
     private void render() {
