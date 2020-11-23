@@ -77,6 +77,11 @@ public final class GameEngine {
         spritePlayer = SpriteFactory.createPlayer(layer, player);
 
     }
+    
+    /*Au moment de l'initialisation des objets qui bougent (player, box,collectables,monstres..) 
+     * le sprite de player est déjà déclaré à part dans le code de base. Afin d'éviter les conflits il ne faut
+     * pas le redéclarer dans la liste des sprites, or notre player est dans la Map movables.
+     * cette fonction sert donc à éviter de redéclarer le player dans la liste des sprites*/
     public void MovableSpriteAdder( Position pos, GameObject go,List<Sprite> sprt) {
     	if(!(go instanceof Player)) {
     		sprt.add((SpriteFactory.createMovables(layer, pos,go)));
