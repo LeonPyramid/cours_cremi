@@ -9,7 +9,7 @@ import fr.ubx.poo.game.Position;
 import fr.ubx.poo.model.Movable;
 import fr.ubx.poo.game.Game;
 
-public class Box extends GameObject implements Movable {
+public class Box extends Unplayer implements Movable {
 
     Direction direction = null;
     private boolean moveRequested = false;

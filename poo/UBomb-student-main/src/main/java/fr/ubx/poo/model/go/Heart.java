@@ -8,7 +8,7 @@ import fr.ubx.poo.model.Movable;
 
 //TODO Faire interaction
 
-public class Heart extends GameObject implements Movable {
+public class Heart extends Unplayer implements Movable {
 
     public Heart (Game game, Position position){ super(game, position);}
 
