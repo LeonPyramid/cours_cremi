@@ -6,6 +6,7 @@ package fr.ubx.poo.game;
 
 import fr.ubx.poo.model.decor.Decor;
 import fr.ubx.poo.model.go.*;
+import fr.ubx.poo.model.go.character.Monster;
 import javafx.geometry.Pos;
 
 import java.lang.reflect.Array;
@@ -54,6 +55,36 @@ public class World {
                             pos =new Position(x,y);
                             movables.put(pos,new Heart(game,pos));
                             break;
+                        case Monster:
+                            pos = new Position(x,y);
+                            movables.put(pos,new Monster(game,pos));
+                            break;
+                        case Princess:
+                            pos = new Position(x,y);
+                            movables.put(pos,new Princess(game,pos));
+                            break;
+                        case BombRangeInc:
+                            pos = new Position(x,y);
+                            movables.put(pos,new BombRangeInc(game,pos));
+                            break;
+                        case BombRangeDec:
+                            pos = new Position(x,y);
+                            movables.put(pos,new BombRangeDec(game,pos));
+                            break;
+                        case BombNumberInc:
+                            pos= new Position(x,y);
+                            movables.put(pos,new BombInc(game,pos));
+                            break;
+                        case DoorNextOpened:
+                            pos =new Position(x,y);
+                            movables.put(pos,new Door_Next_Open(game,pos));
+                            break;
+                        case DoorNextClosed:
+                            pos =new Position(x,y);
+                            movables.put(pos,new Door_Next_Closed(game,pos));
+                            break;
+
+
 
                         default:
                 }
