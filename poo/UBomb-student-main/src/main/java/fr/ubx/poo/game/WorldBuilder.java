@@ -32,8 +32,6 @@ public class WorldBuilder {
                 return new Stone();
             case Tree:
                 return new Tree();
-           /* case Box:
-                return new Box();*/
             default:
                 return null;
         }

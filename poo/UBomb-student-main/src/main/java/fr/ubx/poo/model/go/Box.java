@@ -16,7 +16,6 @@ public class Box extends GameObject implements Movable {
 
     public Box(Game game, Position position) {
             super(game,position);
-
     }
 
 
@@ -44,11 +43,7 @@ public class Box extends GameObject implements Movable {
             return false;
         }
 
-        if (game.getWorld().returnMovable(newPos) != null) {
-            return false;
-        }
-
-        return true;
+        return game.getWorld().returnMovable(newPos) == null;
 
     }
 
@@ -56,15 +51,21 @@ public class Box extends GameObject implements Movable {
     public void doMove(Direction direction) {
         Position nextPos = direction.nextPosition(getPosition());
         setPosition(nextPos);
+        game.getWorld().RemoveMovable(this);
+        game.getWorld().SetMovable(nextPos, this);
+
     }
 
     public void update(long now) {
         if (moveRequested) {
+            moveRequested = false;
+
             if (canMove(direction)) {
                 doMove(direction);
+
             }
         }
-        moveRequested = false;
     }
+
 }
 
