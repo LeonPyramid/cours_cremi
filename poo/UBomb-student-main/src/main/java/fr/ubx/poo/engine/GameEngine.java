@@ -8,6 +8,8 @@ import fr.ubx.poo.game.Direction;
 import fr.ubx.poo.view.sprite.Sprite;
 import fr.ubx.poo.view.sprite.SpriteFactory;
 import fr.ubx.poo.game.Game;
+import fr.ubx.poo.game.Position;
+import fr.ubx.poo.model.go.GameObject;
 import fr.ubx.poo.model.go.character.Player;
 import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
@@ -23,6 +25,7 @@ import javafx.stage.Stage;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 
 public final class GameEngine {
@@ -70,11 +73,17 @@ public final class GameEngine {
         game.getWorld().forEach( (pos,d) -> sprites.add(SpriteFactory.createDecor(layer, pos, d)));
 
         //
-        game.getWorld().forEachMovables(( (pos,go) -> sprites.add((SpriteFactory.createMovables(layer, pos,go)))));
+        game.getWorld().forEachMovables( (pos,go) -> MovableSpriteAdder(pos,go,sprites));
         spritePlayer = SpriteFactory.createPlayer(layer, player);
 
     }
-
+    public void MovableSpriteAdder( Position pos, GameObject go,List<Sprite> sprt) {
+    	if(!(go instanceof Player)) {
+    		sprt.add((SpriteFactory.createMovables(layer, pos,go)));
+    	}
+    	
+    }
+    
     protected final void buildAndSetGameLoop() {
         gameLoop = new AnimationTimer() {
             public void handle(long now) {

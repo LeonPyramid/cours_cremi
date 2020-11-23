@@ -45,7 +45,7 @@ public class World {
             		case Box:
             			Position pos = new Position(x,y);
             			movables.put(pos,new Box(game,pos));
-            			System.out.println("j'ai mis une box");
+            			//System.out.println("j'ai mis une box");
             			break;
                     default:
                 }

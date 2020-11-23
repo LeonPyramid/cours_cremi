@@ -31,7 +31,7 @@ public final class SpriteFactory {
     public static Sprite createMovables(Pane layer, Position position, GameObject go){
         ImageFactory factory = ImageFactory.getInstance();
         if ( go  instanceof Box)
-            return new SpriteBox(layer, (Box) go);
+            return new SpriteBox(layer,factory.get(BOX), (Box) go);
         return null;
     }
 
