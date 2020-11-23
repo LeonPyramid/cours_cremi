@@ -12,6 +12,8 @@ import fr.ubx.poo.model.decor.Stone;
 import fr.ubx.poo.model.decor.Tree;
 import fr.ubx.poo.model.go.Box;
 import fr.ubx.poo.model.go.GameObject;
+import fr.ubx.poo.model.go.Heart;
+import fr.ubx.poo.model.go.Key;
 import fr.ubx.poo.model.go.character.Player;
 import fr.ubx.poo.view.image.ImageFactory;
 import javafx.scene.layout.Pane;
@@ -32,6 +34,10 @@ public final class SpriteFactory {
         ImageFactory factory = ImageFactory.getInstance();
         if ( go  instanceof Box)
             return new SpriteBox(layer,factory.get(BOX), (Box) go);
+        if (go instanceof  Key)
+            return  new SpriteKey(layer,factory.get(KEY), (Key) go);
+        if (go instanceof Heart)
+            return new SpriteHeart(layer, factory.get(HEART), (Heart) go );
         return null;
         
     }
