@@ -41,10 +41,11 @@ public class World {
     public void CreateMovable(Game game) {
     	for (int x = 0; x < dimension.width; x++) {
             for (int y = 0; y < dimension.height; y++) {
-            		switch (raw[x][y]) {
+            		switch (raw[y][x]) {
             		case Box:
             			Position pos = new Position(x,y);
             			movables.put(pos,new Box(game,pos));
+            			System.out.println("j'ai mis une box");
             			break;
                     default:
                 }

@@ -139,6 +139,8 @@ public final class GameEngine {
             gameLoop.stop();
             showMessage("Gagné", Color.BLUE);
         }
+        //Debug dégueu
+        //System.out.println(game.getWorld().movables);
     }
 
     private void render() {
