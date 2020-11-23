@@ -5,12 +5,13 @@
 package fr.ubx.poo.game;
 
 
+import java.io.*;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
-
+import fr.ubx.poo.game.WorldEntity;
 import fr.ubx.poo.model.go.character.Player;
 
 public class Game {
@@ -19,11 +20,15 @@ public class Game {
     private final Player player;
     private final String worldPath;
     public int initPlayerLives;
+    public int levels;
+    private int actualLevel;
 
     public Game(String worldPath) {
-        world = new WorldStatic();
+        //world = new WorldStatic();
         this.worldPath = worldPath;
         loadConfig(worldPath);
+        actualLevel = 1;
+        world = new World(LoadLevel(actualLevel,worldPath));
         Position positionPlayer = null;
         try {
             positionPlayer = world.findPlayer();
@@ -45,6 +50,7 @@ public class Game {
             // load the configuration file
             prop.load(input);
             initPlayerLives = Integer.parseInt(prop.getProperty("lives", "3"));
+            levels = Integer.parseInt(prop.getProperty("levels","3"));
         } catch (IOException ex) {
             System.err.println("Error loading configuration");
         }
@@ -57,6 +63,34 @@ public class Game {
     public Player getPlayer() {
         return this.player;
     }
-
-
+   
+    public WorldEntity[][] LoadLevel(int lvl,String path) {
+    	try (BufferedReader input = new BufferedReader(new FileReader(new File(path, "level"+lvl+".txt")),1024)) {
+    		//creating matrix
+    		input.mark(1024);
+    		int height = 1;
+    		int width = input.readLine().length();
+    		while(input.readLine()!=null) {
+    			height++;
+    		}
+    		input.reset();
+    		WorldEntity[][] tab = new WorldEntity[height][width];
+    		for(int y = 0; y < height; y ++) {
+    			String line = input.readLine();
+    			for (int x = 0; x < width; x++) {
+    				tab[y][x] = WorldEntity.fromCode(line.charAt(x)).get();
+    				System.out.print(tab[y][x]);
+    			}
+    			System.out.println();
+    		}
+    		
+    		System.out.println(tab);
+    		input.close();
+    		return tab;
+        } catch (IOException ex) {
+            System.err.println(ex + "\nError loading "+path+"/level"+lvl+".txt");
+            return null;
+        }
+    }
 }
+
