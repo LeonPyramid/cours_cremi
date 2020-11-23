@@ -157,7 +157,7 @@ public final class GameEngine {
             showMessage("Gagné", Color.BLUE);
         }
         //Debug dégueu
-        System.out.println(game.getWorld().getMovables());
+        //System.out.println(game.getWorld().getMovables());
     }
 
     private void render() {

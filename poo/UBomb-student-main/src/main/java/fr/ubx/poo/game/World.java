@@ -36,6 +36,7 @@ public class World {
         raw.forEach(wet -> lst.add(new Dimension(wet.length,wet[0].length)));
         dimension = lst;
         grid = tmpgrid;
+        CreateMovable(game);
     }
 
     public Position findPlayer() throws PositionNotFoundException {
@@ -52,88 +53,63 @@ public class World {
     }
 
     
-<<<<<<< HEAD
     public Dimension actualDim() {
     	return dimension.get(actualLvl);
     }
-    
-    public void CreateMovable() {
-    	for(int i = 0 ; i < game.levels; i++) {
-    		for (int x = 0; x < dimension.get(actualLvl).width; x++) {
-    			for (int y = 0; y < dimension.get(actualLvl).height; y++) {
+
+    public void CreateMovable(Game game) {
+    	for (int i = 0; i < game.levels; i ++) {
+    		Map<Position,GameObject> ht = new Hashtable<>();	
+    		for (int x = 0; x < dimension.get(i).width; x++) {
+    			for (int y = 0; y < dimension.get(i).height; y++) {
     				switch (raw.get(i)[y][x]) {
     				case Box:
     					Position pos = new Position(x,y);
-    					movables.get(i).put(pos,new Box(game,pos));
+    					ht.put(pos,new Box(game,pos));
     					break;
     				case Key:
     					pos = new Position(x,y);
-    					movables.get(i).put(pos,new Key(game,pos));
+    					ht.put(pos,new Key(game,pos));
     					break;
     				case Heart:
     					pos =new Position(x,y);
-    					movables.get(i).put(pos,new Heart(game,pos));
+    					ht.put(pos,new Heart(game,pos));
     					break;
-    					
+    				case Monster:
+    					pos = new Position(x,y);
+    					ht.put(pos,new Monster(game,pos));
+    					break;
+    				case Princess:
+    					pos = new Position(x,y);
+    					ht.put(pos,new Princess(game,pos));
+    					break;
+    				case BombRangeInc:
+    					pos = new Position(x,y);
+    					ht.put(pos,new BombRangeInc(game,pos));
+    					break;
+    				case BombRangeDec:
+    					pos = new Position(x,y);
+    					ht.put(pos,new BombRangeDec(game,pos));
+    					break;
+    				case BombNumberInc:
+    					pos= new Position(x,y);
+    					ht.put(pos,new BombInc(game,pos));
+    					break;
+    				case DoorNextOpened:
+    					pos =new Position(x,y);
+    					ht.put(pos,new Door_Next_Open(game,pos));
+    					break;
+    				case DoorNextClosed:
+    					pos =new Position(x,y);
+    					ht.put(pos,new Door_Next_Closed(game,pos));
+    					break;	
     				default:
     				}
+    				movables.add(ht);
     			}
-    		}
     		
-    	}
-=======
-    public void CreateMovable(Game game) {
-    	for (int x = 0; x < dimension.width; x++) {
-            for (int y = 0; y < dimension.height; y++) {
-            		switch (raw[y][x]) {
-                        case Box:
-            		    	Position pos = new Position(x,y);
-            			    movables.put(pos,new Box(game,pos));
-            			    break;
-            			case Key:
-                            pos = new Position(x,y);
-                            movables.put(pos,new Key(game,pos));
-                            break;
-                        case Heart:
-                            pos =new Position(x,y);
-                            movables.put(pos,new Heart(game,pos));
-                            break;
-                        case Monster:
-                            pos = new Position(x,y);
-                            movables.put(pos,new Monster(game,pos));
-                            break;
-                        case Princess:
-                            pos = new Position(x,y);
-                            movables.put(pos,new Princess(game,pos));
-                            break;
-                        case BombRangeInc:
-                            pos = new Position(x,y);
-                            movables.put(pos,new BombRangeInc(game,pos));
-                            break;
-                        case BombRangeDec:
-                            pos = new Position(x,y);
-                            movables.put(pos,new BombRangeDec(game,pos));
-                            break;
-                        case BombNumberInc:
-                            pos= new Position(x,y);
-                            movables.put(pos,new BombInc(game,pos));
-                            break;
-                        case DoorNextOpened:
-                            pos =new Position(x,y);
-                            movables.put(pos,new Door_Next_Open(game,pos));
-                            break;
-                        case DoorNextClosed:
-                            pos =new Position(x,y);
-                            movables.put(pos,new Door_Next_Closed(game,pos));
-                            break;
-
-
-
-                        default:
-                }
-            }
+    		}
         }
->>>>>>> f04ef103c3e005b4dddf786384f551450e554678
     }
 
 
@@ -150,10 +126,10 @@ public class World {
     }
 
     public void forEach(BiConsumer<Position, Decor> fn) {
-        grid.forEach(mp -> mp.forEach(fn));
+        grid.get(actualLvl).forEach(fn);
     }
 
-    public void forEachMovables(BiConsumer<Position,GameObject> fn){movables.forEach(mp -> mp.forEach(fn));}
+    public void forEachMovables(BiConsumer<Position,GameObject> fn){movables.get(actualLvl).forEach(fn);}
 
     public Collection<Decor> values() {
         return grid.get(actualLvl).values();

@@ -17,6 +17,7 @@ public class Player extends GameObject implements Movable {
     private boolean moveRequested = false;
     private int lives = 1;
     private boolean winner;
+    private int changeLevel;
 
 
     public Player(Game game, Position position) {
@@ -79,7 +80,11 @@ public class Player extends GameObject implements Movable {
         }
         moveRequested = false;
     }
-
+    
+    public int isChangingLevel() {
+    	return changeLevel;
+    }
+    
     public boolean isWinner() {
         return winner;
     }

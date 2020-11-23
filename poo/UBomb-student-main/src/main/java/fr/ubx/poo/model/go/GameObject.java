@@ -27,6 +27,5 @@ public abstract class GameObject extends Entity {
     public GameObject(Game game, Position position) {
         this.game = game;
         this.position = position;
-        game.getWorld().SetMovable(position, this);
     }
 }
