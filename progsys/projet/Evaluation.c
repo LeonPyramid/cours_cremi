@@ -37,8 +37,9 @@ void verifier(int cond, char *s)
 void sigchld_halder(int id){//Used to handle sigchld
   int stat;
   pid_t w = waitpid(0, &stat, WNOHANG);
-  if(w > 0){
+  while(w > 0){
     printf("%d fini: %d\n",w,stat);
+    w = waitpid(0, &stat, WNOHANG);
   }
 }
 
@@ -91,7 +92,9 @@ int file_redir(Expression *e,int redir,int param){
 
 int evaluer_expr(Expression *e)
 {
+
   
+  sigprocmask(SIG_UNBLOCK,&schld.sa_mask,NULL);
   pid_t bgSon;                      //Used in BG to print the pid of the child process
   pid_t pid;                        //Used in SIMPLE to wait the created process
   int res;                          //used to get the return value of  evaluer_expr to know if it ended correctly or not
@@ -100,9 +103,11 @@ int evaluer_expr(Expression *e)
   //handle sigchld
   schld.sa_flags = 0;
   sigemptyset(&schld.sa_mask);
+  sigaddset(&schld.sa_mask,SIGCHLD);
   schld.sa_handler = sigchld_halder;
   sigaction(SIGCHLD,&schld,NULL);
   
+
   //Ingore sigint
   signal(SIGINT, SIG_IGN);
 
@@ -112,7 +117,7 @@ int evaluer_expr(Expression *e)
   if(res != -1){
     printf("%d fini : %d\n",res,zstat);
   }*/
-
+  sigprocmask(SIG_BLOCK,&schld.sa_mask,NULL);
   switch (e->type)
   {
   case VIDE:
@@ -199,7 +204,8 @@ int evaluer_expr(Expression *e)
   case PIPE:
 
     verifier(pipe(mpipe)==0,"Error pipe creation");
-    if(fork()!=0){
+    pid_t pipeson = fork();
+    if(pipeson!=0){
       close(mpipe[W]);
       int inSave = dup(STDIN_FILENO);
       dup2(mpipe[R],STDIN_FILENO);
@@ -207,7 +213,11 @@ int evaluer_expr(Expression *e)
       res = evaluer_expr(e->droite);
       dup2(inSave,STDIN_FILENO);
       close(inSave);
-      wait(0);
+      int exit_entry;
+      waitpid(pipeson,&exit_entry,0);
+      if(exit_entry!=0){
+        return exit_entry;
+      }
       return res;
     }
     else{
@@ -217,8 +227,9 @@ int evaluer_expr(Expression *e)
       close(mpipe[W]);
       res = evaluer_expr(e->gauche);
       dup2(outSave,STDOUT_FILENO);
+      close(outSave);
       if(res != 0){
-        exit(EXIT_FAILURE);
+        exit(res);
       }
       exit(EXIT_SUCCESS);
     }

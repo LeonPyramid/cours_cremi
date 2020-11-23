@@ -34,7 +34,19 @@ public class World {
         }
         throw new PositionNotFoundException("Player");
     }
-
+    
+    public void CreateMovable(Game game) {
+    	for (int x = 0; x < dimension.width; x++) {
+            for (int y = 0; y < dimension.height; y++) {
+            		switch (raw[x][y]) {
+            		case Box:
+            			Position pos = new Position(x,y);
+            			movables.set(pos,new Box(game,pos));
+                }
+            }
+        }
+    }
+    
     public Decor get(Position position) {
         return grid.get(position);
     }
