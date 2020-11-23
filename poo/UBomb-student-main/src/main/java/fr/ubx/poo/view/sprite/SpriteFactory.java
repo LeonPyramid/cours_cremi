@@ -33,6 +33,7 @@ public final class SpriteFactory {
         if ( go  instanceof Box)
             return new SpriteBox(layer,factory.get(BOX), (Box) go);
         return null;
+        
     }
 
     public static Sprite createPlayer(Pane layer, Player player) {
