@@ -70,6 +70,8 @@ public class World {
         grid.forEach(fn);
     }
 
+    public void forEachMovables(BiConsumer<Position,GameObject> fn){movables.forEach(fn);}
+
     public Collection<Decor> values() {
         return grid.values();
     }
