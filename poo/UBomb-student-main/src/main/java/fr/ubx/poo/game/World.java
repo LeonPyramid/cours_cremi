@@ -5,7 +5,7 @@
 package fr.ubx.poo.game;
 
 import fr.ubx.poo.model.decor.Decor;
-import fr.ubx.poo.model.go.GameObject;
+import fr.ubx.poo.model.go.*;
 import javafx.geometry.Pos;
 
 import java.lang.reflect.Array;
@@ -44,12 +44,14 @@ public class World {
             		switch (raw[x][y]) {
             		case Box:
             			Position pos = new Position(x,y);
-            			movables.set(pos,new Box(game,pos));
+            			movables.put(pos,new Box(game,pos));
+            			break;
+                    default:
                 }
             }
         }
     }
-    
+
 
     public Decor get(Position position) {
         return grid.get(position);
