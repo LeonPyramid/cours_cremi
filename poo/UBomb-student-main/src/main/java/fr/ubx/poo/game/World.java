@@ -95,6 +95,10 @@ public class World {
     					pos= new Position(x,y);
     					ht.put(pos,new BombInc(game,pos));
     					break;
+					case BombNumberDec:
+						pos = new Position(x,y);
+						ht.put(pos,new BombDec(game,pos));
+						break;
     				case DoorNextOpened:
     					pos =new Position(x,y);
     					ht.put(pos,new Door_Next_Open(game,pos));

@@ -46,7 +46,8 @@ public final class SpriteFactory {
             return new SpriteBombRangeDec(layer, factory.get(BOMB_R_DEC),(BombRangeDec) go );
         if(go instanceof BombInc)
             return new SpriteBombInc(layer,factory.get(BOMB_INC), (BombInc) go);
-
+        if(go instanceof BombDec)
+            return new SpriteBombDec(layer,factory.get(BOMB_DEC),(BombDec) go);
         if (go instanceof  Door_Next_Closed)
             return  new SpriteDoor_N_Closed(layer, factory.get(DCLOSE),(Door_Next_Closed) go );
         if (go instanceof  Door_Next_Open)
