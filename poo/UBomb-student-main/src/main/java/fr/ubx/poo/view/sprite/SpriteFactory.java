@@ -51,6 +51,8 @@ public final class SpriteFactory {
             return  new SpriteDoor_N_Closed(layer, factory.get(DCLOSE),(Door_Next_Closed) go );
         if (go instanceof  Door_Next_Open)
             return  new SpriteDoor_N_Open(layer, factory.get(DOPEN),(Door_Next_Open) go);
+        if (go instanceof  Door_Prev_Open)
+            return  new SpriteDoor_P_Open(layer, factory.get(DOPEN),(Door_Prev_Open) go);
 
 
 

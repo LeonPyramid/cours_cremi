@@ -46,7 +46,7 @@ public class Player extends GameObject implements Movable {
     	
     	Position newPos = direction.nextPosition(this.getPosition());
     	
-    	if(!newPos.inside(game.getWorld().actualDim())) {
+    	if(!game.getWorld().isInside(newPos)) {
     		return false;
     	}
     	
@@ -62,6 +62,10 @@ public class Player extends GameObject implements Movable {
     			else {
     				((Box) mov).doMove(direction);
     			}
+    		}
+    		else if(mov instanceof Door_Next_Open) {
+    			this.changeLevel =1;
+    			return true;
     		}
     	}
     	return true;
@@ -83,6 +87,10 @@ public class Player extends GameObject implements Movable {
     
     public int isChangingLevel() {
     	return changeLevel;
+    }
+    
+    public void resetLvl() {
+    	this.changeLevel = 0;
     }
     
     public boolean isWinner() {

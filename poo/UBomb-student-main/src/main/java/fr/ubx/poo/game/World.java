@@ -7,6 +7,7 @@ package fr.ubx.poo.game;
 import fr.ubx.poo.model.decor.Decor;
 import fr.ubx.poo.model.go.*;
 import fr.ubx.poo.model.go.character.Monster;
+import fr.ubx.poo.model.go.character.Player;
 import javafx.geometry.Pos;
 
 import java.lang.reflect.Array;
@@ -31,9 +32,9 @@ public class World {
     	actualLvl = 0;
     	ArrayList<Map<Position, Decor>> tmpgrid = new ArrayList<Map<Position, Decor>>();
     	this.raw = raw;
-        raw.forEach(wet -> tmpgrid.add(WorldBuilder.build(wet,new Dimension(wet.length,wet[0].length))));
+        raw.forEach(wet -> tmpgrid.add(raw.indexOf(wet),WorldBuilder.build(wet,new Dimension(wet.length,wet[0].length))));
         ArrayList<Dimension> lst = new ArrayList<Dimension>();
-        raw.forEach(wet -> lst.add(new Dimension(wet.length,wet[0].length)));
+        raw.forEach(wet -> lst.add(raw.indexOf(wet),new Dimension(wet.length,wet[0].length)));
         dimension = lst;
         grid = tmpgrid;
         CreateMovable(game);
@@ -42,12 +43,10 @@ public class World {
     public Position findPlayer() throws PositionNotFoundException {
         for (int x = 0; x < dimension.get(actualLvl).width; x++) {
             for (int y = 0; y < dimension.get(actualLvl).height; y++) {
-            	System.out.print(raw.get(actualLvl)[y][x]);
                 if (raw.get(actualLvl)[y][x] == WorldEntity.Player) {
                     return new Position(x, y);
                 }
             }
-            System.out.println();
         }
         throw new PositionNotFoundException("Player; Lvl =  ");
     }
@@ -102,13 +101,18 @@ public class World {
     				case DoorNextClosed:
     					pos =new Position(x,y);
     					ht.put(pos,new Door_Next_Closed(game,pos));
-    					break;	
+    					break;
+    				case DoorPrevOpened:
+    					System.out.println("cool");
+    					pos =new Position(x,y);
+    					ht.put(pos,new Door_Prev_Open(game,pos));
+    					break;
     				default:
     				}
-    				movables.add(ht);
     			}
     		
     		}
+    		movables.add(i,ht);
         }
     }
 
@@ -136,7 +140,7 @@ public class World {
     }
 
     public boolean isInside(Position position) {
-        return true; // to update
+        return position.inside(this.actualDim()); // to update
     }
 
     public boolean isEmpty(Position position) {
@@ -163,4 +167,21 @@ public class World {
     public GameObject returnMovable(Position position) {return movables.get(actualLvl).get(position);}
     
     public Map<Position,GameObject> getMovables(){return movables.get(actualLvl);}
+    
+    public void ChangeLevel(int dir,Player pl) {
+    	if(dir > 0) {
+    		this.actualLvl ++;
+    		ArrayList<Position> npos = new ArrayList<Position>();
+    		this.forEachMovables((pos,go) -> {if(go instanceof Door_Prev_Open) {npos.add(pos);}else{}});
+    		
+    		try {
+    			pl.setPosition(npos.get(0));
+    			
+    		}catch(IndexOutOfBoundsException e) {
+    			System.err.println("Erreur : Pas de portes suivantes trouvées.");
+    			throw e;
+    		}
+    		
+    	}  
+    }
 }

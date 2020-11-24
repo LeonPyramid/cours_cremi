@@ -148,6 +148,12 @@ public final class GameEngine {
 
     private void update(long now) {
         player.update(now);
+        int nlvl;
+		if ((nlvl = player.isChangingLevel())!=0) {
+        	game.getWorld().ChangeLevel(nlvl, player);
+        	player.resetLvl();
+        	this.initialize(stage, game);
+        }
         if (player.isAlive() == false) {
             gameLoop.stop();
             showMessage("Perdu!", Color.RED);
