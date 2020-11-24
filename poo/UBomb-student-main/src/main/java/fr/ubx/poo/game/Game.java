@@ -86,7 +86,7 @@ public class Game {
     			}
     			
     			input.close();
-    			lst.add(tab);
+    			lst.add(i,tab);
     		} catch (IOException ex) {
     			System.err.println(ex + "\nError loading "+path+"/level"+i+".txt");
     			return null;
