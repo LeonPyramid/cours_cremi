@@ -53,7 +53,7 @@ public class Game {
             initPlayerLives = Integer.parseInt(prop.getProperty("lives", "3"));
             levels = Integer.parseInt(prop.getProperty("levels","3"));
         } catch (IOException ex) {
-            System.err.println("Error loading configuration");
+            System.err.println("Error loading configuration"+ ex);
         }
     }
 

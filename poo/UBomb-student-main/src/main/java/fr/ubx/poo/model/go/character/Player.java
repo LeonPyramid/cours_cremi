@@ -18,6 +18,7 @@ public class Player extends GameObject implements Movable {
     private int lives = 1;
     private boolean winner;
     private int changeLevel;
+    private int key = 0;
 
 
     public Player(Game game, Position position) {
@@ -42,7 +43,7 @@ public class Player extends GameObject implements Movable {
     }
 
     @Override
-    public boolean canMove(Direction direction) {
+        public boolean canMove(Direction direction) {
     	
     	Position newPos = direction.nextPosition(this.getPosition());
     	
@@ -67,6 +68,10 @@ public class Player extends GameObject implements Movable {
     			this.changeLevel =1;
     			return true;
     		}
+    		else if (mov instanceof Key){
+    		    this.key = key+1;
+    		    return true;
+            }
     	}
     	return true;
     }
@@ -100,5 +105,5 @@ public class Player extends GameObject implements Movable {
     public boolean isAlive() {
         return alive;
     }
-
+    public int getKey(){return this.key;}
 }
