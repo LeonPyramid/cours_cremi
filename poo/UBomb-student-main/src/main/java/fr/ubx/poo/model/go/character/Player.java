@@ -9,6 +9,9 @@ import fr.ubx.poo.game.Position;
 import fr.ubx.poo.model.Movable;
 import fr.ubx.poo.model.go.*;
 import fr.ubx.poo.game.Game;
+import fr.ubx.poo.view.sprite.Sprite;
+
+import java.util.List;
 
 public class Player extends GameObject implements Movable {
 
@@ -44,13 +47,13 @@ public class Player extends GameObject implements Movable {
 
     @Override
         public boolean canMove(Direction direction) {
-    	
+
     	Position newPos = direction.nextPosition(this.getPosition());
-    	
+
     	if(!game.getWorld().isInside(newPos)) {
     		return false;
     	}
-    	
+
     	if(!game.getWorld().isEmpty(newPos)) {
     		return false;
     	}
@@ -70,7 +73,11 @@ public class Player extends GameObject implements Movable {
     		}
     		else if (mov instanceof Key){
     		    this.key = key+1;
-    		    return true;
+                boolean b = game.getWorld().RemoveMovable(mov);
+                if (b) {
+                    //TODO enlever le sprite de la clef
+                    return true;
+                }
             }
     	}
     	return true;
@@ -89,15 +96,15 @@ public class Player extends GameObject implements Movable {
         }
         moveRequested = false;
     }
-    
+
     public int isChangingLevel() {
     	return changeLevel;
     }
-    
+
     public void resetLvl() {
     	this.changeLevel = 0;
     }
-    
+
     public boolean isWinner() {
         return winner;
     }
@@ -106,4 +113,5 @@ public class Player extends GameObject implements Movable {
         return alive;
     }
     public int getKey(){return this.key;}
+    public void setKey(int x){this.key = x;}
 }

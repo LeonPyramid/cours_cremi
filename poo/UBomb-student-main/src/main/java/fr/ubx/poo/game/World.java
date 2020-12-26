@@ -119,7 +119,9 @@ public class World {
     		movables.add(i,ht);
         }
     }
+	public void RemplaceMovable(Game game, Position pos){
 
+	}
 
     public Decor get(Position position) {
         return grid.get(actualLvl).get(position);
@@ -188,4 +190,12 @@ public class World {
     		
     	}  
     }
+
+    public void setActualLvl(int x){
+    	this.actualLvl = x;
+	}
+
+	public int getActualLvl(){
+    	return this.actualLvl;
+	}
 }

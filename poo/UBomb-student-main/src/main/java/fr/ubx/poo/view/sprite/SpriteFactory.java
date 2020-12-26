@@ -60,10 +60,14 @@ public final class SpriteFactory {
 
 
         return null;
-        
     }
-
     public static Sprite createPlayer(Pane layer, Player player) {
         return new SpritePlayer(layer, player);
     }
 }
+/*
+    public static boolean  Removemovables(){
+        final boolean b = false;
+        return b;
+    }
+*/

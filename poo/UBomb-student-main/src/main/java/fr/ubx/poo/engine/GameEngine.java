@@ -5,6 +5,9 @@
 package fr.ubx.poo.engine;
 
 import fr.ubx.poo.game.Direction;
+import fr.ubx.poo.game.World;
+import fr.ubx.poo.model.go.Door_Next_Closed;
+import fr.ubx.poo.model.go.Door_Next_Open;
 import fr.ubx.poo.view.sprite.Sprite;
 import fr.ubx.poo.view.sprite.SpriteFactory;
 import fr.ubx.poo.game.Game;
@@ -70,25 +73,25 @@ public final class GameEngine {
         root.getChildren().add(layer);
         statusBar = new StatusBar(root, sceneWidth, sceneHeight, game);
         // Create decor sprites
-        game.getWorld().forEach( (pos,d) -> sprites.add(SpriteFactory.createDecor(layer, pos, d)));
+        game.getWorld().forEach((pos, d) -> sprites.add(SpriteFactory.createDecor(layer, pos, d)));
 
         //
-        game.getWorld().forEachMovables( (pos,go) -> MovableSpriteAdder(pos,go,sprites));
+        game.getWorld().forEachMovables((pos, go) -> MovableSpriteAdder(pos, go, sprites));
         spritePlayer = SpriteFactory.createPlayer(layer, player);
 
     }
-    
-    /*Au moment de l'initialisation des objets qui bougent (player, box,collectables,monstres..) 
+
+    /*Au moment de l'initialisation des objets qui bougent (player, box,collectables,monstres..)
      * le sprite de player est déjà déclaré à part dans le code de base. Afin d'éviter les conflits il ne faut
      * pas le redéclarer dans la liste des sprites, or notre player est dans la Map movables.
      * cette fonction sert donc à éviter de redéclarer le player dans la liste des sprites*/
-    public void MovableSpriteAdder( Position pos, GameObject go,List<Sprite> sprt) {
-    	if(!(go instanceof Player)) {
-    		sprt.add((SpriteFactory.createMovables(layer, pos,go)));
-    	}
-    	
+    public void MovableSpriteAdder(Position pos, GameObject go, List<Sprite> sprt) {
+        if (!(go instanceof Player)) {
+            sprt.add((SpriteFactory.createMovables(layer, pos, go)));
+        }
+
     }
-    
+
     protected final void buildAndSetGameLoop() {
         gameLoop = new AnimationTimer() {
             public void handle(long now) {
@@ -123,6 +126,22 @@ public final class GameEngine {
         if (input.isMoveUp()) {
             player.requestMove(Direction.N);
         }
+        //TODO Changement de sprite
+        if (input.isKey()){
+            Position pos = player.getDirection().nextPosition(player.getPosition());
+            World world = game.getWorld();
+            GameObject mov = world.returnMovable(pos);
+            if(mov instanceof Door_Next_Closed){
+                if(player.getKey() != 0){
+                    System.out.println("Debut");
+                    player.setKey(player.getKey()-1);
+                    world.RemoveMovable(mov);
+                    world.SetMovable(pos,new Door_Next_Open(game, pos));
+                    System.out.println("Fin");
+                }
+
+            }
+        }
         input.clear();
     }
 
@@ -149,10 +168,10 @@ public final class GameEngine {
     private void update(long now) {
         player.update(now);
         int nlvl;
-		if ((nlvl = player.isChangingLevel())!=0) {
-        	game.getWorld().ChangeLevel(nlvl, player);
-        	player.resetLvl();
-        	this.initialize(stage, game);
+        if ((nlvl = player.isChangingLevel()) != 0) {
+            game.getWorld().ChangeLevel(nlvl, player);
+            player.resetLvl();
+            this.initialize(stage, game);
         }
         if (player.isAlive() == false) {
             gameLoop.stop();
@@ -175,4 +194,10 @@ public final class GameEngine {
     public void start() {
         gameLoop.start();
     }
+
+    public List<Sprite> getSprite() {
+        return this.sprites;
+    }
+
+
 }

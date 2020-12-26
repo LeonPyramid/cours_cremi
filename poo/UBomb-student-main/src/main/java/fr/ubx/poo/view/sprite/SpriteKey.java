@@ -9,5 +9,6 @@ public class SpriteKey extends SpriteGameObject {
     public SpriteKey(Pane layer, Image image, Key key){super(layer,image, key);}
 
     @Override
-    public void updateImage() { }
+    public void updateImage() {
+    }
 }

@@ -41,4 +41,11 @@ public class Position {
     public boolean inside(Dimension d) {
         return x >= 0 && x < d.width && y >= 0 && y < d.height;
     }
+
+    public int getX() {
+        return x;
+    }
+     public int getY(){
+        return y;
+    }
 }

@@ -17,7 +17,7 @@ import java.util.List;
 import fr.ubx.poo.game.WorldEntity;
 import fr.ubx.poo.model.go.character.Player;
 
-public class Game {
+public class    Game {
 
     private final World world;
     private final Player player;
