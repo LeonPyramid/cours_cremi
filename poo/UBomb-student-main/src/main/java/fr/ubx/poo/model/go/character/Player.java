@@ -98,8 +98,10 @@ public class Player extends GameObject implements Movable {
                 }
             }
             else  if (mov instanceof BombRangeDec){
-                this.bombRange --;
                 boolean b = game.getWorld().RemoveMovable(mov);
+                if (this.bombRange >1){
+                    this.bombRange --;
+                }
                 if (b) {
                     //TODO enlever le sprite
                     return true;
@@ -114,8 +116,10 @@ public class Player extends GameObject implements Movable {
                 }
             }
             else if (mov instanceof BombDec){
-                this.numberBomb --;
                 boolean b = game.getWorld().RemoveMovable(mov);
+                if (this.numberBomb > 1){
+                    this.numberBomb --;
+                }
                 if (b) {
                     //TODO enlever le sprite
                     return true;
