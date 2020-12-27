@@ -15,13 +15,15 @@ import java.util.List;
 
 public class Player extends GameObject implements Movable {
 
-    private final boolean alive = true;
+    private  boolean alive = true;
     Direction direction;
     private boolean moveRequested = false;
     private int lives = 1;
     private boolean winner;
     private int changeLevel;
     private int key = 0;
+    private int bombRange = 1;
+    private int numberBomb = 1;
 
 
     public Player(Game game, Position position) {
@@ -71,15 +73,67 @@ public class Player extends GameObject implements Movable {
     			this.changeLevel =1;
     			return true;
     		}
-    		else if (mov instanceof Key){
-    		    this.key = key+1;
+    		else if (mov instanceof Key) {
+                System.out.println("Key");
+                this.key ++;
                 boolean b = game.getWorld().RemoveMovable(mov);
                 if (b) {
-                    //TODO enlever le sprite de la clef
+                    //TODO enlever le sprite
                     return true;
                 }
             }
+            else if (mov instanceof Monster){
+                System.out.println("Monster");
+                this.lives --;
+                if (this.lives == 0){
+                      this.alive = false;
+                }
+            }
+            else if (mov instanceof BombRangeInc){
+                this.bombRange++;
+                boolean b = game.getWorld().RemoveMovable(mov);
+                if (b) {
+                    //TODO enlever le sprite
+                    return true;
+                }
+            }
+            else  if (mov instanceof BombRangeDec){
+                this.bombRange --;
+                boolean b = game.getWorld().RemoveMovable(mov);
+                if (b) {
+                    //TODO enlever le sprite
+                    return true;
+                }
+            }
+            else if (mov instanceof BombInc){
+                this.numberBomb ++;
+                boolean b = game.getWorld().RemoveMovable(mov);
+                if (b) {
+                    //TODO enlever le sprite
+                    return true;
+                }
+            }
+            else if (mov instanceof BombDec){
+                this.numberBomb --;
+                boolean b = game.getWorld().RemoveMovable(mov);
+                if (b) {
+                    //TODO enlever le sprite
+                    return true;
+                }
+            }
+            else if (mov instanceof  Heart){
+                this.lives ++;
+                boolean b = game.getWorld().RemoveMovable(mov);
+                if (b) {
+                    //TODO enlever le sprite
+                    return true;
+                }
+            }
+            else if (mov instanceof Princess){
+                this.winner = true;
+            }
     	}
+
     	return true;
     }
 
@@ -114,4 +168,6 @@ public class Player extends GameObject implements Movable {
     }
     public int getKey(){return this.key;}
     public void setKey(int x){this.key = x;}
+    public int getBombRange(){return this.bombRange;}
+    public int getNumberBomb() { return numberBomb; }
 }

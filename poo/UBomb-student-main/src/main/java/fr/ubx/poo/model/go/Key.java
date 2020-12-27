@@ -4,7 +4,6 @@ import fr.ubx.poo.game.Direction;
 import fr.ubx.poo.game.Game;
 import fr.ubx.poo.game.Position;
 
-//TODO Faire disparaitre quand le  joueur passe dessus
 public class Key extends GameObject {
 
     public Key(Game game, Position position){ super(game, position);}
