@@ -6,16 +6,19 @@ package fr.ubx.poo.engine;
 
 import fr.ubx.poo.game.Direction;
 import fr.ubx.poo.game.World;
+import fr.ubx.poo.model.go.Bomb;
 import fr.ubx.poo.model.go.Door_Next_Closed;
 import fr.ubx.poo.model.go.Door_Next_Open;
-import fr.ubx.poo.view.sprite.Sprite;
-import fr.ubx.poo.view.sprite.SpriteFactory;
+import fr.ubx.poo.view.image.ImageFactory;
+import fr.ubx.poo.view.image.ImageResource;
+import fr.ubx.poo.view.sprite.*;
 import fr.ubx.poo.game.Game;
 import fr.ubx.poo.game.Position;
 import fr.ubx.poo.model.go.GameObject;
 import fr.ubx.poo.model.go.character.Player;
 import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
+import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
@@ -37,7 +40,7 @@ public final class GameEngine {
     private final String windowTitle;
     private final Game game;
     private final Player player;
-    private final List<Sprite> sprites = new ArrayList<>();
+    private  final List<Sprite> sprites = new ArrayList<>();
     private StatusBar statusBar;
     private Pane layer;
     private Input input;
@@ -126,21 +129,28 @@ public final class GameEngine {
         if (input.isMoveUp()) {
             player.requestMove(Direction.N);
         }
-        //TODO Changement de sprite
         if (input.isKey()){
             Position pos = player.getDirection().nextPosition(player.getPosition());
             World world = game.getWorld();
             GameObject mov = world.returnMovable(pos);
             if(mov instanceof Door_Next_Closed){
                 if(player.getKey() != 0){
-                    System.out.println("Debut");
                     player.setKey(player.getKey()-1);
                     world.RemoveMovable(mov);
-                    world.SetMovable(pos,new Door_Next_Open(game, pos));
-                    System.out.println("Fin");
+                    Door_Next_Open door = new Door_Next_Open(game, pos);
+                    world.SetMovable(pos,door);
+                    for (int i = 0; i<this.sprites.size(); i++){
+                        Sprite u =this.sprites.get(i);
+                       if (u instanceof SpriteDoor_N_Closed){
+                            this.sprites.set(i,new SpriteDoor_N_Open(layer,ImageFactory.getInstance().get(ImageResource.DOPEN),door));
+                        }
+                    }
                 }
-
             }
+        }
+        if (input.isBomb()){
+            Position Ppos= player.getPosition();
+            game.getWorld().SetMovable(Ppos,new Bomb(game,Ppos));
         }
         input.clear();
     }

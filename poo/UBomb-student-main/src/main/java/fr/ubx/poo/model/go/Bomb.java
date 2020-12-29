@@ -5,9 +5,14 @@ import fr.ubx.poo.game.Position;
 
 public  class Bomb extends Unplayer{
 
-    public Bomb (Game game, Position position){super(game, position);}
+    public Bomb (Game game, Position position){
+        super(game, position);
+
+    }
 
 
-
+    public void bombLoop(){
+        
+    }
 
 }

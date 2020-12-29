@@ -136,6 +136,10 @@ public class Player extends GameObject implements Movable {
             else if (mov instanceof Princess){
                 this.winner = true;
             }
+            //Debeug tant que sprites sont relous!
+            else if (mov instanceof Bomb){
+                System.out.println("Bomb");
+            }
     	}
 
     	return true;
