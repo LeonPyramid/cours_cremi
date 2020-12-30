@@ -4,12 +4,17 @@
 
 package fr.ubx.poo.model.go.character;
 
+import fr.ubx.poo.engine.GameEngine;
 import fr.ubx.poo.game.Direction;
 import fr.ubx.poo.game.Position;
 import fr.ubx.poo.model.Movable;
 import fr.ubx.poo.model.go.*;
 import fr.ubx.poo.game.Game;
+import fr.ubx.poo.view.image.ImageFactory;
+import fr.ubx.poo.view.image.ImageResource;
 import fr.ubx.poo.view.sprite.Sprite;
+import fr.ubx.poo.view.sprite.SpriteFactory;
+import fr.ubx.poo.view.sprite.SpriteKey;
 
 import java.util.List;
 
@@ -78,7 +83,8 @@ public class Player extends GameObject implements Movable {
                 this.key ++;
                 boolean b = game.getWorld().RemoveMovable(mov);
                 if (b) {
-                    //TODO enlever le sprite
+                    Key key = new Key(game, mov.getPosition());
+                    SpriteFactory.RemoveSprite(new SpriteKey(GameEngine.getLayer(), ImageFactory.getInstance().get(ImageResource.KEY), key ));
                     return true;
                 }
             }

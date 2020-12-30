@@ -6,15 +6,12 @@ package fr.ubx.poo.engine;
 
 import fr.ubx.poo.game.Direction;
 import fr.ubx.poo.game.World;
-import fr.ubx.poo.model.go.Bomb;
-import fr.ubx.poo.model.go.Door_Next_Closed;
-import fr.ubx.poo.model.go.Door_Next_Open;
+import fr.ubx.poo.model.go.*;
 import fr.ubx.poo.view.image.ImageFactory;
 import fr.ubx.poo.view.image.ImageResource;
 import fr.ubx.poo.view.sprite.*;
 import fr.ubx.poo.game.Game;
 import fr.ubx.poo.game.Position;
-import fr.ubx.poo.model.go.GameObject;
 import fr.ubx.poo.model.go.character.Player;
 import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
@@ -40,9 +37,9 @@ public final class GameEngine {
     private final String windowTitle;
     private final Game game;
     private final Player player;
-    private  final List<Sprite> sprites = new ArrayList<>();
+    private  final  static List<Sprite> sprites = new ArrayList<>();
     private StatusBar statusBar;
-    private Pane layer;
+    private static Pane layer;
     private Input input;
     private Stage stage;
     private Sprite spritePlayer;
@@ -205,9 +202,11 @@ public final class GameEngine {
         gameLoop.start();
     }
 
-    public List<Sprite> getSprite() {
-        return this.sprites;
+    public static List<Sprite> getSprite() {
+        return sprites;
     }
-
+    public static Pane getLayer(){
+        return layer;
+    }
 
 }
