@@ -66,16 +66,6 @@ public final class SpriteFactory {
         return new SpritePlayer(layer, player);
     }
 
-    public static void RemoveSprite(Sprite sprite) {
-        List<Sprite> sprites = GameEngine.getSprite();
-        for (int i = 0; i < sprites.size(); i++) {
-            Sprite u = sprites.get(i);
-            if (u.getClass() == sprite.getClass()) {
-                sprites.remove(i);
-            }
-        }
-    }
-
 
 
 }

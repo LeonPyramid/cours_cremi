@@ -37,7 +37,7 @@ public final class GameEngine {
     private final String windowTitle;
     private final Game game;
     private final Player player;
-    private  final  static List<Sprite> sprites = new ArrayList<>();
+    private static List<Sprite> sprites = new ArrayList<>();
     private StatusBar statusBar;
     private static Pane layer;
     private Input input;
@@ -202,11 +202,23 @@ public final class GameEngine {
         gameLoop.start();
     }
 
-    public static List<Sprite> getSprite() {
-        return sprites;
+    public List<Sprite> getSprite() {
+        return this.sprites;
     }
     public static Pane getLayer(){
         return layer;
+    }
+
+    public static void RemoveSprite(Sprite sprite) {
+        for (int i = 0; i < sprites.size(); i++) {
+            Sprite u = sprites.get(i);
+            if (u.getClass() == sprite.getClass()) {
+                System.out.println("1"+  sprites);
+                sprites.get(i).remove();
+                sprites.remove(i);
+                System.out.println("2 " +sprites);
+            }
+        }
     }
 
 }

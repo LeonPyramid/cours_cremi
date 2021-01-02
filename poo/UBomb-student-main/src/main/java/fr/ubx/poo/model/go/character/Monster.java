@@ -6,6 +6,7 @@ import fr.ubx.poo.game.Position;
 import fr.ubx.poo.model.Movable;
 import fr.ubx.poo.model.go.Unplayer;
 
+//TODO a faire complet
 public class Monster extends Unplayer implements Movable {
 
     public Monster (Game game, Position position){super (game, position);}

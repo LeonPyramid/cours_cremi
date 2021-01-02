@@ -6,7 +6,6 @@ import fr.ubx.poo.game.Position;
 import fr.ubx.poo.model.Movable;
 
 
-//TODO Faire interaction
 
 public class Heart extends Unplayer implements Movable {
 

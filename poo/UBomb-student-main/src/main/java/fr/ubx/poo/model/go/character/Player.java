@@ -12,9 +12,7 @@ import fr.ubx.poo.model.go.*;
 import fr.ubx.poo.game.Game;
 import fr.ubx.poo.view.image.ImageFactory;
 import fr.ubx.poo.view.image.ImageResource;
-import fr.ubx.poo.view.sprite.Sprite;
-import fr.ubx.poo.view.sprite.SpriteFactory;
-import fr.ubx.poo.view.sprite.SpriteKey;
+import fr.ubx.poo.view.sprite.*;
 
 import java.util.List;
 
@@ -84,7 +82,7 @@ public class Player extends GameObject implements Movable {
                 boolean b = game.getWorld().RemoveMovable(mov);
                 if (b) {
                     Key key = new Key(game, mov.getPosition());
-                    SpriteFactory.RemoveSprite(new SpriteKey(GameEngine.getLayer(), ImageFactory.getInstance().get(ImageResource.KEY), key ));
+                    GameEngine.RemoveSprite(new SpriteKey(GameEngine.getLayer(), ImageFactory.getInstance().get(ImageResource.KEY), key ));
                     return true;
                 }
             }
@@ -99,7 +97,8 @@ public class Player extends GameObject implements Movable {
                 this.bombRange++;
                 boolean b = game.getWorld().RemoveMovable(mov);
                 if (b) {
-                    //TODO enlever le sprite
+                    BombRangeInc bomb = new BombRangeInc(game, mov.getPosition());
+                    GameEngine.RemoveSprite(new SpriteBombRangInc(GameEngine.getLayer(), ImageFactory.getInstance().get(ImageResource.BOMB_R_INC), bomb ));
                     return true;
                 }
             }
@@ -109,7 +108,9 @@ public class Player extends GameObject implements Movable {
                     this.bombRange --;
                 }
                 if (b) {
-                    //TODO enlever le sprite
+                    BombRangeDec bomb = new BombRangeDec(game, mov.getPosition());
+                    GameEngine.RemoveSprite(new SpriteBombRangeDec(GameEngine.getLayer(), ImageFactory.getInstance().get(ImageResource.BOMB_R_DEC), bomb ));
+
                     return true;
                 }
             }
@@ -117,7 +118,8 @@ public class Player extends GameObject implements Movable {
                 this.numberBomb ++;
                 boolean b = game.getWorld().RemoveMovable(mov);
                 if (b) {
-                    //TODO enlever le sprite
+                    BombInc bomb = new BombInc(game, mov.getPosition());
+                    GameEngine.RemoveSprite(new SpriteBombInc(GameEngine.getLayer(), ImageFactory.getInstance().get(ImageResource.BOMB_INC), bomb ));
                     return true;
                 }
             }
@@ -127,7 +129,8 @@ public class Player extends GameObject implements Movable {
                     this.numberBomb --;
                 }
                 if (b) {
-                    //TODO enlever le sprite
+                    BombDec bomb = new BombDec(game, mov.getPosition());
+                    GameEngine.RemoveSprite(new SpriteBombDec(GameEngine.getLayer(), ImageFactory.getInstance().get(ImageResource.BOMB_DEC), bomb ));
                     return true;
                 }
             }
@@ -135,14 +138,15 @@ public class Player extends GameObject implements Movable {
                 this.lives ++;
                 boolean b = game.getWorld().RemoveMovable(mov);
                 if (b) {
-                    //TODO enlever le sprite
+                    Heart heart = new Heart(game, mov.getPosition());
+                    GameEngine.RemoveSprite(new SpriteHeart(GameEngine.getLayer(), ImageFactory.getInstance().get(ImageResource.HEART), heart ));
                     return true;
                 }
             }
             else if (mov instanceof Princess){
                 this.winner = true;
             }
-            //Debeug tant que sprites sont relous!
+            //TODO Debeug tant que sprites sont relous!
             else if (mov instanceof Bomb){
                 System.out.println("Bomb");
             }
