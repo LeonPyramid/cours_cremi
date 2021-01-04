@@ -188,7 +188,20 @@ public class World {
     			throw e;
     		}
     		
-    	}  
+    	}
+    	else if (dir < 0) {
+    		this.actualLvl --;
+    		ArrayList<Position> npos = new ArrayList<Position>();
+    		this.forEachMovables((pos,go) -> {if(go instanceof Door_Next_Open) {npos.add(pos);}else{}});
+    		
+    		try {
+    			pl.setPosition(npos.get(0));
+    			
+    		}catch(IndexOutOfBoundsException e) {
+    			System.err.println("Erreur : Pas de portes précédentes trouvées.");
+    			throw e;
+    		}
+    	}
     }
 
     public void setActualLvl(int x){

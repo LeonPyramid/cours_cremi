@@ -29,11 +29,6 @@ Section LJ.
         On aura a faire deux preuves, une pour chaque cas (cas A, cas B)
   *)
 
-  Lemma tst : P <-> ~~P.
-  Proof.
-    split.
-      - intros.
-        extends not.
 
   Lemma or_not : P \/ Q -> ~P -> Q.
   Proof.

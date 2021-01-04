@@ -1,0 +1,335 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[margin=1in]{geometry} %diminution de la marge
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{xcolor}
+\frenchbsetup{StandardLists=true} % à inclure si on utilise \usepackage[french]{babel}
+\usepackage{shellesc}
+\usepackage{minted}
+\usepackage{bussproofs}
+\EnableBpAbbreviations
+\setminted{fontsize=\footnotesize,baselinestretch=0.8}
+\usepackage{graphicx}
+\usepackage{float}
+%ajout de saut de ligne entre les enumerate
+\usepackage{enumitem}
+\setlist[enumerate]{itemsep=5pt,leftmargin=20pt}
+\setlist[itemize]{itemsep=0pt}
+
+\title{Devoir Masion Logique Et Preuve}
+\author{Romain Delpy}
+
+%Pour les math/proba
+\usepackage{amsmath}
+\usepackage{amsfonts} 
+\newcommand{\field}[1]{\mathbb{#1}}
+\renewcommand{\epsilon}{\varepsilon}
+\renewcommand{\P}{\field{P}}
+\newcommand{\result}[1]{\textcolor{red}{#1}}
+\newcommand{\ol}[1]{\overline{#1}}
+\newcommand{\nsum}{\sum\limits}%pour des sommes correctement écrites
+\newcommand{\db}[1]{$#1\!#1$} %utilisé pour faire les [[ par exemple
+\newcommand{\g}{\Gamma}
+\renewcommand{\t}{\vdash}
+\newcommand{\imp}{\rightarrow}
+\usepackage{chngpage}
+%pour les numéro d'exo auto
+\newcounter{qst}
+\setcounter{qst}{1}
+\newenvironment{question}{\noindent{\large \textbf{Exercice \theqst :\\ }}}{\addtocounter{qst}{1}}
+
+%Pour les arbres de preuves
+\newcommand{\mop}[3]{
+#2
+#3
+\RL{$mp$}
+\BIC{#1}
+}
+\newcommand{\hyp}[1]{
+\AXC{}
+\RL{$hyp$}
+\UIC{#1}
+}
+\newcommand{\iimp}[2]{
+#2
+\RL{$\imp_i$}
+\UIC{#1}
+}
+\newcommand{\abs}[3]{
+#2
+#3
+\RL{$mp$}
+\BIC{#1}
+}
+\newcommand{\texc}[1]{
+\AXC{}
+\RL{$exm_i$}
+\UIC{#1}
+}
+
+\newcommand{\ve}[4]{
+#2
+#3
+#4
+\RL{$\vee_e$}
+\TIC{#1}
+}
+\newcommand{\avi}[3]{
+#2
+#3
+\RL{$\wedge_i$}
+\BIC{#1}
+}
+\newcommand{\ave}[3]{
+#2
+#3
+\RL{$\wedge_e$}
+\BIC{#1}
+}
+\newcommand{\vig}[2]{
+#2
+\RL{$\vee_{i,1}$}
+\UIC{#1}
+}
+\newcommand{\vid}[2]{
+#2
+\RL{$\vee_{i,2}$}
+\UIC{#1}
+}
+\newcommand{\aff}[2]{
+#2
+\RL{$aff$}
+\UIC{#1}
+}
+\renewcommand{\not}[1]{\sim\! #1}
+\newcommand{\nnot}[1]{\sim\sim\! #1}
+%pour avoir un nouveau type de colonne dans un tableau
+\usepackage{amstext} % for \text macro
+\usepackage{array}   % for \newcolumntype macro
+\newcolumntype{C}{>{$}c<{$}} % math-mode version of "c" column type
+
+\begin{document}
+\maketitle
+\begin{question}
+\begin{enumerate}
+\item dressons les tables de vérités de A et de A'\\
+$\begin{matrix}
+A & \not{A} & \sim\not{A}\\\
+V & F & V\\
+F & V & F
+\end{matrix}$\\
+On observe que \result{les valeurs de v(A) et de v(A’) sont identiques}.
+\item Observons la valuation des hypothèses $\g$ et $\g$’ :
+prenons X une hypothèse de  $\g$, on a donc dans $\g$’ une hypothèse X’, et v(X) =  v(X’). Ainsi toutes les hypothèses de  $\g$’ ont la même valuation que leur penchant dans $\g$.\\
+Observons de plus que la validité du séquent $\g$’ $\t$ A' implique que quand toutes les hypothèses sont vraies, A’ est vrai. Hors quand les hypothèses de  $\g$’ sont vraies, alors les hypothèses de $\g$ le sont aussi. Aussi lorsque A’ est vrai, alors A l’est aussi. Ainsi lorsque les hypothèses de  $\g$ sont vraies, alors A est vrai.\\
+Ainsi \result{si le séquent $\g$' $\t$ A’  est valide alors le séquent $\g \t$A l’est aussi}. 
+\item On Suppose le séquent $\g$' $\t$ A’ prouvable en logique intuitionniste, Il est donc prouvable en logique classique.
+Avant toute chose, prouvons en logique classique le séquent $\t P\Leftrightarrow \sim\not{P}$ :\\
+
+\begin{adjustwidth}{-1in}{-1in}
+\begin{prooftree}
+\AXC{(1)}
+\UIC{$\t  \sim\not{P} \imp P$}
+\AXC{}
+\RL{$hyp$}
+\UIC{$P, P \imp \bot \t P \imp \bot$}
+\AXC{}
+\RL{$hyp$}
+\UIC{$P, P \imp \bot \t P$}
+\RL{$mp$}
+\BIC{$P , P \imp \bot \t \bot$}
+\RL{$\imp_i$}
+\UIC{$\t P\imp \sim\not{P}$}
+\RL{$\wedge_i$}
+\BIC{$\t P\leftrightarrow \sim\not{P}$}
+\end{prooftree}
+
+(1):
+\begin{prooftree}
+\AXC{}
+\RL{$hyp$}
+\UIC{$\sim\not{P} , \not{P} \t \not{P}$}
+\AXC{}
+\RL{$hyp$}
+\UIC{$\sim\not{P} , \not{P} \t \sim\not{P}$}
+\RL{$abs$}
+\BIC{$\sim\not{P} , \not{P} \t P$}
+\AXC{}
+\RL{$hyp$}
+\UIC{$\sim\not{P} , P \t P$}
+\AXC{}
+\RL{$exm_i$}
+\UIC{$\sim\not{P} \t P \vee \not{P}$}
+\RL{$\vee_e$}
+\TIC{$\sim\not{P} \t P$}
+\RL{$\imp_i$}
+\UIC{$\t  \sim\not{P} \imp P$}
+\end{prooftree}
+\end{adjustwidth}
+
+Donc le séquent \result {$\t P\Leftrightarrow \sim\sim P$ est valide en logique classique}.\\
+ De plus le séquent $\g' \t A'$ est prouvable en logique intuitionniste, et donc poruvable en logique classique. Donc en appliquant le métha-théorème de remplacement avec le fait que tout élément de $\g$' est équivalent à son penchant dans $\g$ et que A' est équivalent à A en logique classique, on a que \result{le séquent $\g \t A$ est prouvable en logique classique}.
+
+\end{enumerate}
+\end{question}
+\begin{question}
+\begin{enumerate}
+\item Montrons que les trois règles sont bien des règles dérivés de LK:\\
+
+\begin{adjustwidth}{-1in}{-1in}
+\begin{prooftree}
+\ve{$\g\t B$}
+{\texc{$\g\t A\vee \not{A}$}}
+{\AXC{$\g,A\t B$}}
+{\AXC{$\g,\not{A}\t B$}}
+\end{prooftree}
+\begin{prooftree}
+\ave{$\g \t A$}
+{\AXC{$\g \t A \wedge B$}}
+{\hyp{$\g ,A,B \t A$}}
+\end{prooftree}
+\end{adjustwidth}
+La troisième se montre par commutativité du $\wedge$ sur la deuxième.
+\item Montrons que les deux règles sont bien des règles dérivés de LK':\\
+\begin{adjustwidth}{-1in}{-1in}
+\begin{prooftree}
+\mop{$\g \t C$}
+{\iimp{$\g \t A\imp B\imp C$}
+{\AXC{$\g ,A,B\t C$}}}
+{\iimp{$\g\t A\imp B$}
+{\aff{$\g ,A\t B$}
+{
+\AXC{$\g\t A\wedge B$}
+\RL{$\wedge'_{e,d}$}
+\UIC{$\g\t B$}
+}}}
+\end{prooftree}
+\begin{prooftree}
+\vid{$\g ,\not{A}\t A \vee \not{A}$}
+{\hyp{$\g ,\not{A}\t\not{A}$}}
+\vig{$\g ,A\t A \vee \not{A}$}
+{\hyp{$\g ,A\t A$}}
+\RL{$exm_e$}
+\BIC{$\g\t A\vee \not{A}$}
+\end{prooftree}
+\end{adjustwidth}
+\item Soit S un séquent prouvable en LK. Toutes les règles de LK' dérivent de LK, ainsi le séquent S est prouvable avec le jeu de règle de LK', il est donc prouvable en LK'.\\
+ On peut interchanger LK et LK' dans la proposition précédente, et ainsi tout séquent prouvable dans LK' est prouvable dans LK. On a donc bien \result{un séquent est prouvable dans LK si et seulement si il est prouvable dans LK'}.
+\end{enumerate}
+\end{question}
+\begin{question}
+cf dm.v\\
+\end{question}
+\begin{question}
+\begin{enumerate}
+\item Voici la liste des traductions négatives des règles d'inférence de LK':
+\begin{enumerate}
+\item introduction de l'implication:
+\begin{adjustwidth}{-1in}{-1in}
+\begin{prooftree}
+\AXC{$\g,\nnot{A} \t \nnot{B}$}
+\UIC{$\g\t \nnot{(A\imp B)}$}
+\end{prooftree}
+\end{adjustwidth}
+\item modus ponens:
+\begin{adjustwidth}{-1in}{-1in}
+\begin{prooftree}
+\AXC{$\g\t\nnot{(A\imp B)}$}
+\AXC{$\g\t\nnot{A}$}
+\BIC{$\g\t\nnot{B}$}
+\end{prooftree}
+\end{adjustwidth}
+\item exfalso:
+\begin{adjustwidth}{-1in}{-1in}
+\begin{prooftree}
+\AXC{$\g\t\nnot{\bot}$}
+\UIC{$\g\t\nnot{A}$}
+\end{prooftree}
+\end{adjustwidth}
+\newpage\item absurde:
+\begin{adjustwidth}{-1in}{-1in}
+\begin{prooftree}
+\AXC{$\g\t\nnot{A} $}
+\AXC{$\g\t\nnot{(\not{A})}$}
+\BIC{$\g\t\nnot{B}$}
+\end{prooftree}
+\end{adjustwidth}
+\item introduction de la négation:
+\begin{adjustwidth}{-1in}{-1in}
+\begin{prooftree}
+\AXC{$\g,\nnot{A}\t\nnot{\bot}$}
+\UIC{$\g\t\nnot{(\not{A})}$}
+\end{prooftree}
+\end{adjustwidth}
+\item introductions de la disjonction:\\
+\begin{minipage}{0.4\textwidth}
+\begin{figure}[H]
+\begin{prooftree}
+\AXC{$\g\t\nnot{A}$}
+\UIC{$\g\t\nnot{(A\vee B)}$}
+\end{prooftree}
+\end{figure}
+\end{minipage}
+\begin{minipage}{0.4\textwidth}
+\begin{figure}[H]
+\begin{prooftree}
+\AXC{$\g\t\nnot{B}$}
+\UIC{$\g\t\nnot{(A\vee B)}$}
+\end{prooftree}
+\end{figure}
+\end{minipage}
+\item élimination de la disjonction:
+\begin{prooftree}
+\AXC{$\g\t\nnot{(A\vee B)}$}
+\AXC{$\g,\nnot{A}\t\nnot{C}$}
+\AXC{$\g,\nnot{B}\t\nnot{C}$}
+\TIC{$\g\t\nnot{C}$}
+\end{prooftree}
+\item introduction de la conjonction:
+\begin{prooftree}
+\AXC{$\g\t\nnot{A}$}
+\AXC{$\g\t\nnot{B}$}
+\BIC{$\g\t\nnot{(A\wedge B)}$}
+\end{prooftree}
+\item éliminations de la conjonction bis:\\
+\begin{minipage}{0.4\textwidth}
+\begin{figure}[H]
+\begin{prooftree}
+\AXC{$\g\t\nnot{(A\wedge B)}$}
+\UIC{$\g\t\nnot{A}$}
+\end{prooftree}
+\end{figure}
+\end{minipage}
+\begin{minipage}{0.4\textwidth}
+\begin{figure}[H]
+\begin{prooftree}
+\AXC{$\g\t\nnot{(A\wedge B)}$}
+\UIC{$\g\t\nnot{B}$}
+\end{prooftree}
+\end{figure}
+\end{minipage}
+\item tiers exclu bis:
+\begin{prooftree}
+\AXC{$\g,\nnot{(\not{A})}\t\nnot{B}$}
+\AXC{$\g,\nnot{A}\t\nnot{B}$}
+\BIC{$\g\t\nnot{B}$}
+\end{prooftree}
+\end{enumerate}
+\item cf dm.v\\
+\end{enumerate}
+\end{question}
+\begin{question}
+\begin{enumerate}
+\item La règle d'inférence qui peut être utilisée à la racine d'un arbre de preuve de taille 1 dans LK' est la \result{règle d'hypothèse}.
+\item Soit A une thèse, soit $\g$ un ensemble d'hypothèse. Supposons A$\in\g$.
+Prenons $\g'$. Par définition, cela correspond à l'ensemble des hypothèses traduite en négation de l'ensemble $\g$. Ainsi si A est dans $\g$ alors il sera traduit en négation (donc de la forme A') dans $\g'$. \result{On a donc A' $ \in\g'$} .
+\item On peut donc en conclure la propriété $H_1$:\\
+Pour tout séquent $\g\t$A, si ce séquent admet un arbre de preuve de taille 1 dans le système LK', il possède à la racine une règle d'hypothèse. On a donc A$\in\g$, et de se fait A' $ \in\g'$.\result{Alors sa traduction négative $\g'\t$A' admet une preuve en logique intuitionniste} (représenté par un arbre de taille 1 possédant une règle d'hypothèse à la racine).
+\item Soit i le nombre de sous-arbres de $\mathcal{A}$. Notons $B$ l'ensemble des sous-arbres de $\mathcal{A}$, et notons $B_k$ chaque élément de $B$ (avec k$\in \db{[}0;i\db{]} $). Soit k$\in \db{[}0;i\db{]} $. $B_k$ est donc un arbre de preuve de taille au plus n. Ainsi d'après ($H_n$) on donc a que la traduction négative de l'arbre $B_k$, noté $B_k'$ est prouvable en logique intuitionniste. Ainsi toutes les sous-arbres de $\mathcal{A}$ peuvent subir la traduction de la négation.\\
+Maintenant Observons la racine de $\mathcal{A}$. la règle d'inférence qui y est appliqué appartient aux règles de LK'. Ainsi on sait que ces règles ont des traductions en négation qui sont des règles dérivés de la logique intuitionniste. On peut donc appliquer la traduction en négation sur la racine de $\mathcal{A}$, et sur toutes ses sous-arbres, et on aura un arbre de preuve en logique intuitionniste avec comme séquent à la racine $\g'\t A'$.\\
+ Ainsi \result{le séquent $\g'\t A'$ est prouvable en logique intuitionniste}.
+\item Dans la partie 2, on a prouvé qu'un séquent était prouvable en logique classique si et seulement si il est prouvable dans LK'. dans cette partie on a prouvé que tout séquent prouvable dans LK' a sa traduction négative prouvable dans la logique intuitionniste. Ainsi \result{tout séquent prouvable en logique classique a sa traduction négative prouvable en logique intuitionniste}.
+\end{enumerate}
+\end{question}
+\end{document}

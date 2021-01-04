@@ -76,6 +76,10 @@ public class Player extends GameObject implements Movable {
     			this.changeLevel =1;
     			return true;
     		}
+    		else if(mov instanceof Door_Prev_Open) {
+    			this.changeLevel =-1;
+    			return true;
+    		}
     		else if (mov instanceof Key) {
                 System.out.println("Key");
                 this.key ++;
