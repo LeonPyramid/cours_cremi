@@ -30,6 +30,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import static java.lang.Thread.sleep;
+
 
 public final class GameEngine {
 
@@ -85,10 +87,13 @@ public final class GameEngine {
      * le sprite de player est déjà déclaré à part dans le code de base. Afin d'éviter les conflits il ne faut
      * pas le redéclarer dans la liste des sprites, or notre player est dans la Map movables.
      * cette fonction sert donc à éviter de redéclarer le player dans la liste des sprites*/
-    public void MovableSpriteAdder(Position pos, GameObject go, List<Sprite> sprt) {
+    public static Sprite  MovableSpriteAdder(Position pos, GameObject go, List<Sprite> sprt) {
         if (!(go instanceof Player)) {
-            sprt.add((SpriteFactory.createMovables(layer, pos, go)));
+            Sprite sprite =SpriteFactory.createMovables(layer, pos, go);
+            sprt.add((sprite));
+            return sprite;
         }
+        return null;
 
     }
 
@@ -147,7 +152,9 @@ public final class GameEngine {
         }
         if (input.isBomb()){
             Position Ppos= player.getPosition();
-            game.getWorld().SetMovable(Ppos,new Bomb(game,Ppos));
+            if (game.getPlayer().getNumberBomb() >0){
+                Bomb bomb = new Bomb(game,Ppos);
+            }
         }
         input.clear();
     }
@@ -202,8 +209,8 @@ public final class GameEngine {
         gameLoop.start();
     }
 
-    public List<Sprite> getSprite() {
-        return this.sprites;
+    public static List<Sprite> getSprite() {
+        return sprites;
     }
     public static Pane getLayer(){
         return layer;

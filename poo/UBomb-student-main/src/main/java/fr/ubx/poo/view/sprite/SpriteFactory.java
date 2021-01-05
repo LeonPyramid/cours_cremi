@@ -58,6 +58,8 @@ public final class SpriteFactory {
             return new SpriteDoor_N_Open(layer, factory.get(DOPEN), (Door_Next_Open) go);
         if (go instanceof Door_Prev_Open)
             return new SpriteDoor_P_Open(layer, factory.get(DOPEN), (Door_Prev_Open) go);
+        if (go instanceof Bomb)
+            return  new SpriteBomb(layer,factory.get(BOMB4), (Bomb) go);
 
         return null;
     }

@@ -5,9 +5,16 @@ import fr.ubx.poo.game.Direction;
 import fr.ubx.poo.game.Game;
 import fr.ubx.poo.game.Position;
 import fr.ubx.poo.game.World;
+import fr.ubx.poo.view.image.ImageFactory;
+import fr.ubx.poo.view.image.ImageResource;
+import fr.ubx.poo.view.sprite.Sprite;
+import fr.ubx.poo.view.sprite.SpriteBomb;
 import fr.ubx.poo.view.sprite.SpriteFactory;
 
-//TODO a faire complet
+import java.lang.Thread;
+
+
+//TODO Status bar  +  loop sprite
 public  class Bomb extends Unplayer{
     private int numSprite;
     private long oldNow;
@@ -16,7 +23,13 @@ public  class Bomb extends Unplayer{
         super(game, position);
         this.numSprite = 0;
         this.oldNow = 0;
+        game.getWorld().SetMovable(this.getPosition(),this);
+        game.getPlayer().setNumberBomb(game.getPlayer().getNumberBomb()-1);
         bombuse();
+        game.getPlayer().setNumberBomb(game.getPlayer().getNumberBomb()+1);
+        game.getWorld().RemoveMovable(this);
+        System.out.println("J'ai normalement enlever la bombe");
+
 
     }
 
@@ -76,21 +89,45 @@ public  class Bomb extends Unplayer{
 
 
 
-    }
 
+    }
 
     private void loopSprite(){
+        Sprite spriteBomb = GameEngine.MovableSpriteAdder(this.getPosition(),this,GameEngine.getSprite());
+        for (int i = 2; i < 7; i++){
+            System.out.println("Normalement tempo");
+            display(i, spriteBomb);
+        }
     }
 
-    private void display(int x){
-
+    private void display(int x, Sprite bomb){
+        if (x==2){
+            System.out.println("Sprite 2");
+            bomb.setImage(ImageFactory.getInstance().get(ImageResource.BOMB3));
+        }
+        if (x==3){
+            System.out.println("Sprite 3");
+            bomb.setImage(ImageFactory.getInstance().get(ImageResource.BOMB2));
+        }
+        if (x==4){
+            System.out.println("Sprite 4");
+            bomb.setImage(ImageFactory.getInstance().get(ImageResource.BOMB1));
+        }
+        if (x==5){
+            System.out.println("Sprite exwplosion");
+            bomb.setImage(ImageFactory.getInstance().get(ImageResource.EXPLOSION));
+        }
+        if (x==6){
+            System.out.println("Suppression sprite");
+            GameEngine.RemoveSprite(bomb);
+        }
     }
 
     public void update(long now){
         //test si changement de sprite
         if (now - this.oldNow >= 1000 && this.numSprite < 4){
             this.numSprite ++;
-            display(this.numSprite);
+            //display(this.numSprite);
 
 
         }

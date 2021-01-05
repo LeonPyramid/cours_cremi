@@ -192,5 +192,6 @@ public class Player extends GameObject implements Movable {
     public void setKey(int x){this.key = x;}
     public int getBombRange(){return this.bombRange;}
     public int getNumberBomb() { return numberBomb; }
+    public void setNumberBomb(int x){this.numberBomb = x;}
     public void setLives(int x){ this.lives = x;}
 }
