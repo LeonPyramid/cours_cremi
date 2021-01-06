@@ -17,6 +17,7 @@ public abstract class Sprite {
     private final Pane layer;
     private ImageView imageView;
     private Image image;
+    private ColorAdjust cadd;
 
     public Sprite(Pane layer, Image image) {
         this.layer = layer;
@@ -41,6 +42,7 @@ public abstract class Sprite {
         imageView = new ImageView(this.image);
         imageView.setX(getPosition().x * size);
         imageView.setY(getPosition().y * size);
+        if(cadd!= null) this.imageView.setEffect(cadd);
         layer.getChildren().add(imageView);
     }
 
@@ -50,6 +52,6 @@ public abstract class Sprite {
     }
     
     protected void setFX(ColorAdjust fx) {
-    	this.imageView.setEffect(fx);
+    	cadd = fx;
     }
 }

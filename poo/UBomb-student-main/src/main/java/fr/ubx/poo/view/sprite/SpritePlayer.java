@@ -10,12 +10,12 @@ import javafx.scene.effect.ColorAdjust;
 import javafx.scene.layout.Pane;
 
 public class SpritePlayer extends SpriteGameObject {
-    private final ColorAdjust effect = new ColorAdjust();
-    private float c = 1f;
+    private final ColorAdjust effect;
+    private float b = 0.7f;
     
     public SpritePlayer(Pane layer, Player player) {
         super(layer, null, player);
-        effect.setContrast(c);
+        effect  = new ColorAdjust();
         updateImage();
     }
 
@@ -23,11 +23,13 @@ public class SpritePlayer extends SpriteGameObject {
     public void updateImage() {
         Player player = (Player) go;
         setImage(ImageFactory.getInstance().getPlayer(player.getDirection()));
-        try {
-        	setFX(effect);	
-        } catch (Exception e) {
-        	System.out.println("ça marche pas" + e);
+        if(player.isTouched()) {
+        	effect.setBrightness(b);
+        	setFX(effect);
         }
-        
+        else {
+        	effect.setBrightness(0);
+        	setFX(effect);
+        }
     }
 }
