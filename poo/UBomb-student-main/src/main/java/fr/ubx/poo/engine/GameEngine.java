@@ -212,11 +212,9 @@ public final class GameEngine {
     public static void RemoveSprite(Sprite sprite) {
         for (int i = 0; i < sprites.size(); i++) {
             Sprite u = sprites.get(i);
-            if (u.getClass() == sprite.getClass()) {
-                System.out.println("1"+  sprites);
+            if (u.getClass() == sprite.getClass() && u.getPosition() == sprite.getPosition()) {
                 sprites.get(i).remove();
                 sprites.remove(i);
-                System.out.println("2 " +sprites);
             }
         }
     }
