@@ -11,15 +11,15 @@ import fr.ubx.poo.view.sprite.SpriteFactory;
 
 
 
-//TODO  loop sprite
+//TODO  loop sprite ça va etre chiant
 public  class Bomb extends Unplayer{
-    private int numSprite;
-    private long oldNow;
+    private int state;
+    private long start;
 
     public Bomb (Game game, Position position){
         super(game, position);
-        this.numSprite = 0;
-        this.oldNow = 0;
+        this.state = 0;
+        this.start = 0;
         game.getWorld().SetMovable(this.getPosition(),this);
         game.getPlayer().setNumberBomb(game.getPlayer().getNumberBomb()-1);
         bombuse();
@@ -49,7 +49,7 @@ public  class Bomb extends Unplayer{
 
             GameObject mov = world.returnMovable(newPos);
 
-            if (mov instanceof Key || mov instanceof Door_Next_Open || mov instanceof Door_Next_Closed || mov instanceof  Door_Prev_Open){
+            if (mov instanceof Key || mov instanceof Door_Next_Open || mov instanceof Door_Next_Closed || mov instanceof  Door_Prev_Open || mov instanceof Princess){
                 break;
             }
 
@@ -114,10 +114,24 @@ public  class Bomb extends Unplayer{
     }
 
     public void update(long now){
-        //test si changement de sprite
-        if (now - this.oldNow >= 1000 && this.numSprite < 4){
-            this.numSprite ++;
-            //display(this.numSprite);
+
+        if (start == 0) {
+            this.start = now;
         }
+        if (now >= start + 1000000000){
+            if (state == 3){
+                //prout
+            }else{
+                state ++;
+                start = start + 1000000000;
+
+            }
+
+        }
+
+
     }
+
+    public int getState(){return this.state;}
+
 }

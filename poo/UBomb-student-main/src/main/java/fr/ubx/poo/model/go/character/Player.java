@@ -32,6 +32,7 @@ public class Player extends GameObject implements Movable {
     private float untilTime;//Le temps où le joueur sera de nouveau vulnérable, ==0 si vulnerable
     private boolean isTouched; //Permet de savoir quand le player a pris des degats
     private ArrayList<Bomb> bombs;
+    private int nbbombsused = 0;
 
     public Player(Game game, Position position) {
         super(game, position);
@@ -185,7 +186,12 @@ public class Player extends GameObject implements Movable {
 
         		System.out.println("Je ne suis plus invincible!");
         	}
-        	
+        }
+
+        if(!bombs.isEmpty()){
+            for(int i = 0; i<nbbombsused;i++){
+                bombs.get(i).update(now);
+            }
         }
     }
 
