@@ -14,6 +14,7 @@ import fr.ubx.poo.view.image.ImageFactory;
 import fr.ubx.poo.view.image.ImageResource;
 import fr.ubx.poo.view.sprite.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Player extends GameObject implements Movable {
@@ -30,7 +31,7 @@ public class Player extends GameObject implements Movable {
     public final float invincTime;
     private float untilTime;//Le temps où le joueur sera de nouveau vulnérable, ==0 si vulnerable
     private boolean isTouched; //Permet de savoir quand le player a pris des degats
-    private L
+    private ArrayList<Bomb> bombs;
 
     public Player(Game game, Position position) {
         super(game, position);
