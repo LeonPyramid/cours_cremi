@@ -24,6 +24,7 @@ public class Game {
     private final String worldPath;
     public int initPlayerLives;
     public int levels;
+    public float invincTime;
 
     public Game(String worldPath) {
         //world = new WorldStatic();
@@ -52,6 +53,7 @@ public class Game {
             prop.load(input);
             initPlayerLives = Integer.parseInt(prop.getProperty("lives", "3"));
             levels = Integer.parseInt(prop.getProperty("levels","3"));
+            invincTime = Float.parseFloat(prop.getProperty("invincTime","1f"));
         } catch (IOException ex) {
             System.err.println("Error loading configuration"+ ex);
         }
