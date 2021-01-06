@@ -98,13 +98,7 @@ public class Player extends GameObject implements Movable {
             }
             else if (mov instanceof Monster){
                 System.out.println("Monster");
-                if(isTouched == false) {
-                	this.lives --;
-                	isTouched = true;
-                	if (this.lives == 0){
-                		this.alive = false;
-                	}                	
-                }
+                takeDamage();
                 
             }
             else if (mov instanceof BombRangeInc){
@@ -213,4 +207,17 @@ public class Player extends GameObject implements Movable {
     public int getNumberBomb() { return numberBomb; }
     public void setNumberBomb(int x){this.numberBomb = x;}
     public void setLives(int x){ this.lives = x;}
+    public void setTouched(boolean x){this.isTouched=x;}
+    public void setAlive(boolean x){this.alive = x;}
+
+
+    public void takeDamage(){
+        if(isTouched == false) {
+            this.lives --;
+            isTouched = true;
+            if (this.lives == 0){
+                this.alive = false;
+            }
+        }
+    }
 }

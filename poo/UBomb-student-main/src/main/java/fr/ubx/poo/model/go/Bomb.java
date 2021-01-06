@@ -44,7 +44,7 @@ public  class Bomb extends Unplayer{
                 break;
             }
             if (newPos.equals(game.getPlayer().getPosition())){
-                game.getPlayer().setLives(game.getPlayer().getLives()-1);
+                game.getPlayer().takeDamage();
             }
 
             GameObject mov = world.returnMovable(newPos);
@@ -55,6 +55,7 @@ public  class Bomb extends Unplayer{
 
             if (mov instanceof Bomb){
                 ((Bomb) mov).explosion();
+
             }
 
             if (  mov != null ){
@@ -69,7 +70,7 @@ public  class Bomb extends Unplayer{
         World world = this.game.getWorld();
 
         if (pos.equals(game.getPlayer().getPosition()))
-            game.getPlayer().setLives(game.getPlayer().getLives()-1);
+            game.getPlayer().takeDamage();
 
         Direction dir = Direction.S;
         explosionDirection(world,dir,pos);
