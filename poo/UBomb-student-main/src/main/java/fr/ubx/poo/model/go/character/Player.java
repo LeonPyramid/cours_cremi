@@ -201,6 +201,10 @@ public class Player extends GameObject implements Movable {
     public boolean isAlive() {
         return alive;
     }
+    
+    public boolean isTouched() {
+    	return isTouched;
+    }
     public int getKey(){return this.key;}
     public void setKey(int x){this.key = x;}
     public int getBombRange(){return this.bombRange;}
