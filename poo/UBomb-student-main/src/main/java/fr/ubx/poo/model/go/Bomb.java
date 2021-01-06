@@ -1,5 +1,4 @@
 package fr.ubx.poo.model.go;
-
 import fr.ubx.poo.engine.GameEngine;
 import fr.ubx.poo.game.Direction;
 import fr.ubx.poo.game.Game;
@@ -8,13 +7,11 @@ import fr.ubx.poo.game.World;
 import fr.ubx.poo.view.image.ImageFactory;
 import fr.ubx.poo.view.image.ImageResource;
 import fr.ubx.poo.view.sprite.Sprite;
-import fr.ubx.poo.view.sprite.SpriteBomb;
 import fr.ubx.poo.view.sprite.SpriteFactory;
 
-import java.lang.Thread;
 
 
-//TODO Status bar  +  loop sprite
+//TODO  loop sprite
 public  class Bomb extends Unplayer{
     private int numSprite;
     private long oldNow;
@@ -28,22 +25,17 @@ public  class Bomb extends Unplayer{
         bombuse();
         game.getPlayer().setNumberBomb(game.getPlayer().getNumberBomb()+1);
         game.getWorld().RemoveMovable(this);
-        System.out.println("J'ai normalement enlever la bombe");
-
-
     }
 
 
     public void bombuse(){
-        loopSprite();
+        lineSprite();
         explosion();
-        
     }
 
     private void explosionDirection (World world,Direction direction, Position start){
 
         Position newPos = start;
-
 
         for (int range = 0; range<game.getPlayer().getBombRange(); range++){
 
@@ -61,19 +53,23 @@ public  class Bomb extends Unplayer{
                 break;
             }
 
+            if (mov instanceof Bomb){
+                ((Bomb) mov).explosion();
+            }
+
             if (  mov != null ){
                 world.RemoveMovable(mov);
                 GameEngine.RemoveSprite(SpriteFactory.createMovables(GameEngine.getLayer(),newPos,mov));
                 break;
             }
-
-
-
         }
     }
-    private void explosion(){
+    protected void explosion(){
         Position pos = this.getPosition();
         World world = this.game.getWorld();
+
+        if (pos.equals(game.getPlayer().getPosition()))
+            game.getPlayer().setLives(game.getPlayer().getLives()-1);
 
         Direction dir = Direction.S;
         explosionDirection(world,dir,pos);
@@ -83,16 +79,9 @@ public  class Bomb extends Unplayer{
         explosionDirection(world,dir,pos);
         dir = Direction.E;
         explosionDirection(world,dir,pos);
-
-
-
-
-
-
-
     }
 
-    private void loopSprite(){
+    private void lineSprite(){
         Sprite spriteBomb = GameEngine.MovableSpriteAdder(this.getPosition(),this,GameEngine.getSprite());
         for (int i = 2; i < 7; i++){
             System.out.println("Normalement tempo");
@@ -128,8 +117,6 @@ public  class Bomb extends Unplayer{
         if (now - this.oldNow >= 1000 && this.numSprite < 4){
             this.numSprite ++;
             //display(this.numSprite);
-
-
         }
     }
 }

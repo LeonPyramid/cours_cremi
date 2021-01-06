@@ -30,6 +30,7 @@ public class Player extends GameObject implements Movable {
     public final float invincTime;
     private float untilTime;//Le temps où le joueur sera de nouveau vulnérable, ==0 si vulnerable
     private boolean isTouched; //Permet de savoir quand le player a pris des degats
+    private L
 
     public Player(Game game, Position position) {
         super(game, position);
@@ -54,7 +55,7 @@ public class Player extends GameObject implements Movable {
     }
 
     @Override
-        public boolean canMove(Direction direction) {
+    public boolean canMove(Direction direction) {
 
     	Position newPos = direction.nextPosition(this.getPosition());
 
@@ -65,6 +66,7 @@ public class Player extends GameObject implements Movable {
     	if(!game.getWorld().isEmpty(newPos)) {
     		return false;
     	}
+
     	GameObject mov = game.getWorld().returnMovable(newPos);
     	if(mov!=null) {
     		if(mov instanceof Box) {
@@ -162,7 +164,6 @@ public class Player extends GameObject implements Movable {
                 System.out.println("Bomb");
             }
     	}
-
     	return true;
     }
 
@@ -196,15 +197,12 @@ public class Player extends GameObject implements Movable {
     public int isChangingLevel() {
     	return changeLevel;
     }
-
     public void resetLvl() {
     	this.changeLevel = 0;
     }
-
     public boolean isWinner() {
         return winner;
     }
-
     public boolean isAlive() {
         return alive;
     }
