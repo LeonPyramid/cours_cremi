@@ -27,12 +27,15 @@ public class Player extends GameObject implements Movable {
     private int key = 0;
     private int bombRange = 1;
     private int numberBomb = 1;
-
+    public final float invincTime;
+    private float untilTime;//Le temps où le joueur sera de nouveau vulnérable, ==0 si vulnerable
+    private boolean isTouched; //Permet de savoir quand le player a pris des degats
 
     public Player(Game game, Position position) {
         super(game, position);
         this.direction = Direction.S;
         this.lives = game.getInitPlayerLives();
+        this.invincTime = game.invincTime*1000000000;//Afin de le convertir en nanosecondes
     }
 
     public int getLives() {
@@ -92,10 +95,14 @@ public class Player extends GameObject implements Movable {
             }
             else if (mov instanceof Monster){
                 System.out.println("Monster");
-                this.lives --;
-                if (this.lives == 0){
-                      this.alive = false;
+                if(isTouched == false) {
+                	this.lives --;
+                	isTouched = true;
+                	if (this.lives == 0){
+                		this.alive = false;
+                	}                	
                 }
+                
             }
             else if (mov instanceof BombRangeInc){
                 this.bombRange++;
@@ -171,6 +178,19 @@ public class Player extends GameObject implements Movable {
             }
         }
         moveRequested = false;
+        if(isTouched) {
+        	if(untilTime == 0) {
+        		System.out.println("Je suis touché et invincible!");
+        		untilTime = now + invincTime;
+        	}
+        	else if(untilTime <= now) {
+        		isTouched = false;
+        		untilTime = 0;
+
+        		System.out.println("Je ne suis plus invincible!");
+        	}
+        	
+        }
     }
 
     public int isChangingLevel() {

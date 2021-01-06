@@ -4,6 +4,8 @@
 
 package fr.ubx.poo.view.sprite;
 
+import javafx.scene.effect.ColorAdjust;
+
 import fr.ubx.poo.game.Position;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -45,5 +47,9 @@ public abstract class Sprite {
     public final void remove() {
         layer.getChildren().remove(imageView);
         imageView = null;
+    }
+    
+    protected void setFX(ColorAdjust fx) {
+    	this.imageView.setEffect(fx);
     }
 }
