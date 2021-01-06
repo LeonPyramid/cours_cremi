@@ -8,8 +8,11 @@ import fr.ubx.poo.model.go.Unplayer;
 
 //TODO a faire complet
 public class Monster extends Unplayer implements Movable {
-
-    public Monster (Game game, Position position){super (game, position);}
+	Direction direction;
+    public Monster (Game game, Position position){
+    	super (game, position);
+    	direction = Direction.S;
+    }
 
     @Override
     public String toString() { return "Monster"; }
@@ -19,4 +22,7 @@ public class Monster extends Unplayer implements Movable {
 
     @Override
     public boolean canMove(Direction direction) { return false; }
+    public Direction getDirection() {
+    	return direction;
+    }
 }
