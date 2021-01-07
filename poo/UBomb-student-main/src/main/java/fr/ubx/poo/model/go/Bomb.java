@@ -4,14 +4,11 @@ import fr.ubx.poo.game.Direction;
 import fr.ubx.poo.game.Game;
 import fr.ubx.poo.game.Position;
 import fr.ubx.poo.game.World;
-import fr.ubx.poo.view.image.ImageFactory;
-import fr.ubx.poo.view.image.ImageResource;
-import fr.ubx.poo.view.sprite.Sprite;
 import fr.ubx.poo.view.sprite.SpriteFactory;
 
 
 
-//TODO  loop sprite ça va etre chiant
+//TODO  loop sprite
 public  class Bomb extends Unplayer{
     private int state;
     private long start;
@@ -20,18 +17,8 @@ public  class Bomb extends Unplayer{
         super(game, position);
         this.state = 0;
         this.start = 0;
-        game.getWorld().SetMovable(this.getPosition(),this);
-        game.getPlayer().setNumberBomb(game.getPlayer().getNumberBomb()-1);
-        bombuse();
-        game.getPlayer().setNumberBomb(game.getPlayer().getNumberBomb()+1);
-        game.getWorld().RemoveMovable(this);
     }
 
-
-    public void bombuse(){
-        lineSprite();
-        explosion();
-    }
 
     private void explosionDirection (World world,Direction direction, Position start){
 
@@ -54,7 +41,7 @@ public  class Bomb extends Unplayer{
             }
 
             if (mov instanceof Bomb){
-                ((Bomb) mov).explosion();
+                ((Bomb) mov).setState(3);
 
             }
 
@@ -82,15 +69,15 @@ public  class Bomb extends Unplayer{
         explosionDirection(world,dir,pos);
     }
 
-    private void lineSprite(){
+    /*private void lineSprite(){
         Sprite spriteBomb = GameEngine.MovableSpriteAdder(this.getPosition(),this,GameEngine.getSprite());
         for (int i = 2; i < 7; i++){
             System.out.println("Normalement tempo");
             display(i, spriteBomb);
         }
-    }
+    }*/
 
-    private void display(int x, Sprite bomb){
+    /*private void display(int x, Sprite bomb){
         if (x==2){
             System.out.println("Sprite 2");
             bomb.setImage(ImageFactory.getInstance().get(ImageResource.BOMB3));
@@ -111,27 +98,28 @@ public  class Bomb extends Unplayer{
             System.out.println("Suppression sprite");
             GameEngine.RemoveSprite(bomb);
         }
-    }
+    }*/
 
-    public void update(long now){
-
+    public boolean update(long now){
         if (start == 0) {
             this.start = now;
         }
+
         if (now >= start + 1000000000){
+            if (state == 6){
+                return true;
+            }
             if (state == 3){
-                //prout
+                state ++;
+                explosion();
             }else{
                 state ++;
                 start = start + 1000000000;
-
             }
-
         }
-
-
+        return false;
     }
 
     public int getState(){return this.state;}
-
+    public void setState(int x){state = x;}
 }

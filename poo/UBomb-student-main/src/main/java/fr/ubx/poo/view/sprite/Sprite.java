@@ -54,4 +54,6 @@ public abstract class Sprite {
     protected void setFX(ColorAdjust fx) {
     	cadd = fx;
     }
+
+    protected void setImageView(ImageView x){ this.imageView =x;}
 }

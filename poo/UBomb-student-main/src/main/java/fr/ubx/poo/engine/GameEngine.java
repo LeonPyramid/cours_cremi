@@ -154,6 +154,8 @@ public final class GameEngine {
             Position Ppos= player.getPosition();
             if (game.getPlayer().getNumberBomb() >0){
                 Bomb bomb = new Bomb(game,Ppos);
+                player.addbomb(bomb);
+                Sprite sprtbomb =  MovableSpriteAdder(Ppos,bomb,sprites);
             }
         }
         input.clear();

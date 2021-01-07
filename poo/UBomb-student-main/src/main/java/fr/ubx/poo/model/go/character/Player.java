@@ -13,9 +13,8 @@ import fr.ubx.poo.game.Game;
 import fr.ubx.poo.view.image.ImageFactory;
 import fr.ubx.poo.view.image.ImageResource;
 import fr.ubx.poo.view.sprite.*;
-
 import java.util.ArrayList;
-import java.util.List;
+
 
 public class Player extends GameObject implements Movable {
 
@@ -31,7 +30,7 @@ public class Player extends GameObject implements Movable {
     public final float invincTime;
     private float untilTime;//Le temps où le joueur sera de nouveau vulnérable, ==0 si vulnerable
     private boolean isTouched; //Permet de savoir quand le player a pris des degats
-    private ArrayList<Bomb> bombs;
+    private ArrayList<Bomb> bombs  = new ArrayList<>();
     private int nbbombsused = 0;
 
     public Player(Game game, Position position) {
@@ -155,10 +154,6 @@ public class Player extends GameObject implements Movable {
             else if (mov instanceof Princess){
                 this.winner = true;
             }
-            //TODO Debeug tant que sprites sont relous!
-            else if (mov instanceof Bomb){
-                System.out.println("Bomb");
-            }
     	}
     	return true;
     }
@@ -183,14 +178,19 @@ public class Player extends GameObject implements Movable {
         	else if(untilTime <= now) {
         		isTouched = false;
         		untilTime = 0;
+                System.out.println("Je ne suis plus invincible!");
 
-        		System.out.println("Je ne suis plus invincible!");
         	}
         }
-
         if(!bombs.isEmpty()){
             for(int i = 0; i<nbbombsused;i++){
-                bombs.get(i).update(now);
+                boolean status = bombs.get(i).update(now);
+                if (status==true) {
+                    game.getWorld().RemoveMovable(bombs.get(i));
+                    bombs.remove(i);
+                    numberBomb++;
+                    nbbombsused --;
+                }
             }
         }
     }
@@ -229,5 +229,14 @@ public class Player extends GameObject implements Movable {
                 this.alive = false;
             }
         }
+    }
+
+    public  void addbomb(Bomb bomb){
+        numberBomb--;
+        game.getWorld().SetMovable(getPosition(),bomb);
+        bombs.add(bomb);
+        nbbombsused ++;
+        System.out.println("Bomb?");
+
     }
 }
