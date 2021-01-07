@@ -12,6 +12,7 @@ import fr.ubx.poo.view.image.ImageResource;
 import fr.ubx.poo.view.sprite.*;
 import fr.ubx.poo.game.Game;
 import fr.ubx.poo.game.Position;
+import fr.ubx.poo.model.go.character.Monster;
 import fr.ubx.poo.model.go.character.Player;
 import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
@@ -29,6 +30,7 @@ import javafx.stage.Stage;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BiConsumer;
 
 import static java.lang.Thread.sleep;
 
@@ -109,6 +111,7 @@ public final class GameEngine {
                 // Graphic update
                 render();
                 statusBar.update(game);
+                
             }
         };
     }
@@ -199,7 +202,13 @@ public final class GameEngine {
         }
         //Debug dégueu
         //System.out.println(game.getWorld().getMovables());
+        //Update des monstres
+        game.getWorld().monsterList().forEach(go -> go.update(now));
+        
     }
+
+
+    
 
     private void render() {
         sprites.forEach(Sprite::render);

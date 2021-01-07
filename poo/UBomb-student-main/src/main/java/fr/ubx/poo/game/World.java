@@ -140,6 +140,12 @@ public class World {
     }
 
     public void forEachMovables(BiConsumer<Position,GameObject> fn){movables.get(actualLvl).forEach(fn);}
+    
+    public ArrayList<Monster> monsterList(){
+    	ArrayList<Monster> list = new ArrayList<Monster>();
+    	this.forEachMovables((pos,go) -> {if(go instanceof Monster) {list.add((Monster) go);}else{}});
+    	return list;
+    }
 
     public Collection<Decor> values() {
         return grid.get(actualLvl).values();
