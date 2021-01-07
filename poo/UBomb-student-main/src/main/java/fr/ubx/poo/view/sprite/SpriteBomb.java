@@ -27,26 +27,20 @@ public class SpriteBomb extends SpriteGameObject{
         int x = wich();
 
         if (x==1){
-            System.out.println("Sprite 2");
             this.setImage(ImageFactory.getInstance().get(ImageResource.BOMB3));
         }
         if (x==2){
-            System.out.println("Sprite 3");
             this.setImage(ImageFactory.getInstance().get(ImageResource.BOMB2));
         }
         if (x==3){
-            System.out.println("Sprite 4");
             this.setImage(ImageFactory.getInstance().get(ImageResource.BOMB1));
         }
         if (x==4){
-            System.out.println("Sprite exwplosion");
             this.setImage(ImageFactory.getInstance().get(ImageResource.EXPLOSION));
         }
         if (x==5){
-            System.out.println("Suppression sprite");
             this.setImage(null);
-          //  this.setImageView(null);
-        }
+         }
 
 
 

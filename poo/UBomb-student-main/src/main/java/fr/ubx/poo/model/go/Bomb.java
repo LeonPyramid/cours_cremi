@@ -69,37 +69,6 @@ public  class Bomb extends Unplayer{
         explosionDirection(world,dir,pos);
     }
 
-    /*private void lineSprite(){
-        Sprite spriteBomb = GameEngine.MovableSpriteAdder(this.getPosition(),this,GameEngine.getSprite());
-        for (int i = 2; i < 7; i++){
-            System.out.println("Normalement tempo");
-            display(i, spriteBomb);
-        }
-    }*/
-
-    /*private void display(int x, Sprite bomb){
-        if (x==2){
-            System.out.println("Sprite 2");
-            bomb.setImage(ImageFactory.getInstance().get(ImageResource.BOMB3));
-        }
-        if (x==3){
-            System.out.println("Sprite 3");
-            bomb.setImage(ImageFactory.getInstance().get(ImageResource.BOMB2));
-        }
-        if (x==4){
-            System.out.println("Sprite 4");
-            bomb.setImage(ImageFactory.getInstance().get(ImageResource.BOMB1));
-        }
-        if (x==5){
-            System.out.println("Sprite exwplosion");
-            bomb.setImage(ImageFactory.getInstance().get(ImageResource.EXPLOSION));
-        }
-        if (x==6){
-            System.out.println("Suppression sprite");
-            GameEngine.RemoveSprite(bomb);
-        }
-    }*/
-
     public boolean update(long now){
         if (start == 0) {
             this.start = now;

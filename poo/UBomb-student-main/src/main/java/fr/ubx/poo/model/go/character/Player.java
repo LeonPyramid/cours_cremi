@@ -87,7 +87,6 @@ public class Player extends GameObject implements Movable {
     			return true;
     		}
     		else if (mov instanceof Key) {
-                System.out.println("Key");
                 this.key ++;
                 boolean b = game.getWorld().RemoveMovable(mov);
                 if (b) {
@@ -97,7 +96,6 @@ public class Player extends GameObject implements Movable {
                 }
             }
             else if (mov instanceof Monster){
-                System.out.println("Monster");
                 takeDamage();
                 
             }
@@ -236,7 +234,5 @@ public class Player extends GameObject implements Movable {
         game.getWorld().SetMovable(getPosition(),bomb);
         bombs.add(bomb);
         nbbombsused ++;
-        System.out.println("Bomb?");
-
     }
 }
