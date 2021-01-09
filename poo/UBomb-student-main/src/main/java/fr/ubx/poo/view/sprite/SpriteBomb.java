@@ -1,10 +1,9 @@
 package fr.ubx.poo.view.sprite;
-import fr.ubx.poo.game.Game;
 import fr.ubx.poo.model.go.Bomb;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import fr.ubx.poo.view.image.*;
-import fr.ubx.poo.engine.GameEngine;
+
 
 public class SpriteBomb extends SpriteGameObject{
 

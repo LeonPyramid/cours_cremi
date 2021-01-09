@@ -1,6 +1,6 @@
 package fr.ubx.poo.model.go;
 
-import fr.ubx.poo.game.Direction;
+
 import fr.ubx.poo.game.Game;
 import fr.ubx.poo.game.Position;
 

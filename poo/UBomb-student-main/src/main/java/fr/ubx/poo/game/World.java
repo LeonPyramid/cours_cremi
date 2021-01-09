@@ -8,9 +8,6 @@ import fr.ubx.poo.model.decor.Decor;
 import fr.ubx.poo.model.go.*;
 import fr.ubx.poo.model.go.character.Monster;
 import fr.ubx.poo.model.go.character.Player;
-import javafx.geometry.Pos;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Hashtable;

@@ -1,7 +1,6 @@
 package fr.ubx.poo.view.sprite;
 
 import fr.ubx.poo.model.go.BombRangeDec;
-import fr.ubx.poo.model.go.BombRangeInc;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 
