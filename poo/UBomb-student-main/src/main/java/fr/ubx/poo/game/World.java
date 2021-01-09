@@ -107,7 +107,6 @@ public class World {
     					ht.put(pos,new Door_Next_Closed(game,pos));
     					break;
     				case DoorPrevOpened:
-    					System.out.println("cool");
     					pos =new Position(x,y);
     					ht.put(pos,new Door_Prev_Open(game,pos));
     					break;

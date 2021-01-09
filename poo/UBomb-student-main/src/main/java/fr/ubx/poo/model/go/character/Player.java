@@ -171,13 +171,11 @@ public class Player extends GameObject implements Movable {
         moveRequested = false;
         if(isTouched) {
         	if(untilTime == 0) {
-        		System.out.println("Je suis touché et invincible!");
         		untilTime = now + invincTime;
         	}
         	else if(untilTime <= now) {
         		isTouched = false;
         		untilTime = 0;
-                System.out.println("Je ne suis plus invincible!");
 
         	}
         }

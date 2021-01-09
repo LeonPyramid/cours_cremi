@@ -201,8 +201,6 @@ public final class GameEngine {
             gameLoop.stop();
             showMessage("Gagné", Color.BLUE);
         }
-        //Debug dégueu
-        //System.out.println(game.getWorld().getMovables());
         //Update des monstres
         game.getWorld().monsterList().forEach(go -> go.update(now));
         

@@ -48,7 +48,6 @@ public class Monster extends Unplayer implements Movable {
         setPosition(nextPos);
         game.getWorld().SetMovable(nextPos, this);
         GameObject mov = game.getWorld().returnMovable(nextPos);
-        //System.out.println("my pos" + nextPos + " player pos" + game.getPlayer().getPosition());
         if(nextPos.equals(game.getPlayer().getPosition())) {
         	game.getPlayer().takeDamage();
     	}
