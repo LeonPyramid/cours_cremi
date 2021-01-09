@@ -123,7 +123,11 @@ public class World {
     public Decor get(Position position) {
         return grid.get(actualLvl).get(position);
     }
-
+    public Decor get(Position position,int lvl) {
+        return grid.get(lvl).get(position);
+    }
+    
+    
     public void set(Position position, Decor decor) {
         grid.get(actualLvl).put(position, decor);
     }
@@ -155,7 +159,9 @@ public class World {
     public boolean isEmpty(Position position) {
         return grid.get(actualLvl).get(position) == null;
     }
-    
+    public boolean isEmpty(Position position,int lvl) {
+        return grid.get(lvl).get(position) == null;
+    }
     public void SetMovable(Position pos, GameObject go){
     	if(movables.get(actualLvl).get(pos)!=null) {
     		throw new PositionAlreadyTakenException("Can't put " +go+" at "+ pos + " ; taken by " + movables.get(actualLvl).get(pos));
@@ -172,8 +178,16 @@ public class World {
     	}
     	return false;
     }
+    public boolean RemoveMovable(GameObject go,int lvl) {
+    	if(movables.get(lvl).containsValue(go)) {
+    		movables.get(lvl).remove(go.getPosition());
+    		return true;
+    	}
+    	return false;
+    }
     
     public GameObject returnMovable(Position position) {return movables.get(actualLvl).get(position);}
+    public GameObject returnMovable(Position position,int lvl) {return movables.get(lvl).get(position);}
     
     public Map<Position,GameObject> getMovables(){return movables.get(actualLvl);}
     
