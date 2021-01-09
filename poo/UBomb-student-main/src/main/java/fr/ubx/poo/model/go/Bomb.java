@@ -8,11 +8,11 @@ import fr.ubx.poo.view.sprite.SpriteFactory;
 
 
 
-//TODO  loop sprite
 public  class Bomb extends Unplayer{
     private int state;
     private long start;
     private boolean exploded = false;
+    private boolean hasexploded = false;
     final private int range;
 
 
@@ -45,6 +45,7 @@ public  class Bomb extends Unplayer{
             }
 
             if (mov instanceof Bomb){
+                if (! ((Bomb) mov).getHasExploded())
                 ((Bomb) mov).setState(3);
 
             }
@@ -71,6 +72,7 @@ public  class Bomb extends Unplayer{
         explosionDirection(world,dir,pos);
         dir = Direction.E;
         explosionDirection(world,dir,pos);
+        this.exploded = true;
     }
 
     public boolean update(long now){
@@ -84,8 +86,8 @@ public  class Bomb extends Unplayer{
             }
             if (state == 3){
                 state ++;
+                this.hasexploded = true;
                 explosion();
-                this.exploded = true;
             }else{
                 state ++;
                 start = start + 1000000000;
@@ -98,4 +100,5 @@ public  class Bomb extends Unplayer{
     public void setState(int x){state = x;}
     public boolean getExploded(){return this.exploded;}
     public void setExploded(boolean x){this.exploded = x;}
+    private boolean getHasExploded(){return this.hasexploded;}
 }
