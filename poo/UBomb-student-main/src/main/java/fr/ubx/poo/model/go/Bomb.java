@@ -14,6 +14,7 @@ public  class Bomb extends Unplayer{
     private boolean exploded = false;
     private boolean hasexploded = false;
     final private int range;
+    private final int lvl;
 
 
     public Bomb (Game game, Position position){
@@ -21,6 +22,7 @@ public  class Bomb extends Unplayer{
         this.state = 0;
         this.start = 0;
         this.range = game.getPlayer().getBombRange();
+        this.lvl = game.getWorld().getActualLvl();
     }
 
 
@@ -31,14 +33,14 @@ public  class Bomb extends Unplayer{
         for (int rng = 0; rng<this.range; rng++){
 
             newPos = direction.nextPosition(newPos);
-            if (!world.isEmpty(newPos)){
+            if (!world.isEmpty(newPos,lvl)){
                 break;
             }
             if (newPos.equals(game.getPlayer().getPosition())){
                 game.getPlayer().takeDamage();
             }
 
-            GameObject mov = world.returnMovable(newPos);
+            GameObject mov = world.returnMovable(newPos,lvl);
 
             if (mov instanceof Key || mov instanceof Door_Next_Open || mov instanceof Door_Next_Closed || mov instanceof  Door_Prev_Open || mov instanceof Princess){
                 break;
@@ -51,7 +53,7 @@ public  class Bomb extends Unplayer{
             }
 
             if (  mov != null ){
-                world.RemoveMovable(mov);
+                world.RemoveMovable(mov,lvl);
                 GameEngine.RemoveSprite(SpriteFactory.createMovables(GameEngine.getLayer(),newPos,mov));
                 break;
             }
