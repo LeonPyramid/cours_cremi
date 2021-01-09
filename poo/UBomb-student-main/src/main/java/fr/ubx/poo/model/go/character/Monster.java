@@ -27,7 +27,6 @@ import fr.ubx.poo.view.sprite.SpriteBombRangeDec;
 import fr.ubx.poo.view.sprite.SpriteHeart;
 import fr.ubx.poo.view.sprite.SpriteKey;
 
-//TODO a faire complet
 public class Monster extends Unplayer implements Movable {
 	Direction direction;
 	private float timeMin = 0.5f;
@@ -49,11 +48,6 @@ public class Monster extends Unplayer implements Movable {
         setPosition(nextPos);
         game.getWorld().SetMovable(nextPos, this);
         GameObject mov = game.getWorld().returnMovable(nextPos);
-        if(mov!=null) {
-    		if(mov instanceof Player && !((Player) mov).isTouched()) {
-    			((Player) mov).takeDamage();
-    		}
-    	}
     }
 
     @Override
