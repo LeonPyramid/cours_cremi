@@ -14,7 +14,6 @@ import fr.ubx.poo.view.image.ImageFactory;
 import fr.ubx.poo.view.image.ImageResource;
 import fr.ubx.poo.view.sprite.*;
 import java.util.ArrayList;
-import java.util.function.BiConsumer;
 
 
 public class Player extends GameObject implements Movable {

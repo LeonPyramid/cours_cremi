@@ -12,9 +12,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 import java.util.ArrayList;
-import java.util.List;
-
-import fr.ubx.poo.game.WorldEntity;
 import fr.ubx.poo.model.go.character.Player;
 
 public class Game {
@@ -39,7 +36,6 @@ public class Game {
             System.err.println("Position not found : " + e.getLocalizedMessage());
             throw new RuntimeException(e);
         }
-        //world.CreateMovable(this);
     }
 
     public int getInitPlayerLives() {

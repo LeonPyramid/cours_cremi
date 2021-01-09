@@ -6,7 +6,6 @@ package fr.ubx.poo.view.sprite;
 
 import static fr.ubx.poo.view.image.ImageResource.*;
 
-import fr.ubx.poo.engine.GameEngine;
 import fr.ubx.poo.game.Position;
 import fr.ubx.poo.model.decor.Decor;
 import fr.ubx.poo.model.decor.Stone;
@@ -15,10 +14,8 @@ import fr.ubx.poo.model.go.*;
 import fr.ubx.poo.model.go.character.Monster;
 import fr.ubx.poo.model.go.character.Player;
 import fr.ubx.poo.view.image.ImageFactory;
-import fr.ubx.poo.view.image.ImageResource;
 import javafx.scene.layout.Pane;
 
-import java.util.List;
 
 
 public final class SpriteFactory {

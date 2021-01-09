@@ -1,8 +1,6 @@
 package fr.ubx.poo.view.sprite;
 
-import fr.ubx.poo.model.go.BombRangeInc;
 import fr.ubx.poo.model.go.Door_Next_Closed;
-import fr.ubx.poo.model.go.Door_Next_Open;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 
