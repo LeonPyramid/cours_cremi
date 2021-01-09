@@ -203,6 +203,7 @@ public class Player extends GameObject implements Movable {
     }
 
     
+    
     public int isChangingLevel() {
     	return changeLevel;
     }
