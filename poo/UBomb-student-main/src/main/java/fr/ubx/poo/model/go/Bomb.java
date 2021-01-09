@@ -13,11 +13,14 @@ public  class Bomb extends Unplayer{
     private int state;
     private long start;
     private boolean exploded = false;
+    final private int range;
+
 
     public Bomb (Game game, Position position){
         super(game, position);
         this.state = 0;
         this.start = 0;
+        this.range = game.getPlayer().getBombRange();
     }
 
 
@@ -25,7 +28,7 @@ public  class Bomb extends Unplayer{
 
         Position newPos = start;
 
-        for (int range = 0; range<game.getPlayer().getBombRange(); range++){
+        for (int rng = 0; rng<this.range; rng++){
 
             newPos = direction.nextPosition(newPos);
             if (!world.isEmpty(newPos)){

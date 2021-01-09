@@ -191,6 +191,7 @@ public final class GameEngine {
             game.getWorld().ChangeLevel(nlvl, player);
             player.resetLvl();
             this.initialize(stage, game);
+            statusBar.update(game);
         }
         if (player.isAlive() == false) {
             gameLoop.stop();

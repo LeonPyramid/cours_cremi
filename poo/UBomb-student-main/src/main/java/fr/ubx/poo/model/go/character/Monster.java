@@ -29,8 +29,8 @@ import fr.ubx.poo.view.sprite.SpriteKey;
 
 public class Monster extends Unplayer implements Movable {
 	Direction direction;
-	private float timeMin = 0.5f;
-	private float timeMax =0.8f;
+	private float timeMin = 0.7f;
+	private float timeMax =1f;
 	private long nextmve;
     public Monster (Game game, Position position){
     	super (game, position);
@@ -80,7 +80,8 @@ public class Monster extends Unplayer implements Movable {
     public void update(long now) {
     	if(nextmve == 0) {
     		nextmve = now;
-    		nextmve += ((Math.random()*((timeMax-timeMin)+1))+timeMin)*1000000000;
+    		
+    		nextmve += ((Math.random()*((timeMax-timeMin)+1))+timeMin)*1000000000/(game.getWorld().getActualLvl()+1);
     	}
     	if(now>=nextmve) {
     		boolean requestMove = true;
