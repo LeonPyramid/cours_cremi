@@ -12,6 +12,7 @@ import fr.ubx.poo.view.sprite.SpriteFactory;
 public  class Bomb extends Unplayer{
     private int state;
     private long start;
+    private boolean exploded = false;
 
     public Bomb (Game game, Position position){
         super(game, position);
@@ -81,6 +82,7 @@ public  class Bomb extends Unplayer{
             if (state == 3){
                 state ++;
                 explosion();
+                this.exploded = true;
             }else{
                 state ++;
                 start = start + 1000000000;
@@ -91,4 +93,6 @@ public  class Bomb extends Unplayer{
 
     public int getState(){return this.state;}
     public void setState(int x){state = x;}
+    public boolean getExploded(){return this.exploded;}
+    public void setExploded(boolean x){this.exploded = x;}
 }

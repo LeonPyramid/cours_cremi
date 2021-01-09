@@ -30,7 +30,7 @@ import fr.ubx.poo.view.sprite.SpriteKey;
 public class Monster extends Unplayer implements Movable {
 	Direction direction;
 	private float timeMin = 0.5f;
-	private float timeMax = 1f;
+	private float timeMax =0.8f;
 	private long nextmve;
     public Monster (Game game, Position position){
     	super (game, position);
@@ -48,6 +48,10 @@ public class Monster extends Unplayer implements Movable {
         setPosition(nextPos);
         game.getWorld().SetMovable(nextPos, this);
         GameObject mov = game.getWorld().returnMovable(nextPos);
+        //System.out.println("my pos" + nextPos + " player pos" + game.getPlayer().getPosition());
+        if(nextPos.equals(game.getPlayer().getPosition())) {
+        	game.getPlayer().takeDamage();
+    	}
     }
 
     @Override
@@ -64,9 +68,6 @@ public class Monster extends Unplayer implements Movable {
 
     	GameObject mov = game.getWorld().returnMovable(newPos);
     	if(mov!=null) {
-    		if(mov instanceof Player) {
-    			return true;
-    		}
     		return false;
     	}
     	return true;
@@ -85,9 +86,7 @@ public class Monster extends Unplayer implements Movable {
     		boolean requestMove = true;
     		do {
     			direction = Direction.random();
-    			System.out.println("J'essaye de me déplacer");
     			if(canMove(direction)) {
-    				System.out.println("je me déplace!");
     				doMove(direction);
     				requestMove = false;
     			}

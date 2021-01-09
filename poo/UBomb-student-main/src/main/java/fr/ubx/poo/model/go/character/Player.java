@@ -98,7 +98,7 @@ public class Player extends GameObject implements Movable {
             }
             else if (mov instanceof Monster){
                 takeDamage();
-                
+                return true;
             }
             else if (mov instanceof BombRangeInc){
                 this.bombRange++;
@@ -183,12 +183,18 @@ public class Player extends GameObject implements Movable {
         }
         if(!bombs.isEmpty()){
             for(int i = 0; i<nbbombsused;i++){
+                int n = 0;
                 boolean status = bombs.get(i).update(now);
+                if (bombs.get(i).getExploded() == true){
+                    bombs.get(i).setExploded(false);
+                    numberBomb ++;
+                }
+
                 if (status==true) {
                     game.getWorld().RemoveMovable(bombs.get(i));
                     bombs.remove(i);
-                    numberBomb++;
                     nbbombsused --;
+
                 }
             }
         }
