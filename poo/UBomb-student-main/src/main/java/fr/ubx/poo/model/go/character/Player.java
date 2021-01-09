@@ -183,7 +183,6 @@ public class Player extends GameObject implements Movable {
                 int n = 0;
                 boolean status = bombs.get(i).update(now);
                 if (bombs.get(i).getExploded() == true){
-                    System.out.println(bombs.get(i));
                     bombs.get(i).setExploded(false);
                     numberBomb ++;
                 }
