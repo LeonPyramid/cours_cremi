@@ -98,7 +98,7 @@ public class Player extends GameObject implements Movable {
             }
             else if (mov instanceof Monster){
                 takeDamage();
-                
+                return true;
             }
             else if (mov instanceof BombRangeInc){
                 this.bombRange++;
