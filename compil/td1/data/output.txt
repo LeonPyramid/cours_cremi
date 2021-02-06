@@ -1,0 +1,4 @@
+Lines: 44
+Keywords: 16
+Identifiers: 34
+Operators: 30
