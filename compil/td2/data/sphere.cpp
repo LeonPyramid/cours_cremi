@@ -37,7 +37,7 @@ int main(void) {
     cout << "Enter a radius to use for both a circle\n"
             << "and a sphere (in inches): ";
     cin >> radius_of_both;
-
+    int tst = 9;
     area_of_circle = area(radius_of_both);
     volume_of_sphere = volume(radius_of_both);
 
@@ -57,5 +57,14 @@ double area(double radius) {
 
 // Returns the volume of a sphere with the specified radius.
 double volume(double radius) {
+    if(true){
+
+    }
+    elseif(false){
+
+    }
+    else{
+
+    }
     return ((4.0 / 3.0) * PI * pow(radius, 3));
 }
