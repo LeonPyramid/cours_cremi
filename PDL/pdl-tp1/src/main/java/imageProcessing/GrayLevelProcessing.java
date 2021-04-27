@@ -8,9 +8,12 @@ import io.scif.img.ImgIOException;
 import io.scif.img.ImgOpener;
 import io.scif.img.ImgSaver;
 import net.imglib2.type.numeric.integer.UnsignedByteType;
+import net.imglib2.view.IntervalView;
+import net.imglib2.view.Views;
 import net.imglib2.exception.IncompatibleTypeException;
 import java.io.File;
 import net.imglib2.Cursor;
+import net.imglib2.Dimensions;
 import net.imglib2.img.Img;
 import net.imglib2.img.array.ArrayImgFactory;
 import net.imglib2.type.numeric.integer.UnsignedByteType;
@@ -49,6 +52,7 @@ public class GrayLevelProcessing{
 				r.setPosition(y, 1);
 				final UnsignedByteType val = r.get();
 				p = val.get() + t;
+				//Bornage des valeurs entre 0 et 255
 				if (p > 255)
 					 p = 255;
 				else if (p< 0)
@@ -87,11 +91,8 @@ public class GrayLevelProcessing{
 		int p = 0;
 		while(cursor.hasNext()){
 			final UnsignedByteType val = cursor.next();
-			p = (255*(val.get()-min)/(max-min)) ;
-			if (p > maxct)
-				 p = maxct;
-			else if (p< minct)
-				p = minct;
+			//On remplace le 255 du cours par l'écart entre les deux bornes, ainsi la répartition est uniforme, on ajoute la borne min pour être entre ces bornes
+			p = minct+((maxct-minct)*(val.get()-min)/(max-min));
 			val.set(p);
 		}
 	}
@@ -107,7 +108,7 @@ public class GrayLevelProcessing{
 		int p = 0;
 		int lut[] = new int[256];
 		for(int i = 0; i < 256; i ++){
-			lut[i] = (255*(i-min)/(max-min)) ;
+			lut[i] = minct+((maxct-minct)*(i-min)/(max-min)) ;
 		}
 		while(cursor.hasNext()){
 			final UnsignedByteType val = cursor.next();
@@ -123,7 +124,7 @@ public class GrayLevelProcessing{
 	public static void hystoContr(Img<UnsignedByteType> img){
 		final Cursor< UnsignedByteType > cursor = img.cursor();
 		int hyst[] = new int[256];
-		for( UnsignedByteType t : img ){
+		for( UnsignedByteType t : img ){ 
 			hyst[t.get()] ++;
 		}
 
@@ -132,15 +133,18 @@ public class GrayLevelProcessing{
 		for(int i = 1; i < 256; i ++){
 			lut[i] = lut[i-1] + hyst[i];
 		}
-		int p;
+		float p; //l'utilisation d'un flotant me permet d'éviter les arrondis trop tôt
 		int n = lut[255];
 		while(cursor.hasNext()){
 			final UnsignedByteType val = cursor.next();
-			p = lut[val.get()]*255/n ;
-			val.set(p);
+			p = lut[val.get()] ;
+			p = p*255/n;
+			val.set((int)p);
 		}
 	}
 	
+
+
 	public static void main(final String[] args) throws ImgIOException, IncompatibleTypeException {
 		// load image
 		if (args.length < 2) {
@@ -157,6 +161,7 @@ public class GrayLevelProcessing{
 		final ImgOpener imgOpener = new ImgOpener();
 		final Img<UnsignedByteType> input = (Img<UnsignedByteType>) imgOpener.openImgs(filename, factory).get(0);
 		imgOpener.context().dispose();
+
 		
 		// process image
 		long begcur = System.nanoTime(); 

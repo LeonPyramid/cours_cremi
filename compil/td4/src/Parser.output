@@ -1,0 +1,897 @@
+Terminaux inutilisés dans la grammaire
+
+    UP
+    ")"
+
+
+Grammaire
+
+    0 $accept: lines $end
+
+    1 lines: lines line
+    2      | line
+
+    3 line: exprLog '\n'
+    4     | exprArith '\n'
+
+    5 exprArith: INTEGER
+    6          | exprArith "+" exprArith
+    7          | exprArith "-" exprArith
+    8          | exprArith "*" exprArith
+    9          | exprArith "/" exprArith
+   10          | "-" exprArith
+   11          | '(' exprArith ')'
+
+   12 exprComp: BOOL
+   13         | exprArith "=" exprArith
+   14         | exprArith ">" exprArith
+   15         | exprArith "<" exprArith
+   16         | exprArith ">=" exprArith
+   17         | exprArith "<=" exprArith
+   18         | exprArith "!=" exprArith
+
+   19 exprLog: exprComp
+   20        | exprLog "&&" exprLog
+   21        | exprLog "||" exprLog
+   22        | "!" exprLog
+   23        | '(' exprLog ')'
+
+
+Terminaux, suivis des règles où ils apparaissent
+
+    $end (0) 0
+    '\n' (10) 3 4
+    '(' (40) 11 23
+    ')' (41) 11 23
+    error (256)
+    "+" (258) 6
+    "-" (259) 7 10
+    UMINUS (260)
+    "*" (261) 8
+    "/" (262) 9
+    "=" (263) 13
+    ">" (264) 14
+    "<" (265) 15
+    ">=" (266) 16
+    "<=" (267) 17
+    "!=" (268) 18
+    "&&" (269) 20
+    "||" (270) 21
+    "!" (271) 22
+    INTEGER <Integer> (272) 5
+    BOOL <Boolean> (273) 12
+    UP (274)
+    ")" (275)
+
+
+Non-terminaux, suivis des règles où ils apparaissent
+
+    $accept (24)
+        à gauche: 0
+    exprComp <Boolean> (25)
+        à gauche: 12 13 14 15 16 17 18
+        à droite: 19
+    exprLog <Boolean> (26)
+        à gauche: 19 20 21 22 23
+        à droite: 3 20 21 22 23
+    exprArith <Integer> (27)
+        à gauche: 5 6 7 8 9 10 11
+        à droite: 4 6 7 8 9 10 11 13 14 15 16 17 18
+    lines (28)
+        à gauche: 1 2
+        à droite: 0 1
+    line (29)
+        à gauche: 3 4
+        à droite: 1 2
+
+
+État 0
+
+    0 $accept: • lines $end
+    1 lines: • lines line
+    2      | • line
+    3 line: • exprLog '\n'
+    4     | • exprArith '\n'
+    5 exprArith: • INTEGER
+    6          | • exprArith "+" exprArith
+    7          | • exprArith "-" exprArith
+    8          | • exprArith "*" exprArith
+    9          | • exprArith "/" exprArith
+   10          | • "-" exprArith
+   11          | • '(' exprArith ')'
+   12 exprComp: • BOOL
+   13         | • exprArith "=" exprArith
+   14         | • exprArith ">" exprArith
+   15         | • exprArith "<" exprArith
+   16         | • exprArith ">=" exprArith
+   17         | • exprArith "<=" exprArith
+   18         | • exprArith "!=" exprArith
+   19 exprLog: • exprComp
+   20        | • exprLog "&&" exprLog
+   21        | • exprLog "||" exprLog
+   22        | • "!" exprLog
+   23        | • '(' exprLog ')'
+
+    "-"      décalage et aller à l'état 1
+    "!"      décalage et aller à l'état 2
+    INTEGER  décalage et aller à l'état 3
+    BOOL     décalage et aller à l'état 4
+    '('      décalage et aller à l'état 5
+
+    exprComp   aller à l'état 6
+    exprLog    aller à l'état 7
+    exprArith  aller à l'état 8
+    lines      aller à l'état 9
+    line       aller à l'état 10
+
+
+État 1
+
+    5 exprArith: • INTEGER
+    6          | • exprArith "+" exprArith
+    7          | • exprArith "-" exprArith
+    8          | • exprArith "*" exprArith
+    9          | • exprArith "/" exprArith
+   10          | • "-" exprArith
+   10          | "-" • exprArith
+   11          | • '(' exprArith ')'
+
+    "-"      décalage et aller à l'état 1
+    INTEGER  décalage et aller à l'état 3
+    '('      décalage et aller à l'état 11
+
+    exprArith  aller à l'état 12
+
+
+État 2
+
+    5 exprArith: • INTEGER
+    6          | • exprArith "+" exprArith
+    7          | • exprArith "-" exprArith
+    8          | • exprArith "*" exprArith
+    9          | • exprArith "/" exprArith
+   10          | • "-" exprArith
+   11          | • '(' exprArith ')'
+   12 exprComp: • BOOL
+   13         | • exprArith "=" exprArith
+   14         | • exprArith ">" exprArith
+   15         | • exprArith "<" exprArith
+   16         | • exprArith ">=" exprArith
+   17         | • exprArith "<=" exprArith
+   18         | • exprArith "!=" exprArith
+   19 exprLog: • exprComp
+   20        | • exprLog "&&" exprLog
+   21        | • exprLog "||" exprLog
+   22        | • "!" exprLog
+   22        | "!" • exprLog
+   23        | • '(' exprLog ')'
+
+    "-"      décalage et aller à l'état 1
+    "!"      décalage et aller à l'état 2
+    INTEGER  décalage et aller à l'état 3
+    BOOL     décalage et aller à l'état 4
+    '('      décalage et aller à l'état 5
+
+    exprComp   aller à l'état 6
+    exprLog    aller à l'état 13
+    exprArith  aller à l'état 14
+
+
+État 3
+
+    5 exprArith: INTEGER •
+
+    $défaut  réduction par utilisation de la règle 5 (exprArith)
+
+
+État 4
+
+   12 exprComp: BOOL •
+
+    $défaut  réduction par utilisation de la règle 12 (exprComp)
+
+
+État 5
+
+    5 exprArith: • INTEGER
+    6          | • exprArith "+" exprArith
+    7          | • exprArith "-" exprArith
+    8          | • exprArith "*" exprArith
+    9          | • exprArith "/" exprArith
+   10          | • "-" exprArith
+   11          | • '(' exprArith ')'
+   11          | '(' • exprArith ')'
+   12 exprComp: • BOOL
+   13         | • exprArith "=" exprArith
+   14         | • exprArith ">" exprArith
+   15         | • exprArith "<" exprArith
+   16         | • exprArith ">=" exprArith
+   17         | • exprArith "<=" exprArith
+   18         | • exprArith "!=" exprArith
+   19 exprLog: • exprComp
+   20        | • exprLog "&&" exprLog
+   21        | • exprLog "||" exprLog
+   22        | • "!" exprLog
+   23        | • '(' exprLog ')'
+   23        | '(' • exprLog ')'
+
+    "-"      décalage et aller à l'état 1
+    "!"      décalage et aller à l'état 2
+    INTEGER  décalage et aller à l'état 3
+    BOOL     décalage et aller à l'état 4
+    '('      décalage et aller à l'état 5
+
+    exprComp   aller à l'état 6
+    exprLog    aller à l'état 15
+    exprArith  aller à l'état 16
+
+
+État 6
+
+   19 exprLog: exprComp •
+
+    $défaut  réduction par utilisation de la règle 19 (exprLog)
+
+
+État 7
+
+    3 line: exprLog • '\n'
+   20 exprLog: exprLog • "&&" exprLog
+   21        | exprLog • "||" exprLog
+
+    "&&"  décalage et aller à l'état 17
+    "||"  décalage et aller à l'état 18
+    '\n'  décalage et aller à l'état 19
+
+
+État 8
+
+    4 line: exprArith • '\n'
+    6 exprArith: exprArith • "+" exprArith
+    7          | exprArith • "-" exprArith
+    8          | exprArith • "*" exprArith
+    9          | exprArith • "/" exprArith
+   13 exprComp: exprArith • "=" exprArith
+   14         | exprArith • ">" exprArith
+   15         | exprArith • "<" exprArith
+   16         | exprArith • ">=" exprArith
+   17         | exprArith • "<=" exprArith
+   18         | exprArith • "!=" exprArith
+
+    "+"   décalage et aller à l'état 20
+    "-"   décalage et aller à l'état 21
+    "*"   décalage et aller à l'état 22
+    "/"   décalage et aller à l'état 23
+    "="   décalage et aller à l'état 24
+    ">"   décalage et aller à l'état 25
+    "<"   décalage et aller à l'état 26
+    ">="  décalage et aller à l'état 27
+    "<="  décalage et aller à l'état 28
+    "!="  décalage et aller à l'état 29
+    '\n'  décalage et aller à l'état 30
+
+
+État 9
+
+    0 $accept: lines • $end
+    1 lines: lines • line
+    3 line: • exprLog '\n'
+    4     | • exprArith '\n'
+    5 exprArith: • INTEGER
+    6          | • exprArith "+" exprArith
+    7          | • exprArith "-" exprArith
+    8          | • exprArith "*" exprArith
+    9          | • exprArith "/" exprArith
+   10          | • "-" exprArith
+   11          | • '(' exprArith ')'
+   12 exprComp: • BOOL
+   13         | • exprArith "=" exprArith
+   14         | • exprArith ">" exprArith
+   15         | • exprArith "<" exprArith
+   16         | • exprArith ">=" exprArith
+   17         | • exprArith "<=" exprArith
+   18         | • exprArith "!=" exprArith
+   19 exprLog: • exprComp
+   20        | • exprLog "&&" exprLog
+   21        | • exprLog "||" exprLog
+   22        | • "!" exprLog
+   23        | • '(' exprLog ')'
+
+    $end     décalage et aller à l'état 31
+    "-"      décalage et aller à l'état 1
+    "!"      décalage et aller à l'état 2
+    INTEGER  décalage et aller à l'état 3
+    BOOL     décalage et aller à l'état 4
+    '('      décalage et aller à l'état 5
+
+    exprComp   aller à l'état 6
+    exprLog    aller à l'état 7
+    exprArith  aller à l'état 8
+    line       aller à l'état 32
+
+
+État 10
+
+    2 lines: line •
+
+    $défaut  réduction par utilisation de la règle 2 (lines)
+
+
+État 11
+
+    5 exprArith: • INTEGER
+    6          | • exprArith "+" exprArith
+    7          | • exprArith "-" exprArith
+    8          | • exprArith "*" exprArith
+    9          | • exprArith "/" exprArith
+   10          | • "-" exprArith
+   11          | • '(' exprArith ')'
+   11          | '(' • exprArith ')'
+
+    "-"      décalage et aller à l'état 1
+    INTEGER  décalage et aller à l'état 3
+    '('      décalage et aller à l'état 11
+
+    exprArith  aller à l'état 33
+
+
+État 12
+
+    6 exprArith: exprArith • "+" exprArith
+    7          | exprArith • "-" exprArith
+    8          | exprArith • "*" exprArith
+    9          | exprArith • "/" exprArith
+   10          | "-" exprArith •
+
+    "+"  décalage et aller à l'état 20
+    "-"  décalage et aller à l'état 21
+    "*"  décalage et aller à l'état 22
+    "/"  décalage et aller à l'état 23
+
+    $défaut  réduction par utilisation de la règle 10 (exprArith)
+
+
+État 13
+
+   20 exprLog: exprLog • "&&" exprLog
+   21        | exprLog • "||" exprLog
+   22        | "!" exprLog •
+
+    "&&"  décalage et aller à l'état 17
+    "||"  décalage et aller à l'état 18
+
+    $défaut  réduction par utilisation de la règle 22 (exprLog)
+
+
+État 14
+
+    6 exprArith: exprArith • "+" exprArith
+    7          | exprArith • "-" exprArith
+    8          | exprArith • "*" exprArith
+    9          | exprArith • "/" exprArith
+   13 exprComp: exprArith • "=" exprArith
+   14         | exprArith • ">" exprArith
+   15         | exprArith • "<" exprArith
+   16         | exprArith • ">=" exprArith
+   17         | exprArith • "<=" exprArith
+   18         | exprArith • "!=" exprArith
+
+    "+"   décalage et aller à l'état 20
+    "-"   décalage et aller à l'état 21
+    "*"   décalage et aller à l'état 22
+    "/"   décalage et aller à l'état 23
+    "="   décalage et aller à l'état 24
+    ">"   décalage et aller à l'état 25
+    "<"   décalage et aller à l'état 26
+    ">="  décalage et aller à l'état 27
+    "<="  décalage et aller à l'état 28
+    "!="  décalage et aller à l'état 29
+
+
+État 15
+
+   20 exprLog: exprLog • "&&" exprLog
+   21        | exprLog • "||" exprLog
+   23        | '(' exprLog • ')'
+
+    "&&"  décalage et aller à l'état 17
+    "||"  décalage et aller à l'état 18
+    ')'   décalage et aller à l'état 34
+
+
+État 16
+
+    6 exprArith: exprArith • "+" exprArith
+    7          | exprArith • "-" exprArith
+    8          | exprArith • "*" exprArith
+    9          | exprArith • "/" exprArith
+   11          | '(' exprArith • ')'
+   13 exprComp: exprArith • "=" exprArith
+   14         | exprArith • ">" exprArith
+   15         | exprArith • "<" exprArith
+   16         | exprArith • ">=" exprArith
+   17         | exprArith • "<=" exprArith
+   18         | exprArith • "!=" exprArith
+
+    "+"   décalage et aller à l'état 20
+    "-"   décalage et aller à l'état 21
+    "*"   décalage et aller à l'état 22
+    "/"   décalage et aller à l'état 23
+    "="   décalage et aller à l'état 24
+    ">"   décalage et aller à l'état 25
+    "<"   décalage et aller à l'état 26
+    ">="  décalage et aller à l'état 27
+    "<="  décalage et aller à l'état 28
+    "!="  décalage et aller à l'état 29
+    ')'   décalage et aller à l'état 35
+
+
+État 17
+
+    5 exprArith: • INTEGER
+    6          | • exprArith "+" exprArith
+    7          | • exprArith "-" exprArith
+    8          | • exprArith "*" exprArith
+    9          | • exprArith "/" exprArith
+   10          | • "-" exprArith
+   11          | • '(' exprArith ')'
+   12 exprComp: • BOOL
+   13         | • exprArith "=" exprArith
+   14         | • exprArith ">" exprArith
+   15         | • exprArith "<" exprArith
+   16         | • exprArith ">=" exprArith
+   17         | • exprArith "<=" exprArith
+   18         | • exprArith "!=" exprArith
+   19 exprLog: • exprComp
+   20        | • exprLog "&&" exprLog
+   20        | exprLog "&&" • exprLog
+   21        | • exprLog "||" exprLog
+   22        | • "!" exprLog
+   23        | • '(' exprLog ')'
+
+    "-"      décalage et aller à l'état 1
+    "!"      décalage et aller à l'état 2
+    INTEGER  décalage et aller à l'état 3
+    BOOL     décalage et aller à l'état 4
+    '('      décalage et aller à l'état 5
+
+    exprComp   aller à l'état 6
+    exprLog    aller à l'état 36
+    exprArith  aller à l'état 14
+
+
+État 18
+
+    5 exprArith: • INTEGER
+    6          | • exprArith "+" exprArith
+    7          | • exprArith "-" exprArith
+    8          | • exprArith "*" exprArith
+    9          | • exprArith "/" exprArith
+   10          | • "-" exprArith
+   11          | • '(' exprArith ')'
+   12 exprComp: • BOOL
+   13         | • exprArith "=" exprArith
+   14         | • exprArith ">" exprArith
+   15         | • exprArith "<" exprArith
+   16         | • exprArith ">=" exprArith
+   17         | • exprArith "<=" exprArith
+   18         | • exprArith "!=" exprArith
+   19 exprLog: • exprComp
+   20        | • exprLog "&&" exprLog
+   21        | • exprLog "||" exprLog
+   21        | exprLog "||" • exprLog
+   22        | • "!" exprLog
+   23        | • '(' exprLog ')'
+
+    "-"      décalage et aller à l'état 1
+    "!"      décalage et aller à l'état 2
+    INTEGER  décalage et aller à l'état 3
+    BOOL     décalage et aller à l'état 4
+    '('      décalage et aller à l'état 5
+
+    exprComp   aller à l'état 6
+    exprLog    aller à l'état 37
+    exprArith  aller à l'état 14
+
+
+État 19
+
+    3 line: exprLog '\n' •
+
+    $défaut  réduction par utilisation de la règle 3 (line)
+
+
+État 20
+
+    5 exprArith: • INTEGER
+    6          | • exprArith "+" exprArith
+    6          | exprArith "+" • exprArith
+    7          | • exprArith "-" exprArith
+    8          | • exprArith "*" exprArith
+    9          | • exprArith "/" exprArith
+   10          | • "-" exprArith
+   11          | • '(' exprArith ')'
+
+    "-"      décalage et aller à l'état 1
+    INTEGER  décalage et aller à l'état 3
+    '('      décalage et aller à l'état 11
+
+    exprArith  aller à l'état 38
+
+
+État 21
+
+    5 exprArith: • INTEGER
+    6          | • exprArith "+" exprArith
+    7          | • exprArith "-" exprArith
+    7          | exprArith "-" • exprArith
+    8          | • exprArith "*" exprArith
+    9          | • exprArith "/" exprArith
+   10          | • "-" exprArith
+   11          | • '(' exprArith ')'
+
+    "-"      décalage et aller à l'état 1
+    INTEGER  décalage et aller à l'état 3
+    '('      décalage et aller à l'état 11
+
+    exprArith  aller à l'état 39
+
+
+État 22
+
+    5 exprArith: • INTEGER
+    6          | • exprArith "+" exprArith
+    7          | • exprArith "-" exprArith
+    8          | • exprArith "*" exprArith
+    8          | exprArith "*" • exprArith
+    9          | • exprArith "/" exprArith
+   10          | • "-" exprArith
+   11          | • '(' exprArith ')'
+
+    "-"      décalage et aller à l'état 1
+    INTEGER  décalage et aller à l'état 3
+    '('      décalage et aller à l'état 11
+
+    exprArith  aller à l'état 40
+
+
+État 23
+
+    5 exprArith: • INTEGER
+    6          | • exprArith "+" exprArith
+    7          | • exprArith "-" exprArith
+    8          | • exprArith "*" exprArith
+    9          | • exprArith "/" exprArith
+    9          | exprArith "/" • exprArith
+   10          | • "-" exprArith
+   11          | • '(' exprArith ')'
+
+    "-"      décalage et aller à l'état 1
+    INTEGER  décalage et aller à l'état 3
+    '('      décalage et aller à l'état 11
+
+    exprArith  aller à l'état 41
+
+
+État 24
+
+    5 exprArith: • INTEGER
+    6          | • exprArith "+" exprArith
+    7          | • exprArith "-" exprArith
+    8          | • exprArith "*" exprArith
+    9          | • exprArith "/" exprArith
+   10          | • "-" exprArith
+   11          | • '(' exprArith ')'
+   13 exprComp: exprArith "=" • exprArith
+
+    "-"      décalage et aller à l'état 1
+    INTEGER  décalage et aller à l'état 3
+    '('      décalage et aller à l'état 11
+
+    exprArith  aller à l'état 42
+
+
+État 25
+
+    5 exprArith: • INTEGER
+    6          | • exprArith "+" exprArith
+    7          | • exprArith "-" exprArith
+    8          | • exprArith "*" exprArith
+    9          | • exprArith "/" exprArith
+   10          | • "-" exprArith
+   11          | • '(' exprArith ')'
+   14 exprComp: exprArith ">" • exprArith
+
+    "-"      décalage et aller à l'état 1
+    INTEGER  décalage et aller à l'état 3
+    '('      décalage et aller à l'état 11
+
+    exprArith  aller à l'état 43
+
+
+État 26
+
+    5 exprArith: • INTEGER
+    6          | • exprArith "+" exprArith
+    7          | • exprArith "-" exprArith
+    8          | • exprArith "*" exprArith
+    9          | • exprArith "/" exprArith
+   10          | • "-" exprArith
+   11          | • '(' exprArith ')'
+   15 exprComp: exprArith "<" • exprArith
+
+    "-"      décalage et aller à l'état 1
+    INTEGER  décalage et aller à l'état 3
+    '('      décalage et aller à l'état 11
+
+    exprArith  aller à l'état 44
+
+
+État 27
+
+    5 exprArith: • INTEGER
+    6          | • exprArith "+" exprArith
+    7          | • exprArith "-" exprArith
+    8          | • exprArith "*" exprArith
+    9          | • exprArith "/" exprArith
+   10          | • "-" exprArith
+   11          | • '(' exprArith ')'
+   16 exprComp: exprArith ">=" • exprArith
+
+    "-"      décalage et aller à l'état 1
+    INTEGER  décalage et aller à l'état 3
+    '('      décalage et aller à l'état 11
+
+    exprArith  aller à l'état 45
+
+
+État 28
+
+    5 exprArith: • INTEGER
+    6          | • exprArith "+" exprArith
+    7          | • exprArith "-" exprArith
+    8          | • exprArith "*" exprArith
+    9          | • exprArith "/" exprArith
+   10          | • "-" exprArith
+   11          | • '(' exprArith ')'
+   17 exprComp: exprArith "<=" • exprArith
+
+    "-"      décalage et aller à l'état 1
+    INTEGER  décalage et aller à l'état 3
+    '('      décalage et aller à l'état 11
+
+    exprArith  aller à l'état 46
+
+
+État 29
+
+    5 exprArith: • INTEGER
+    6          | • exprArith "+" exprArith
+    7          | • exprArith "-" exprArith
+    8          | • exprArith "*" exprArith
+    9          | • exprArith "/" exprArith
+   10          | • "-" exprArith
+   11          | • '(' exprArith ')'
+   18 exprComp: exprArith "!=" • exprArith
+
+    "-"      décalage et aller à l'état 1
+    INTEGER  décalage et aller à l'état 3
+    '('      décalage et aller à l'état 11
+
+    exprArith  aller à l'état 47
+
+
+État 30
+
+    4 line: exprArith '\n' •
+
+    $défaut  réduction par utilisation de la règle 4 (line)
+
+
+État 31
+
+    0 $accept: lines $end •
+
+    $défaut  accepter
+
+
+État 32
+
+    1 lines: lines line •
+
+    $défaut  réduction par utilisation de la règle 1 (lines)
+
+
+État 33
+
+    6 exprArith: exprArith • "+" exprArith
+    7          | exprArith • "-" exprArith
+    8          | exprArith • "*" exprArith
+    9          | exprArith • "/" exprArith
+   11          | '(' exprArith • ')'
+
+    "+"  décalage et aller à l'état 20
+    "-"  décalage et aller à l'état 21
+    "*"  décalage et aller à l'état 22
+    "/"  décalage et aller à l'état 23
+    ')'  décalage et aller à l'état 35
+
+
+État 34
+
+   23 exprLog: '(' exprLog ')' •
+
+    $défaut  réduction par utilisation de la règle 23 (exprLog)
+
+
+État 35
+
+   11 exprArith: '(' exprArith ')' •
+
+    $défaut  réduction par utilisation de la règle 11 (exprArith)
+
+
+État 36
+
+   20 exprLog: exprLog • "&&" exprLog
+   20        | exprLog "&&" exprLog •
+   21        | exprLog • "||" exprLog
+
+    $défaut  réduction par utilisation de la règle 20 (exprLog)
+
+
+État 37
+
+   20 exprLog: exprLog • "&&" exprLog
+   21        | exprLog • "||" exprLog
+   21        | exprLog "||" exprLog •
+
+    "&&"  décalage et aller à l'état 17
+
+    $défaut  réduction par utilisation de la règle 21 (exprLog)
+
+
+État 38
+
+    6 exprArith: exprArith • "+" exprArith
+    6          | exprArith "+" exprArith •
+    7          | exprArith • "-" exprArith
+    8          | exprArith • "*" exprArith
+    9          | exprArith • "/" exprArith
+
+    "*"  décalage et aller à l'état 22
+    "/"  décalage et aller à l'état 23
+
+    $défaut  réduction par utilisation de la règle 6 (exprArith)
+
+
+État 39
+
+    6 exprArith: exprArith • "+" exprArith
+    7          | exprArith • "-" exprArith
+    7          | exprArith "-" exprArith •
+    8          | exprArith • "*" exprArith
+    9          | exprArith • "/" exprArith
+
+    "*"  décalage et aller à l'état 22
+    "/"  décalage et aller à l'état 23
+
+    $défaut  réduction par utilisation de la règle 7 (exprArith)
+
+
+État 40
+
+    6 exprArith: exprArith • "+" exprArith
+    7          | exprArith • "-" exprArith
+    8          | exprArith • "*" exprArith
+    8          | exprArith "*" exprArith •
+    9          | exprArith • "/" exprArith
+
+    $défaut  réduction par utilisation de la règle 8 (exprArith)
+
+
+État 41
+
+    6 exprArith: exprArith • "+" exprArith
+    7          | exprArith • "-" exprArith
+    8          | exprArith • "*" exprArith
+    9          | exprArith • "/" exprArith
+    9          | exprArith "/" exprArith •
+
+    $défaut  réduction par utilisation de la règle 9 (exprArith)
+
+
+État 42
+
+    6 exprArith: exprArith • "+" exprArith
+    7          | exprArith • "-" exprArith
+    8          | exprArith • "*" exprArith
+    9          | exprArith • "/" exprArith
+   13 exprComp: exprArith "=" exprArith •
+
+    "+"  décalage et aller à l'état 20
+    "-"  décalage et aller à l'état 21
+    "*"  décalage et aller à l'état 22
+    "/"  décalage et aller à l'état 23
+
+    $défaut  réduction par utilisation de la règle 13 (exprComp)
+
+
+État 43
+
+    6 exprArith: exprArith • "+" exprArith
+    7          | exprArith • "-" exprArith
+    8          | exprArith • "*" exprArith
+    9          | exprArith • "/" exprArith
+   14 exprComp: exprArith ">" exprArith •
+
+    "+"  décalage et aller à l'état 20
+    "-"  décalage et aller à l'état 21
+    "*"  décalage et aller à l'état 22
+    "/"  décalage et aller à l'état 23
+
+    $défaut  réduction par utilisation de la règle 14 (exprComp)
+
+
+État 44
+
+    6 exprArith: exprArith • "+" exprArith
+    7          | exprArith • "-" exprArith
+    8          | exprArith • "*" exprArith
+    9          | exprArith • "/" exprArith
+   15 exprComp: exprArith "<" exprArith •
+
+    "+"  décalage et aller à l'état 20
+    "-"  décalage et aller à l'état 21
+    "*"  décalage et aller à l'état 22
+    "/"  décalage et aller à l'état 23
+
+    $défaut  réduction par utilisation de la règle 15 (exprComp)
+
+
+État 45
+
+    6 exprArith: exprArith • "+" exprArith
+    7          | exprArith • "-" exprArith
+    8          | exprArith • "*" exprArith
+    9          | exprArith • "/" exprArith
+   16 exprComp: exprArith ">=" exprArith •
+
+    "+"  décalage et aller à l'état 20
+    "-"  décalage et aller à l'état 21
+    "*"  décalage et aller à l'état 22
+    "/"  décalage et aller à l'état 23
+
+    $défaut  réduction par utilisation de la règle 16 (exprComp)
+
+
+État 46
+
+    6 exprArith: exprArith • "+" exprArith
+    7          | exprArith • "-" exprArith
+    8          | exprArith • "*" exprArith
+    9          | exprArith • "/" exprArith
+   17 exprComp: exprArith "<=" exprArith •
+
+    "+"  décalage et aller à l'état 20
+    "-"  décalage et aller à l'état 21
+    "*"  décalage et aller à l'état 22
+    "/"  décalage et aller à l'état 23
+
+    $défaut  réduction par utilisation de la règle 17 (exprComp)
+
+
+État 47
+
+    6 exprArith: exprArith • "+" exprArith
+    7          | exprArith • "-" exprArith
+    8          | exprArith • "*" exprArith
+    9          | exprArith • "/" exprArith
+   18 exprComp: exprArith "!=" exprArith •
+
+    "+"  décalage et aller à l'état 20
+    "-"  décalage et aller à l'état 21
+    "*"  décalage et aller à l'état 22
+    "/"  décalage et aller à l'état 23
+
+    $défaut  réduction par utilisation de la règle 18 (exprComp)

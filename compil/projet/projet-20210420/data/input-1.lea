@@ -1,0 +1,20 @@
+class main {
+	private m: integer;
+	private s: string;
+
+
+	main(args: list<string>) {
+		m := 36;
+		s := "36";
+		j: integer := 1;
+		writeln(m + j);
+		m := 5 + 5;
+		while (m <= 52){
+			m := m + 5;
+		}
+		if(m != 36){
+			j := 21;
+		}
+	}
+ 
+}

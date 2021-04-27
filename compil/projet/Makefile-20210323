@@ -1,0 +1,46 @@
+package_name = fr.ubordeaux.deptinfo.compilation.lea
+
+bindir = bin
+
+srcdir = src/fr/ubordeaux/deptinfo/compilation/lea
+
+jflexjar = lib/jflex-full-1.8.2.jar
+jflex = java -jar $(jflexjar)
+jflex_options = -d $(srcdir)/parser
+
+bison = bison
+bison_options = --report=all
+
+lexerjava = $(srcdir)/parser/ParserLexer.java
+parserjava = $(srcdir)/parser/Parser.java
+
+srcfiles = $(wildcard $(srcdir)/**/*.java) $(lexerjava) $(parserjava)
+
+testFiles = $(wildcard data/*.lea)
+testOutFiles = $(patsubst %.lea, %.out, $(testFiles))
+
+run: compile
+
+test: $(testOutFiles)
+
+%.out : %.lea compile
+	java -cp bin $(package_name).Main $< > $@
+
+compile: parser lexer $(bindir)/Main.class
+
+$(bindir)/Main.class: $(srcdir)/Main.java $(srcfiles)
+	javac -sourcepath src -d bin $<
+
+parser: $(parserjava)
+
+lexer: $(lexerjava)
+
+$(parserjava): parser/Parser.y
+	$(bison) $(bison_options) $< -o $@
+
+$(lexerjava): lexer/Lexer.jflex
+	$(jflex) $(jflex_options) $<
+
+clean:
+	rm -r $(bindir)/* || true
+	rm $(srcdir)/parser/Parser.output $(parserjava) $(lexerjava) || true

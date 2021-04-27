@@ -11,7 +11,7 @@
             "name": "Launch Current File",
             "request": "launch",
             "mainClass": "${file}",
-            "args": "images/street.tif images/street-gaus.tif"
+            "args": "images/street.jpg images/street-out.jpg"
         },
         {
             "type": "java",

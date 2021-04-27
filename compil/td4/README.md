@@ -1,0 +1,2 @@
+Voici le code du TP4. POur le compiler il suffit de faire ant (attention à bien vérifier que le chemin d'accès à bison est le bon dans le build ligne 96).
+Ensuite il faut juste écrire la ligne que vous voulez traiter et d'appuyer sur entrée. En cas de division par zéro le programme renvoi un message d'érreur et le resultat du calcul sera null.
