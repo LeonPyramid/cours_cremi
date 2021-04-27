@@ -7,7 +7,7 @@ import java.io.*;
 %type Token
 %line
 %column 
-
+%state COMMENT COMMENT_DOC STRING
 
 /* Définition des expressions régulières */
 
@@ -17,6 +17,7 @@ Reel = "-"?({Decimal} ([eE] [-+]? {Entier})? | {Entier} [eE] [-+]? {Entier})
 Mots = [a-zA-Z_] [a-zA-Z0-9_]*
 
 %%
+<YYINITIAL>{
 bool            {return new Token(Sym.BOOL,null,yyline,yycolumn);}
 break           {return new Token(Sym.BREAK,null,yyline,yycolumn);}
 case            {return new Token(Sym.CASE,null,yyline,yycolumn);}
@@ -29,6 +30,7 @@ default         {return new Token(Sym.DEFAULT,null,yyline,yycolumn);}
 delete          {return new Token(Sym.DELETE,null,yyline,yycolumn);}
 do              {return new Token(Sym.DO,null,yyline,yycolumn);}
 double          {return new Token(Sym.DOUBLE,null,yyline,yycolumn);}
+elseif          {return new Token(Sym.ELSEIF,null,yyline,yycolumn);}
 else            {return new Token(Sym.ELSE,null,yyline,yycolumn);}
 enum            {return new Token(Sym.ENUM,null,yyline,yycolumn);}
 false           {return new Token(Sym.FALSE,null,yyline,yycolumn);}
@@ -69,6 +71,39 @@ virtual         {return new Token(Sym.VIRTUAL,null,yyline,yycolumn);}
 void            {return new Token(Sym.VOID,null,yyline,yycolumn);}
 while           {return new Token(Sym.WHILE,null,yyline,yycolumn);}
 
+/* Identifier */
 
+    [a-zA-Z_] [a-zA-Z0-9_]* {return new Token(Sym.IDENTIFIER, yytext(),yyline,yycolumn);}
+
+/* Comments */
+    "//"[^\n]*  {return new Token(Sym.COMMENT,null,yyline,yycolumn);}
+    "/*"        {yybegin(COMMENT);return new Token(Sym.COMMENT,null,yyline,yycolumn);}
+//    "/**"       {yybegin(COMMENT_DOC);return new Token(Sym.COMMENT,null,yyline,yycolumn);}
+
+    "#include" [^\n]*  {return new Token(Sym.INCLUDE,null,yyline,yycolumn);}
+
+    \" {yybegin(STRING); return new Token(Sym.STRING,null,yyline,yycolumn);}
 
 [^] {}
+
+/* Numbers */
+
+    {Entier}      {return new Token(Sym.INTEGER,(new Integer(yytext())),yyline,yycolumn);}
+    {Decimal}     {return new Token(Sym.REAL,(new Float(yytext())),yyline,yycolumn);}
+    //{Reel}        {return new Token(Sym.REAL,(new Float(yytext())),yyline,yycolumn);}
+
+}
+
+<COMMENT>{
+	"*/" {yybegin(YYINITIAL);return new Token(Sym.ENDCOMMENT,null,yyline,yycolumn);}
+    [^] {;}
+}
+
+<COMMENT_DOC>{
+    "@author" {}
+}
+
+<STRING>{
+    ([^\"]| \\ \" )* \" {yybegin(YYINITIAL);}
+    [^] {}
+}

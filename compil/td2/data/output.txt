@@ -1,0 +1,114 @@
+sym = COMMENT value = null line = 0 colum  = 0
+sym = ENDCOMMENT value = null line = 7 colum  = 0
+sym = INCLUDE value = null line = 9 colum  = 0
+sym = INCLUDE value = null line = 11 colum  = 0
+sym = USING value = null line = 12 colum  = 0
+sym = NAMESPACE value = null line = 12 colum  = 6
+sym = IDENTIFIER value = std line = 12 colum  = 16
+sym = CONST value = null line = 14 colum  = 0
+sym = DOUBLE value = null line = 14 colum  = 6
+sym = IDENTIFIER value = PI line = 14 colum  = 13
+sym = REAL value = 3.0 line = 14 colum  = 17
+sym = REAL value = 0.14159 line = 14 colum  = 19
+sym = COMMENT value = null line = 16 colum  = 0
+sym = ENDCOMMENT value = null line = 21 colum  = 0
+sym = DOUBLE value = null line = 22 colum  = 0
+sym = IDENTIFIER value = area line = 22 colum  = 7
+sym = DOUBLE value = null line = 22 colum  = 12
+sym = IDENTIFIER value = radius line = 22 colum  = 19
+sym = COMMENT value = null line = 24 colum  = 0
+sym = ENDCOMMENT value = null line = 29 colum  = 0
+sym = DOUBLE value = null line = 30 colum  = 0
+sym = IDENTIFIER value = volume line = 30 colum  = 7
+sym = DOUBLE value = null line = 30 colum  = 14
+sym = IDENTIFIER value = radius line = 30 colum  = 21
+sym = COMMENT value = null line = 32 colum  = 0
+sym = INT value = null line = 33 colum  = 0
+sym = IDENTIFIER value = main line = 33 colum  = 4
+sym = VOID value = null line = 33 colum  = 9
+sym = DOUBLE value = null line = 34 colum  = 4
+sym = IDENTIFIER value = radius_of_both line = 34 colum  = 11
+sym = IDENTIFIER value = area_of_circle line = 34 colum  = 27
+sym = IDENTIFIER value = volume_of_sphere line = 34 colum  = 43
+sym = IDENTIFIER value = cout line = 36 colum  = 4
+sym = STRING value = null line = 36 colum  = 12
+sym = STRING value = null line = 37 colum  = 15
+sym = IDENTIFIER value = cin line = 38 colum  = 4
+sym = IDENTIFIER value = radius_of_both line = 38 colum  = 11
+sym = INT value = null line = 39 colum  = 4
+sym = IDENTIFIER value = tst line = 39 colum  = 8
+sym = REAL value = 9.0 line = 39 colum  = 13
+sym = IDENTIFIER value = area_of_circle line = 40 colum  = 4
+sym = IDENTIFIER value = area line = 40 colum  = 21
+sym = IDENTIFIER value = radius_of_both line = 40 colum  = 26
+sym = IDENTIFIER value = volume_of_sphere line = 41 colum  = 4
+sym = IDENTIFIER value = volume line = 41 colum  = 23
+sym = IDENTIFIER value = radius_of_both line = 41 colum  = 30
+sym = IDENTIFIER value = cout line = 43 colum  = 4
+sym = STRING value = null line = 43 colum  = 12
+sym = IDENTIFIER value = radius_of_both line = 43 colum  = 27
+sym = STRING value = null line = 43 colum  = 45
+sym = STRING value = null line = 44 colum  = 15
+sym = IDENTIFIER value = area_of_circle line = 44 colum  = 38
+sym = STRING value = null line = 45 colum  = 15
+sym = STRING value = null line = 46 colum  = 15
+sym = IDENTIFIER value = volume_of_sphere line = 46 colum  = 40
+sym = STRING value = null line = 47 colum  = 15
+sym = RETURN value = null line = 49 colum  = 4
+sym = REAL value = 0.0 line = 49 colum  = 10
+sym = COMMENT value = null line = 52 colum  = 0
+sym = DOUBLE value = null line = 53 colum  = 0
+sym = IDENTIFIER value = area line = 53 colum  = 7
+sym = DOUBLE value = null line = 53 colum  = 12
+sym = IDENTIFIER value = radius line = 53 colum  = 19
+sym = RETURN value = null line = 54 colum  = 4
+sym = IDENTIFIER value = PI line = 54 colum  = 12
+sym = IDENTIFIER value = pow line = 54 colum  = 17
+sym = IDENTIFIER value = radius line = 54 colum  = 21
+sym = REAL value = 2.0 line = 54 colum  = 28
+sym = COMMENT value = null line = 57 colum  = 0
+sym = DOUBLE value = null line = 58 colum  = 0
+sym = IDENTIFIER value = volume line = 58 colum  = 7
+sym = DOUBLE value = null line = 58 colum  = 14
+sym = IDENTIFIER value = radius line = 58 colum  = 21
+sym = IF value = null line = 59 colum  = 4
+sym = TRUE value = null line = 59 colum  = 7
+sym = ELSEIF value = null line = 62 colum  = 4
+sym = FALSE value = null line = 62 colum  = 11
+sym = ELSE value = null line = 65 colum  = 4
+sym = RETURN value = null line = 68 colum  = 4
+Unexpected exception:
+java.lang.NumberFormatException: For input string: "(4"
+	at java.base/jdk.internal.math.FloatingDecimal.readJavaFormatString(FloatingDecimal.java:2054)
+	at java.base/jdk.internal.math.FloatingDecimal.parseFloat(FloatingDecimal.java:122)
+	at java.base/java.lang.Float.parseFloat(Float.java:455)
+	at java.base/java.lang.Float.<init>(Float.java:554)
+	at Lexer.yylex(Unknown Source)
+	at Main.main(Main.java:23)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at org.apache.tools.ant.taskdefs.ExecuteJava.run(ExecuteJava.java:218)
+	at org.apache.tools.ant.taskdefs.ExecuteJava.execute(ExecuteJava.java:155)
+	at org.apache.tools.ant.taskdefs.Java.run(Java.java:861)
+	at org.apache.tools.ant.taskdefs.Java.executeJava(Java.java:231)
+	at org.apache.tools.ant.taskdefs.Java.executeJava(Java.java:135)
+	at org.apache.tools.ant.taskdefs.Java.execute(Java.java:108)
+	at org.apache.tools.ant.UnknownElement.execute(UnknownElement.java:292)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at org.apache.tools.ant.dispatch.DispatchUtils.execute(DispatchUtils.java:99)
+	at org.apache.tools.ant.Task.perform(Task.java:350)
+	at org.apache.tools.ant.Target.execute(Target.java:449)
+	at org.apache.tools.ant.Target.performTasks(Target.java:470)
+	at org.apache.tools.ant.Project.executeSortedTargets(Project.java:1401)
+	at org.apache.tools.ant.Project.executeTarget(Project.java:1374)
+	at org.apache.tools.ant.helper.DefaultExecutor.executeTargets(DefaultExecutor.java:41)
+	at org.apache.tools.ant.Project.executeTargets(Project.java:1264)
+	at org.apache.tools.ant.Main.runBuild(Main.java:827)
+	at org.apache.tools.ant.Main.startAnt(Main.java:223)
+	at org.apache.tools.ant.launch.Launcher.run(Launcher.java:284)
+	at org.apache.tools.ant.launch.Launcher.main(Launcher.java:101)
