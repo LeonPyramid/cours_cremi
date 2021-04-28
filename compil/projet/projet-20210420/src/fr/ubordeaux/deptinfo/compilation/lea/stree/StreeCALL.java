@@ -4,6 +4,7 @@ import fr.ubordeaux.deptinfo.compilation.lea.intermediate.CALL;
 import fr.ubordeaux.deptinfo.compilation.lea.intermediate.EXPSTM;
 import fr.ubordeaux.deptinfo.compilation.lea.intermediate.Exp;
 import fr.ubordeaux.deptinfo.compilation.lea.intermediate.Stm;
+import fr.ubordeaux.deptinfo.compilation.lea.type.Type;
 import fr.ubordeaux.deptinfo.compilation.lea.type.TypeException;
 
 public class StreeCALL extends Stree {
@@ -29,7 +30,16 @@ public class StreeCALL extends Stree {
 
 	@Override
 	public boolean checkType() throws StreeException {
-		return true;
+		Type lType = this.getLeft().getType();
+		Stree rArg = this.getRight();
+		while(lType.getRight()!=null&&rArg.getRight()!=null){
+			if(lType.getLeft()!= rArg.getType())
+				return false;
+			lType = lType.getRight();
+			rArg = rArg.getRight();
+		}
+		return(lType.getRight()==null&&rArg.getRight()==null);
+
 	}
 
 }

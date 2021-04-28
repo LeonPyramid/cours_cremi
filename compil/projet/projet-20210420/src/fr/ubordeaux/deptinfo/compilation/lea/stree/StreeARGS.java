@@ -3,6 +3,7 @@ package fr.ubordeaux.deptinfo.compilation.lea.stree;
 import fr.ubordeaux.deptinfo.compilation.lea.intermediate.ExpList;
 import fr.ubordeaux.deptinfo.compilation.lea.intermediate.SEQ;
 import fr.ubordeaux.deptinfo.compilation.lea.intermediate.Stm;
+import fr.ubordeaux.deptinfo.compilation.lea.type.Type;
 import fr.ubordeaux.deptinfo.compilation.lea.type.TypeException;
 
 public class StreeARGS extends Stree {
@@ -31,5 +32,10 @@ public class StreeARGS extends Stree {
 	@Override
 	public boolean checkType() throws StreeException {
 		return true;
+	}
+
+	@Override
+	public Type getType() throws StreeException {
+		return this.getLeft().getType();
 	}
 }

@@ -1,1 +1,2 @@
-Créer une classe abstraite pour les affectations (hors affectation de base), pour ça créer le sopératerus d'abord
+SUCC
+DEC

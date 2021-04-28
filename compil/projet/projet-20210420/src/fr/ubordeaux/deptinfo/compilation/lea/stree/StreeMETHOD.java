@@ -35,5 +35,9 @@ public class StreeMETHOD extends Stree {
 		return true;
 	}
 
+	@Override
+	public Type getType() throws StreeException {
+		return this.type;
+	}
 
 }
