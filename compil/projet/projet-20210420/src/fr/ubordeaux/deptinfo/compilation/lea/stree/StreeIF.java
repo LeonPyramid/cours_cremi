@@ -68,8 +68,7 @@ public class StreeIF extends Stree {
 								new SEQ(new JUMP(label3),
 									new SEQ(new LABEL(label2),
 										new SEQ(getRight().getRight().getStm(),
-											new SEQ(new JUMP(label3),
-												new LABEL(label3))))))));
+											new LABEL(label3)))))));
 	}
 
 	@Override

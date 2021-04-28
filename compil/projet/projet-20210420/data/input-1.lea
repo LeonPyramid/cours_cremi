@@ -15,6 +15,9 @@ class main {
 		if(m != 36){
 			j := 21;
 		}
+		else{
+			j := 12;
+		}
 	}
  
 }
