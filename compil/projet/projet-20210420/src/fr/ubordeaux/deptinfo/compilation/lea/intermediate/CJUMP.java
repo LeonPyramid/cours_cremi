@@ -43,5 +43,10 @@ public class CJUMP extends Stm {
 		return super.getDotLabel() + ' ' + relop.toString();
 	}
 
+	@Override
+	public Stm copy() {
+		return new CJUMP(this.relop, this.left.copy(), this.right.copy(), this.iftrue, this.iffalse);
+	}
+
 
 }

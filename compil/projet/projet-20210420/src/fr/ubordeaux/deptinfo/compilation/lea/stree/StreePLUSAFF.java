@@ -2,10 +2,10 @@ package fr.ubordeaux.deptinfo.compilation.lea.stree;
 
 import fr.ubordeaux.deptinfo.compilation.lea.type.TypeException;
 
-public class StreePLUSAFF extends Stree {
+public class StreePLUSAFF extends StreeOpeAff {
 
 	public StreePLUSAFF(Stree left, Stree right) throws TypeException, StreeException {
-		super(left, right);
+		super(left, right, new StreePLUS(left,right));
 	}
 
 }

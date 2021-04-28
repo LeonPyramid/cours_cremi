@@ -14,4 +14,9 @@ public class NAME extends Exp {
 	public String getDotLabel() {
 		return "NAME: " + label.toString();
 	}
+
+	@Override
+	public Exp copy() {
+		return new NAME(this.label);
+	}
 }

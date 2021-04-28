@@ -35,4 +35,6 @@ abstract public class Exp {
 			System.err.println("ERROR: build dot");
 		}
 	}
+
+	public abstract Exp copy();
 }

@@ -37,5 +37,5 @@ abstract public class Stm {
 			System.err.println("ERROR: build dot");
 		}
 	}
-
+	public abstract Stm copy();
 }

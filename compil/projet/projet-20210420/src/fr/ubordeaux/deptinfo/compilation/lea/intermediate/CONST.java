@@ -17,4 +17,9 @@ public class CONST extends Exp {
 	public String getDotLabel() {
 		return String.valueOf(value);
 	}
+
+	@Override
+	public Exp copy() {
+		return new CONST(this.value);
+	}
 }

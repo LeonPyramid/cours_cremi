@@ -49,5 +49,9 @@ public class BINOP extends Exp {
 		return binop.toString();
 	}
 
+	@Override
+	public Exp copy() {
+		return new BINOP(this.binop,this.left.copy(),this.right.copy());
+	}
 
 }

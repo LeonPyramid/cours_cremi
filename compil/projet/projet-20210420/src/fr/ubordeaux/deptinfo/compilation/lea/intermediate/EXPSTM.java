@@ -14,4 +14,9 @@ public class EXPSTM extends Stm {
 		return "EXPSTM [exp=" + exp + "]";
 	}
 
+	@Override
+	public Stm copy() {
+		return new EXPSTM(this.exp.copy());
+	}
+
 }

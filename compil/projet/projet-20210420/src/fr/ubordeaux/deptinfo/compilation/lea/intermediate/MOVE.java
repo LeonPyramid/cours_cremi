@@ -25,4 +25,9 @@ public class MOVE extends Stm {
 		str.append("Stm_" + getId() + " -> Exp_" + source.getId() + ";\n");
 	}
 
+	@Override
+	public Stm copy() {
+		return new MOVE(this.target.copy(),this.source.copy());
+	}
+
 }

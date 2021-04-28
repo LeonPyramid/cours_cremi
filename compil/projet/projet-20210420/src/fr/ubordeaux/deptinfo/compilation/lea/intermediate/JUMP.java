@@ -24,4 +24,9 @@ public class JUMP extends Stm {
 		str.append("Stm_" + getId() + " -> Exp_" + exp.getId() + ";\n");
 	}
 
+	@Override
+	public Stm copy() {
+		return new JUMP(this.exp.copy(),this.targets);
+	}
+
 }

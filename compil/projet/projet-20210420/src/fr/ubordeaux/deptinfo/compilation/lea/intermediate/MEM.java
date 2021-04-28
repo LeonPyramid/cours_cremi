@@ -26,4 +26,9 @@ public class MEM extends Exp {
 		return "MEM";
 	}
 
+	@Override
+	public Exp copy() {
+		return new MEM(this.exp.copy());
+	}
+
 }

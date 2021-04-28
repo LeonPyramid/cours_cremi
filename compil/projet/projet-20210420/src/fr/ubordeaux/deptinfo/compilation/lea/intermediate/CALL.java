@@ -16,4 +16,9 @@ public class CALL extends Exp {
 		return "CALL(" + function + ',' + args + ')';
 	}
 
+	@Override
+	public Exp copy() {
+		return new CALL(this.function.copy(),this.args);
+	}
+
 }

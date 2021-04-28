@@ -14,4 +14,9 @@ public class ESEQ extends Exp {
 	public String getDotLabel() {
 		return "ESEQ(" + stm.toString() + ',' + exp.toString() + ')';
 	}
+
+	@Override
+	public Exp copy() {
+		return new ESEQ(this.stm, this.exp.copy());
+	}
 }

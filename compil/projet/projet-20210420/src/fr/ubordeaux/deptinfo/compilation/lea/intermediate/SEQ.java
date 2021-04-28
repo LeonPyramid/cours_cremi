@@ -25,4 +25,9 @@ public class SEQ extends Stm {
 		str.append("Stm_" + getId() + " -> Stm_" + right.getId() + ";\n");
 	}
 
+	@Override
+	public Stm copy() {
+		return new SEQ(this.left.copy(),this.right.copy());
+	}
+
 }

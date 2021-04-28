@@ -20,5 +20,10 @@ public class LABEL extends Stm {
 		return super.getDotLabel() + ':' + label;
 	}
 
+	@Override
+	public Stm copy() {
+		return new LABEL(this.label);
+	}
+
 
 }

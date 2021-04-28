@@ -14,4 +14,9 @@ public class TEMP extends Exp {
 	public String getDotLabel() {
 		return temp.toString();
 	}
+
+	@Override
+	public Exp copy() {
+		return new TEMP(this.temp);
+	}
 }
