@@ -3,3 +3,5 @@ bin/
 *.error
 *.dot
 *.jpg
+Parser.java
+ParserLexer.java
