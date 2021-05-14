@@ -86,6 +86,12 @@
 		<delete>
 			<fileset dir="${data}" includes="input-*.error" />
 		</delete>
+		<delete>
+			<fileset dir="${data}" includes="*.dot" />
+		</delete>
+		<delete>
+			<fileset dir="${data}" includes="*.jpg" />
+		</delete>
 	</target>
 
 	<!-- ================================= = target: compilation ================================= -->
