@@ -55,8 +55,12 @@ public class StackEnvironment<T> {
 		case FIELD:
 			this.put(type.getName(), (T)type.getLeft());
 			break;
+		case PRODUCT:
+			this.put(type.getLeft().getName(),(T)type.getLeft().getLeft());
+			this.put(type.getRight());
+			break;
 		default:
-			throw new EnvironmentException("Unexpected case");
+			throw new EnvironmentException("Unexpected case "+ type);
 		}
 	}
 
