@@ -12,9 +12,13 @@ public class NAME extends Exp {
 
 	@Override
 	public String getDotLabel() {
-		return "NAME: " + label.toString();
+		return this.toString();
 	}
 
+	@Override
+	public String toString(){
+		return "NAME: " + label.toString();
+	}
 	@Override
 	public Exp copy() {
 		return new NAME(this.label);

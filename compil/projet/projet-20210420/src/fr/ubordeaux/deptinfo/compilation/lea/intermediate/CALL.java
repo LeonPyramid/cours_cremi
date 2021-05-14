@@ -13,12 +13,25 @@ public class CALL extends Exp {
 
 	@Override
 	public String getDotLabel() {
-		return "CALL(" + function + ',' + args + ')';
+		return this.toString();
+	}
+
+	public String toString(){
+		return "CALL";
+	}
+
+	@Override
+	public void toDot(StringBuffer str) {
+		super.toDot(str);
+		function.toDot(str);
+		args.toDot(str);
+		str.append("Exp_" + getId() + " -> Exp_" + function.getId() + ";\n");
+		str.append("Exp_" + getId() + " -> Stm_" + args.getId() + ";\n");
 	}
 
 	@Override
 	public Exp copy() {
-		return new CALL(this.function.copy(),this.args);
+		return new CALL(this.function.copy(),this.args.copy());
 	}
 
 }

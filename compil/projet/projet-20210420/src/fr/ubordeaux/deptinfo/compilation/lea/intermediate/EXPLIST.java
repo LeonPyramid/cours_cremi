@@ -1,10 +1,10 @@
 package fr.ubordeaux.deptinfo.compilation.lea.intermediate;
 
-public class EXPSTM extends Stm {
+public class EXPLIST extends Stm {
 	
-	private Exp exp;
+	private ExpList exp;
 
-	public EXPSTM(Exp exp) {
+	public EXPLIST(ExpList exp) {
 		super();
 		this.exp = exp;
 	}
@@ -17,13 +17,11 @@ public class EXPSTM extends Stm {
 	@Override
 	public void toDot(StringBuffer str) {
 		super.toDot(str);
-		exp.toDot(str);
-		str.append("Stm_" + getId() + " -> Exp_" + exp.getId() + ";\n");
 	}
 
 	@Override
 	public Stm copy() {
-		return new EXPSTM(this.exp.copy());
+		return new EXPLIST(this.exp.copy());
 	}
 
 }
