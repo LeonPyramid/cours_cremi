@@ -13,9 +13,7 @@ public class StreeMETHOD extends Stree {
 	private Type type;
 
 	public StreeMETHOD(String name) throws TypeException, StreeException {
-		super();
-		this.name = name;
-		this.exp = new NAME(new Label(name));
+		this(name,null);
 
 	}
 
@@ -23,6 +21,9 @@ public class StreeMETHOD extends Stree {
 		super();
 		this.name = name;
 		this.type = type;
+		Label lbl = new Label(name);
+		this.exp = new NAME(lbl);
+		System.out.println("this method is labeled: " + this.exp.getDotLabel());
 	}
 	
 	@Override

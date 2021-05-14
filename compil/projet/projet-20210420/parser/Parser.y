@@ -27,6 +27,7 @@
 	private Environment<Type> classEnvironment = new MapEnvironment<Type>("CLASSE", true);
 	private StackEnvironment<Type> localVarEnvironment = new StackEnvironment<Type>("STACK", true);
 	private Type type;
+	private StreeMETHOD currentMethod;
 }
 
 // operators
@@ -333,6 +334,7 @@ pop_environment:
  	| determiner specifier "function" IDENTIFIER '(' args_definition ')' ':' type_expression  	
 	{
 		type = new TypeExpression(Tag.FUNCTION, $6, $9);
+		currentMethod = new StreeMETHOD($4,$9);
 		localVarEnvironment.put($4, type);
 	}
 	push_environment {localVarEnvironment.put($6);} block pop_environment
@@ -422,7 +424,7 @@ type_name:
 	;
 	
 args_definition:
-	args_definition ',' arg_definition {$$ = new TypeExpression(Tag.PRODUCT, $1, $3);}
+	args_definition ',' arg_definition {$$ = new TypeExpression(Tag.PRODUCT, $3, $1);}
 	| arg_definition {$$ = $1;}
 	;	
 	
@@ -503,7 +505,7 @@ simple_stm:
 	| "writeln" '(' expression ')' { $$ = new StreeCALL(new StreeMETHOD("writeln"), new StreeARGS($3)); }
 	| "break" { $$ = new StreeBREAK(); }
 	| "continue" { $$ = new StreeCONTINUE(); }
-	| "return" expression { $$ = new StreeRETURN($2); }
+	| "return" expression { $$ = new StreeRETURN($2,currentMethod); }
 	//| error ';'
 	//| error YYEOF
 	;
@@ -558,7 +560,7 @@ method_name:
 	;
 
 args:
-	args ',' expression {$$ = new StreeARGS($1, $3);}
+	args ',' expression {$$ = new StreeARGS($3, $1);}
 	| expression { $$ = $$ = new StreeARGS($1, null);}
 	;
 	

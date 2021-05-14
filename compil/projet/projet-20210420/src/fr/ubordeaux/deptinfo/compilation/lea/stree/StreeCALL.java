@@ -4,6 +4,7 @@ import fr.ubordeaux.deptinfo.compilation.lea.intermediate.CALL;
 import fr.ubordeaux.deptinfo.compilation.lea.intermediate.EXPSTM;
 import fr.ubordeaux.deptinfo.compilation.lea.intermediate.Exp;
 import fr.ubordeaux.deptinfo.compilation.lea.intermediate.Stm;
+import fr.ubordeaux.deptinfo.compilation.lea.type.Tag;
 import fr.ubordeaux.deptinfo.compilation.lea.type.Type;
 import fr.ubordeaux.deptinfo.compilation.lea.type.TypeException;
 
@@ -19,27 +20,47 @@ public class StreeCALL extends Stree {
 	}
 
 	@Override
-	public Exp getExp(){
+	public Exp getExp() {
 		return exp;
 	}
 
 	@Override
-	public Stm getStm(){
+	public Stm getStm() {
 		return stm;
 	}
 
 	@Override
 	public boolean checkType() throws StreeException {
-		Type lType = this.getLeft().getType();
+		if (getLeft().getType() == null)
+			return true;
+		Type lType = this.getLeft().getType().getLeft();
 		Stree rArg = this.getRight();
-		while(lType.getRight()!=null&&rArg.getRight()!=null){
-			if(lType.getLeft()!= rArg.getType())
+		if (lType == null || rArg == null)
+			return lType == rArg;
+		while (lType != null && rArg != null) {
+			Type tmpType = lType;
+			if(tmpType.getTag()==Tag.PRODUCT)
+				tmpType = lType.getRight();
+
+			if (!tmpType.getLeft().assertEqual(rArg.getLeft().getType())) {
+				System.out.println(lType.getRight() + " " + rArg.getLeft().getType());
 				return false;
-			lType = lType.getRight();
+			}
+
+			if(lType.getTag() == Tag.PRODUCT)
+				lType = lType.getLeft();
+			else
+				lType = null;
 			rArg = rArg.getRight();
 		}
-		return(lType.getRight()==null&&rArg.getRight()==null);
+		System.out.println(lType + " " + rArg);
+		return (lType == null && rArg == null);
 
+	}
+
+	@Override
+	public Type getType() throws StreeException {
+		return this.getLeft().getType().getRight();
 	}
 
 }
