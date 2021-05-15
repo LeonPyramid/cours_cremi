@@ -23,7 +23,6 @@ public class StreeMETHOD extends Stree {
 		this.type = type;
 		Label lbl = new Label(name);
 		this.exp = new NAME(lbl);
-		System.out.println("this method is labeled: " + this.exp.getDotLabel());
 	}
 	
 	@Override

@@ -43,7 +43,6 @@ public class StreeIF extends Stree {
 		//
 		
 		if(getRight().getRight()==null){
-			System.out.println("sans else");
 			return new SEQ(new CJUMP(CJUMP.Op.EQ,getLeft().getExp(),new CONST(0),label1,label2),
 				new SEQ(new LABEL(label1),
 					new SEQ(getRight().getLeft().getStm(),
@@ -61,7 +60,6 @@ public class StreeIF extends Stree {
 		//	fin
 		//
 		//
-		System.out.println("ifthelese");
 		return new SEQ(	new CJUMP(CJUMP.Op.EQ, getLeft().getExp(),new CONST(0),label1,label2),
 						new SEQ(new LABEL(label1),
 							new SEQ(getRight().getLeft().getStm(),

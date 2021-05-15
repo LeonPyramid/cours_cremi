@@ -43,7 +43,6 @@ public class StreeCALL extends Stree {
 				tmpType = lType.getRight();
 
 			if (!tmpType.getLeft().assertEqual(rArg.getLeft().getType())) {
-				System.out.println(lType.getRight() + " " + rArg.getLeft().getType());
 				return false;
 			}
 
@@ -53,7 +52,6 @@ public class StreeCALL extends Stree {
 				lType = null;
 			rArg = rArg.getRight();
 		}
-		System.out.println(lType + " " + rArg);
 		return (lType == null && rArg == null);
 
 	}

@@ -25,8 +25,6 @@ public class StreeRETURN extends Stree {
 
 	@Override
 	public boolean checkType() throws StreeException {
-		//TODO: Tu as bien avancé, tu as une erreur pour vérifier les deux types:
-		//là on a Left qui est l'objet renvoyé et returnType qui est le type de retour, voir pourquoi ça dit qu'ils sont pas identiques
 		return this.getLeft().getType().assertEqual(this.getRight().getType());
 	}
 }
